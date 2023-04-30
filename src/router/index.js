@@ -3,8 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import HelloWorld from '../components/HelloWorld.vue'    
 
 const routes = [
-  { path: '/', component: HelloWorld },
-  { path: '/home', component: HomeView },
+  { path: '/', component: HomeView },
+  { path: '/hello', component: HelloWorld },
 ]
 
 const router = createRouter({

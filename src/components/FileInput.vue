@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="file" @change="getFile" accept="image/*" capture />
+        <input type="file" ref=file @change="getFile()" accept="image/*" capture />
     </div>
 </template>
 
@@ -11,22 +11,16 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
     name: 'FileInput',
-    data() {
+    setup() {
+        const file = ref(null)
+        const getFile = async () => {
+            console.log("selected file", file.value.files[0])
+        }
         return {
-            getFile: null
-        }
+          getFile,
+          file
+       }
     },
-    methods: {
-        loadFile() {
-            const src = ref('')
-            //Init reader
-            const reader = new FileReader()
-            reader.onload = () => {
-                src.value = reader.result
-            }
-            reader.readAsDataURL(this.getFile.target.files[0])
-        }
-    }
 })
 
 </script>

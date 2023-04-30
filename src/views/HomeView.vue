@@ -1,17 +1,17 @@
 <template>
     <HelloWorld msg="Hello World"/>
-    <FileInput></FileInput>
+    <ScanDocument></ScanDocument>
 </template>
 
 <script>
 import HelloWorld from '../components/HelloWorld.vue'
-import FileInput from '../components/FileInput.vue'
+import ScanDocument from '@/components/ScanDocument.vue';
 
 export default {
   name: 'HomeView',
   components: {
     HelloWorld,
-    FileInput
-  }
+    ScanDocument
+}
 }
 </script>

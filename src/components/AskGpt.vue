@@ -5,7 +5,6 @@ export default {
     Components: {
 
     },
-    
     methods: {
          async postApiRequest(input) {
             const endpoint = 'https://api.openai.com/v1/chat/completions'
@@ -29,21 +28,16 @@ export default {
                 redirect: 'follow'
           }
 
-            this.fetchApiResponse(endpoint, requestOptions).then(async response => {
-                console.log("Schritt 2: " + response)
-                return response;
-            })
+           return await this.fetchApiResponse(endpoint, requestOptions)
         },
 
         async fetchApiResponse(endpoint, requestOptions) {
-            let output = ''
-
-            fetch(endpoint, requestOptions)
+            return await fetch(endpoint, requestOptions)
                 .then(response => response.text())
                 .then(async result => {
                     let parsedObj = JSON.parse(result);
-                    let content = parsedObj.choices[0].message.content;
-                    output = content;
+                    let output = parsedObj.choices[0].message.content;
+
                     console.log("Schritt 1" + output)
                     return output
                 })

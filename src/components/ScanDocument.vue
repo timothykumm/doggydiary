@@ -62,9 +62,7 @@ export default {
             this.summary = await this.getGptResponse()
         },
          async getGptResponse() {
-            AskGpt.methods.postApiRequest(this.extractedText).then(async response => {
-                return response;
-            })
+           return await AskGpt.methods.postApiRequest(this.extractedText)
         }
     }
 }

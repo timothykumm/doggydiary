@@ -61,10 +61,29 @@ export default {
             await this.extractText()
             this.summary = await this.getGptResponse()
         },
-         async getGptResponse() {
-           return await AskGpt.methods.postApiRequest(this.extractedText)
+        async getGptResponse() {
+            return await AskGpt.methods.postApiRequest(this.extractedText)
         }
     }
 }
 
 </script>
+
+<style scoped>
+input {
+    border-radius: 50%;
+    position: absolute; /* Positioniere das Feld relativ zum nächsten positionierten Element */
+    bottom: 20px; /* Abstand von unten */
+    right: 20px;
+    background-color: #007bff; /* Hintergrundfarbe */
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    width: 60px; 
+    height: 60px;
+    background-image: url('../assets/scan.png'); /* Setzt das  Icon */
+    background-repeat: no-repeat; /* Stellt sicher, dass das Icon nicht wiederholt wird */
+    background-size: contain;
+    text-indent: -9999px; /* Text des Inputfeldes wird weggesetzt */
+}</style>

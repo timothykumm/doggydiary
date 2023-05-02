@@ -1,16 +1,18 @@
 <template>
-    <HelloWorld msg="Hello World"/>
+  <body>
+    <NavigationBar name="DoggyDiary"></NavigationBar>
     <ScanDocument></ScanDocument>
+  </body>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue'
+import NavigationBar from '@/components/NavigationBar.vue';
 import ScanDocument from '@/components/ScanDocument.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld,
+    NavigationBar,
     ScanDocument
 }
 }

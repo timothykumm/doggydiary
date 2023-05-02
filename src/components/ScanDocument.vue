@@ -1,29 +1,43 @@
 <template>
     <div>
         <input type="file" ref=file @change=processFile() accept="image/*" capture />
-        <p> {{ summary }} </p>
+        <h4> Scannen sie ein Dokument und ich fasse es für sie zusammen: </h4>
+        <pre v-text="summary"></pre>
+
+        <div v-if="isLoading" name="loading">
+            <self-building-square-spinner
+            :animation-duration="6000"
+            :size="60"
+            color="black"
+            />
+            <p ref="status"></p>
+        </div>
+
     </div>
 </template>
 
 <script>
-
+/* eslint-disable */
 import { ref } from 'vue'
-import { createWorker, PSM, OEM } from 'tesseract.js';
 import AskGpt from './AskGpt.vue';
+import { createWorker, PSM, OEM } from 'tesseract.js';
+import { SelfBuildingSquareSpinner  } from 'epic-spinners'
 
 export default {
     name: 'FileInput',
-    Components: {
-        AskGpt
+    components: {
+        SelfBuildingSquareSpinner
     },
     data() {
         return {
-            summary: 'Summary'
+            summary: '',
+            isLoading: false
         }
     },
     setup() {
         const file = ref(null)
         const extractedText = ref('')
+        const status = ref('')
 
         const getFile = async () => {
             console.log("selected file", file.value.files[0])
@@ -31,7 +45,7 @@ export default {
         }
 
         const worker = createWorker({
-            logger: m => console.log(`${m.status} : ${(m.progress * 100).toFixed(2)}%`)
+            logger: m => status.value.innerHTML = `${m.status} : ${(m.progress * 100).toFixed(2)}%`
         })
 
         const extractText = async () => {
@@ -52,17 +66,23 @@ export default {
             getFile,
             extractText,
             file,
-            extractedText
+            extractedText,
+            status
         }
     },
     methods: {
         async processFile() {
+            await this.toggleLoadingSymbol()
             await this.getFile()
             await this.extractText()
             this.summary = await this.getGptResponse()
+            this.toggleLoadingSymbol()
         },
         async getGptResponse() {
             return await AskGpt.methods.postApiRequest(this.extractedText)
+        },
+        async toggleLoadingSymbol() {
+            this.isLoading = !this.isLoading;
         }
     }
 }
@@ -86,4 +106,32 @@ input {
     background-repeat: no-repeat; /* Stellt sicher, dass das Icon nicht wiederholt wird */
     background-size: contain;
     text-indent: -9999px; /* Text des Inputfeldes wird weggesetzt */
-}</style>
+}
+
+
+
+.self-building-square-spinner {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50%;
+}
+
+pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 22px;
+  line-height: 100%;
+  padding: 5%;
+  background-color: #d5d5fc;
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0;
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;
+}
+
+</style>

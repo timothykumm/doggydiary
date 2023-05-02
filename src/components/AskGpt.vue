@@ -9,7 +9,7 @@ export default {
          async postApiRequest(input) {
             const endpoint = 'https://api.openai.com/v1/chat/completions'
             const openAiKey = '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'
-            const preQuestion = 'Das folgende Dokument ist von einem Hund. Schreibe eine kurze Überschrift nach <Überschrift> fasse das Dokument in <Inhalt> zusammen und falls es ein ärztliches Dokument ist, analysiere die Werte unter <Analyse>'
+            const preQuestion = 'Das folgende Dokument ist von einem Hund. Schreibe eine kurze Überschrift, fasse das Dokument zusammen und falls es ein Dokument mit BVlutwerten ist, analysiere die Werte.'
 
             const myHeaders = new Headers()
             myHeaders.append('Authorization', 'Bearer ' + openAiKey)
@@ -37,8 +37,6 @@ export default {
                 .then(async result => {
                     let parsedObj = JSON.parse(result);
                     let output = parsedObj.choices[0].message.content;
-
-                    console.log("Schritt 1" + output)
                     return output
                 })
                 .catch(error => console.log('error', error))

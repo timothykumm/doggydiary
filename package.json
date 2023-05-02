@@ -9,10 +9,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.7",
+    "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
+    "epic-spinners": "^2.0.0",
     "openai": "^3.2.1",
     "tesseract.js": "^2.1.1",
     "vue": "^3.2.13",
+    "vue-loading-overlay": "^6.0.3",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

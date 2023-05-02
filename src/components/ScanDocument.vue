@@ -1,27 +1,26 @@
 <template>
     <div>
         <input type="file" ref=file @change=processFile() accept="image/*" capture />
-        <h4> Scannen sie ein Dokument und ich fasse es für sie zusammen: </h4>
-        <pre v-text="summary"></pre>
+        <h5 name="scanning-instruction"> Scanne unten rechts ein Dokument und ich fasse es zusammen. </h5>
+        <pre name="summary-output" v-text="summary"></pre>
 
         <div v-if="isLoading" name="loading">
             <self-building-square-spinner
             :animation-duration="6000"
             :size="60"
-            color="black"
+            color="#007bff"
             />
             <p ref="status"></p>
         </div>
-
     </div>
 </template>
 
 <script>
-/* eslint-disable */
-import { ref } from 'vue'
+
+import { ref } from 'vue';
 import AskGpt from './AskGpt.vue';
 import { createWorker, PSM, OEM } from 'tesseract.js';
-import { SelfBuildingSquareSpinner  } from 'epic-spinners'
+import { SelfBuildingSquareSpinner  } from 'epic-spinners';
 
 export default {
     name: 'FileInput',
@@ -90,13 +89,16 @@ export default {
 </script>
 
 <style scoped>
+div {
+    background-color: #32373d;
+}
+
 input {
     border-radius: 50%;
     position: absolute; /* Positioniere das Feld relativ zum nächsten positionierten Element */
     bottom: 20px; /* Abstand von unten */
     right: 20px;
     background-color: #007bff; /* Hintergrundfarbe */
-    color: #fff;
     cursor: pointer;
     border: none;
     font-family: 'Helvetica Neue', sans-serif;
@@ -117,21 +119,34 @@ input {
   margin-top: 50%;
 }
 
-pre {
+pre[name="summary-output"] {
   font-family: "Courier New", Courier, monospace;
   font-size: 22px;
   line-height: 100%;
   padding: 5%;
-  background-color: #d5d5fc;
   display: block;
   font-family: monospace;
   white-space: pre;
-  margin: 1em 0;
   white-space: pre-wrap;       /* Since CSS 2.1 */
   white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;
+  color: #ffffff;
+  background-color: #32373d;
+}
+
+pre:empty {
+  visibility: hidden;
+}
+
+h5[name="scanning-instruction"] {
+    padding-top: 2%;
+    color: #ffffff;
+}
+
+p {
+    color: #ffffff;
 }
 
 </style>

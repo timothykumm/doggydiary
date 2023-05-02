@@ -7,7 +7,8 @@ describe('ScanDocument.vue', () => {
     const wrapper = shallowMount(ScanDocument, {
       data() {
         return {
-          summary: msg
+          summary: msg,
+          isLoading: false
         }
       }
     })

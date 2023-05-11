@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: doggydb
+      MYSQL_ROOT_PASSWORD: geheim
+    ports:
+      - "3306:3306"

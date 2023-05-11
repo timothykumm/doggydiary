@@ -2,22 +2,12 @@ package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
 public class User {
 
-    private long id;
     private String email;
     private String password;
 
-    public User(long id, String email, String password) {
-        this.id = id;
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getEmail() {

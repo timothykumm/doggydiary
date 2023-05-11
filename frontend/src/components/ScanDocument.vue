@@ -116,7 +116,7 @@ input {
   display: inline-block;
   justify-content: center;
   align-items: center;
-  margin-top: 0%;
+  margin-top: 50%;
 }
 
 pre[name="summary-output"] {

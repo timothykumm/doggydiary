@@ -2,9 +2,7 @@
 
 export default {
     name: 'AskGpt',
-    Components: {
-
-    },
+    Components: {},
     methods: {
          async postApiRequest(input) {
             const endpoint = 'https://api.openai.com/v1/chat/completions'

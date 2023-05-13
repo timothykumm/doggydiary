@@ -1,13 +1,19 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
+import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
+
+import java.util.List;
+
 public class User {
 
     private String email;
     private String password;
+    private List<DogEntity> dogs;
 
-    public User(String email, String password) {
+    public User(String email, String password, List<DogEntity> dogs) {
         this.email = email;
         this.password = password;
+        this.dogs = dogs;
     }
 
     public String getEmail() {
@@ -26,4 +32,11 @@ public class User {
         this.password = password;
     }
 
+    public List<DogEntity> getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(List<DogEntity> dogs) {
+        this.dogs = dogs;
+    }
 }

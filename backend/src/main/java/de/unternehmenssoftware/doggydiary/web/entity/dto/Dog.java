@@ -1,34 +1,24 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
+import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 public class Dog {
 
-    private long id;
-    private String email;
     private String name;
     private String breed;
     private int age;
+    private UserEntity user;
 
-    public Dog(String email, String name, String breed, int age) {
-        this.email = email;
+    public Dog() {}
+
+    public Dog(String name, String breed, int age, UserEntity user) {
         this.name = name;
         this.breed = breed;
         this.age = age;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.user = user;
     }
 
     public String getName() {
@@ -53,5 +43,13 @@ public class Dog {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

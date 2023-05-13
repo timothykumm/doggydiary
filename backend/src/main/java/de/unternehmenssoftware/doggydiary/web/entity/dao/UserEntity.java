@@ -22,9 +22,10 @@ public class UserEntity {
 
     public UserEntity() {}
 
-    public UserEntity(String email, String password) {
+    public UserEntity(String email, String password, List<DogEntity> dogs) {
         this.email = email;
         this.password = password;
+        this.dogs = dogs;
     }
 
     public String getEmail() {
@@ -43,4 +44,11 @@ public class UserEntity {
         this.password = password;
     }
 
+    public List<DogEntity> getDogs() {
+        return dogs;
+    }
+
+    public void setDogs(List<DogEntity> dogs) {
+        this.dogs = dogs;
+    }
 }

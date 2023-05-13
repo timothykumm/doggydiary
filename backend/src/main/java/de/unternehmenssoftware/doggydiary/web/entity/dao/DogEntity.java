@@ -2,8 +2,6 @@ package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity(name = "dogs")
 public class DogEntity {
 
@@ -24,11 +22,11 @@ public class DogEntity {
 
     public DogEntity() {}
 
-    public DogEntity(String email, String name, String breed, int age) {
-        this.id = id;
+    public DogEntity(String name, String breed, int age, UserEntity user) {
         this.name = name;
         this.breed = breed;
         this.age = age;
+        this.user = user;
     }
 
     public String getName() {
@@ -53,6 +51,14 @@ public class DogEntity {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
 

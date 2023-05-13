@@ -17,11 +17,14 @@ public class UserService {
     public User findByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
 
-        return user != null ? new User(user.getEmail(), user.getPassword()) : null;
+        if(user == null) {
+            return null;
+        }
+        return new User(user.getEmail(), user.getPassword(), user.getDogs());
     }
 
     public User createUser(User user) {
-        UserEntity userEntity = new UserEntity(user.getEmail(), user.getPassword());
+        UserEntity userEntity = new UserEntity(user.getEmail(), user.getPassword(), user.getDogs());
         try {
             userRepository.save(userEntity);
         }catch (Exception e) {

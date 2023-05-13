@@ -21,7 +21,7 @@ public class UserController {
         User user = userService.findByEmail(email);
 
         if(user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         }
         return ResponseEntity.ok(user.getEmail() + " " + user.getPassword());
     }

@@ -9,7 +9,6 @@ public interface UserRepository extends CrudRepository<UserEntity, String> {
 
     UserEntity findByEmail(String email);
     UserEntity findByEmailAndPassword(String email, String password);
-
     UserEntity findByPassword(String password);
 
 }

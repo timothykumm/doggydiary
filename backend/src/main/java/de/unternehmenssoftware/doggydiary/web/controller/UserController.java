@@ -1,4 +1,4 @@
-package de.unternehmenssoftware.doggydiary.web.api.v1;
+package de.unternehmenssoftware.doggydiary.web.controller;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
@@ -32,7 +32,7 @@ public class UserController {
     @PostMapping(path = "/users")
     public ResponseEntity<Void> createUser(@RequestBody User userRequest) {
         User user = userService.createUser(userRequest);
-        
+
         if(user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

@@ -22,6 +22,11 @@ public class UserEntity {
 
     public UserEntity() {}
 
+    public UserEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public UserEntity(String email, String password, List<DogEntity> dogs) {
         this.email = email;
         this.password = password;

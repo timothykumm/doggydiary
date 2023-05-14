@@ -2,6 +2,8 @@ package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "dogs")
 public class DogEntity {
 
@@ -15,6 +17,9 @@ public class DogEntity {
     private String breed;
     @Column(name = "age")
     private int age;
+
+    @OneToMany(mappedBy = "dog")
+    private List<DocumentEntity> documents;
 
     @ManyToOne()
     @JoinColumn(name = "fk_email")

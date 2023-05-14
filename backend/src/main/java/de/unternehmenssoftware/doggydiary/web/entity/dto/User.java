@@ -10,6 +10,13 @@ public class User {
     private String password;
     private List<DogEntity> dogs;
 
+    public User() {}
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String email, String password, List<DogEntity> dogs) {
         this.email = email;
         this.password = password;

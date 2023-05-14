@@ -17,11 +17,11 @@ public class UserController {
     }
 
     @GetMapping(path = "/users")
-    public ResponseEntity<String> getUserByEmail(@RequestParam String email) {
-        User user = userService.findByEmail(email);
+    public ResponseEntity<String> validateUser(@RequestParam String email, @RequestParam String password) {
+        User user = userService.validateUser(email, password);
 
         if(user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found or wrong credentials");
         }
         return ResponseEntity.ok(user.getEmail() + " " + user.getPassword());
     }

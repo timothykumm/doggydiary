@@ -1,8 +1,10 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "documents")
+@NoArgsConstructor
 public class DocumentEntity {
 
     @Id
@@ -20,9 +22,7 @@ public class DocumentEntity {
     @JoinColumn(name = "fk_id")
     private DogEntity dog;
 
-    public DocumentEntity() {}
-
-    public DocumentEntity(long id, String title, String content, DogEntity dog) {
+    public DocumentEntity(String title, String content, DogEntity dog) {
         this.title = title;
         this.content = content;
         this.dog = dog;

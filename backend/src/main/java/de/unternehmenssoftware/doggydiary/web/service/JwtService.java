@@ -8,11 +8,8 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -20,13 +17,10 @@ import java.util.function.Function;
 public class JwtService {
 
     public static final String SECRET_KEY = "792F423F4528472B4B6250655368566D597133743677397A24432646294A404D";
-    private final int expirationDateAddition = 24 * (60  * 60 * 1000);
+    private final int expirationDateAddition = 24 * (60  * 60 * 1000); //24hS
 
+    //Extra Claims removed
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<String, Object>(), userDetails);
-    }
-
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))

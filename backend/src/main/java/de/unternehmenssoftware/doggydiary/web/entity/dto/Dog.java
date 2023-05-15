@@ -1,18 +1,15 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Dog {
 
     private String name;
     private String breed;
     private int age;
     private UserEntity user;
-
-    public Dog() {}
 
     public Dog(String name, String breed, int age, UserEntity user) {
         this.name = name;

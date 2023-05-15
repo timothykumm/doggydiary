@@ -1,10 +1,12 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity(name = "dogs")
+@NoArgsConstructor
 public class DogEntity {
 
     @Id
@@ -24,8 +26,6 @@ public class DogEntity {
     @ManyToOne()
     @JoinColumn(name = "fk_email")
     private UserEntity user;
-
-    public DogEntity() {}
 
     public DogEntity(String name, String breed, int age, UserEntity user) {
         this.name = name;

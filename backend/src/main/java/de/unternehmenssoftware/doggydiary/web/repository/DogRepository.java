@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface DogRepository extends CrudRepository<DogEntity, Long> {
-
-    public List<DogEntity> getAllByUser(UserEntity user);
+    List<DogEntity> getAllByUser(UserEntity user);
 
 }

@@ -1,17 +1,14 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Document {
 
     private String title;
     private String content;
     private DogEntity dog;
-
-    public Document() {}
 
     public Document(long id, String title, String content, DogEntity dog) {
         this.title = title;

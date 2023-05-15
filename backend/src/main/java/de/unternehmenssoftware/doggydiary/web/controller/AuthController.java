@@ -2,7 +2,6 @@ package de.unternehmenssoftware.doggydiary.web.controller;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
-import de.unternehmenssoftware.doggydiary.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/auth")
 public class AuthController {
-
-    private final UserService userService;
     private final AuthService authService;
 
     @PostMapping(path = "/register")

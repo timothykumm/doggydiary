@@ -5,19 +5,17 @@ import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DogService {
 
     private DogRepository dogRepository;
-
-    public DogService(DogRepository dogRepository) {
-        this.dogRepository = dogRepository;
-    }
 
     public List<Dog> getAllDogsByUser(User user) {
         UserEntity userEntity = new UserEntity(user.getEmail(), user.getPassword());

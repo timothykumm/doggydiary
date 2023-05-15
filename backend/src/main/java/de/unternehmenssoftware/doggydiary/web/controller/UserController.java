@@ -3,21 +3,18 @@ package de.unternehmenssoftware.doggydiary.web.controller;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
 import de.unternehmenssoftware.doggydiary.web.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/v1")
 public class UserController {
 
     UserService userService;
     AuthService authService;
-
-    public UserController(UserService userService, AuthService authService) {
-        this.userService = userService;
-        this.authService = authService;
-    }
 
     /*@GetMapping(path = "/users")
     public ResponseEntity<String> validateUser(@RequestParam String email, @RequestParam String password) {

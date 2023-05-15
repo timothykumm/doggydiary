@@ -4,18 +4,15 @@ import de.unternehmenssoftware.doggydiary.web.config.WebSecurityConfig;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     UserRepository userRepository;
     WebSecurityConfig securityConfig;
-
-    public UserService(UserRepository userRepository, WebSecurityConfig securityConfig) {
-        this.userRepository = userRepository;
-        this.securityConfig = securityConfig;
-    }
 
     public User findByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);

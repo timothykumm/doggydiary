@@ -5,20 +5,17 @@ import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     UserRepository userRepository;
     WebSecurityConfig securityConfig;
-
-    public AuthService(UserRepository userRepository, WebSecurityConfig securityConfig) {
-        this.userRepository = userRepository;
-        this.securityConfig = securityConfig;
-    }
 
     public User validateUser(HttpServletRequest request) {
         String[] credentials = getUsernameAndPasswordFromBasicAuthHeader(request);

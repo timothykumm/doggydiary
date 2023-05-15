@@ -5,21 +5,18 @@ import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
 import de.unternehmenssoftware.doggydiary.web.service.DogService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
+@RequiredArgsConstructor
 @RequestMapping(path = "/api/v1")
 public class DogController {
 
     AuthService authService;
     DogService dogService;
-
-    public DogController(DogService dogService, AuthService authService) {
-        this.dogService = dogService;
-        this.authService = authService;
-    }
 
     @GetMapping(path = "/dogs")
     public ResponseEntity<String> getDogs(HttpServletRequest request) {

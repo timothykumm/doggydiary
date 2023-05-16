@@ -97,7 +97,7 @@ public class UserEntity implements UserDetails {
     }*/
 
     public User transformToUser() {
-        return new User(email, forename, surname, password);
+        return new User(email, forename, surname);
     }
 
     @Override

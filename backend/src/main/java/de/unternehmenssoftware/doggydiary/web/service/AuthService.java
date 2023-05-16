@@ -1,6 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.config.ApplicationConfig;
+import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,32 +21,27 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public String register(User user) {
-        String encodedPassword = applicationConfig.passwordEncoder().encode(user.getPassword());
-
-        User encodedPasswordUser = new User(user.getEmail(), user.getForename(), user.getSurname(), encodedPassword);
-        UserEntity encodedPasswordUserEntity = encodedPasswordUser.transformToUserEntity();
+    public String register(AuthRequest authRequest) {
+        String encodedPassword = applicationConfig.passwordEncoder().encode(authRequest.password());
+        UserEntity encodedPasswordUserEntity = new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword);
 
         try {
             userRepository.save(encodedPasswordUserEntity);
-            return jwtService.generateToken(encodedPasswordUser);
+            return jwtService.generateToken(encodedPasswordUserEntity);
         }catch (Exception e) {
             return null;
         }
     }
 
-    public String authenticate(User user) {
-        String encodedPassword = applicationConfig.passwordEncoder().encode(user.getPassword());
-
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        UserEntity userEntity = userRepository.findByEmail(user.getEmail());
+    public String authenticate(AuthRequest authRequest) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
+        UserEntity userEntity = userRepository.findByEmail(authRequest.email());
 
         if(userEntity == null) {
             return null;
         }
 
-        User encodedPasswordUser = new User(userEntity.getEmail(), userEntity.getForename(), userEntity.getSurname(), encodedPassword);
-        return jwtService.generateToken(encodedPasswordUser);
+        return jwtService.generateToken(userEntity);
     }
 
     public User getAuthenticatedUser() {

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity(name = "users")
@@ -59,6 +60,12 @@ public class UserEntity implements UserDetails {
         return new User(email, forename, surname, password,
                 dogs.stream().map(DogEntity::transformToDog).collect(Collectors.toList()));
     }*/
+
+    public boolean equals(UserEntity user) {
+        return (Objects.equals(email, user.getEmail())) &&
+                (Objects.equals(forename, user.getForename())) &&
+                (Objects.equals(surname, user.getSurname()));
+    }
 
     public User transformToUser() {
         return new User(email, forename, surname);

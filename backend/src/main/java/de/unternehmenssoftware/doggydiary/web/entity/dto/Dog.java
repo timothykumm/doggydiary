@@ -16,6 +16,12 @@ public class Dog {
     private String breed;
     private int age;
 
+    public Dog(String name, String breed, int age) {
+        this.name = name;
+        this.breed = breed;
+        this.age = age;
+    }
+
     public Dog(Long id, String name, String breed, int age) {
         this.id = id;
         this.name = name;

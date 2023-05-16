@@ -1,5 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.controller;
 
+import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import de.unternehmenssoftware.doggydiary.web.service.DogService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class DogController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> createDog(@RequestBody Dog dogRequest) {
+    public ResponseEntity<Void> createDog(@RequestBody DogRequest dogRequest) {
         Optional<Dog> dog = dogService.createDog(dogRequest);
 
         if(dog.isEmpty()) {

@@ -1,7 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.controller;
 
 import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
-import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

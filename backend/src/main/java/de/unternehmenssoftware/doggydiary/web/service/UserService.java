@@ -6,16 +6,14 @@ import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+    private final AuthService authService;
     private final UserRepository userRepository;
 
-    public Optional<User> findByEmail(String email) {
-        UserEntity userEntity = userRepository.findByEmail(email);
-        return Optional.ofNullable(userEntity.transformToUser());
+    public User getUserDetails() {
+        return authService.getAuthenticatedUser();
     }
 }

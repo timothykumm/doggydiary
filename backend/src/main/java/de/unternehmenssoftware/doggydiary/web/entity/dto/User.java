@@ -1,5 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.AuthRole;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;

@@ -5,10 +5,15 @@ import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class User {
 
     private String email;
@@ -23,30 +28,6 @@ public class User {
         this.forename = forename;
         this.surname = surname;
         authRole = AuthRole.USER;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getForename() {
-        return forename;
-    }
-
-    public void setForename(String forename) {
-        this.forename = forename;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
     }
 
     public UserEntity transformToUserEntity(String password) {

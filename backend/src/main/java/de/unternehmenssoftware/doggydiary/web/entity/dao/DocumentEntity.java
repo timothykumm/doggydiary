@@ -3,10 +3,14 @@ package de.unternehmenssoftware.doggydiary.web.entity.dao;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "documents")
 @NoArgsConstructor
+@Getter
+@Setter
 public class DocumentEntity {
 
     @Id
@@ -27,30 +31,6 @@ public class DocumentEntity {
     public DocumentEntity(String title, String content, DogEntity dog) {
         this.title = title;
         this.content = content;
-        this.dog = dog;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public DogEntity getDog() {
-        return dog;
-    }
-
-    public void setDog(DogEntity dog) {
         this.dog = dog;
     }
 

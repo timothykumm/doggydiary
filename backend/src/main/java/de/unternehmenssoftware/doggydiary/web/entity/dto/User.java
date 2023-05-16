@@ -19,7 +19,6 @@ public class User implements UserDetails {
     private String forename;
     private String surname;
     private String password;
-    private List<DogEntity> dogs;
 
     @Enumerated(EnumType.STRING)
     private AuthRole authRole;
@@ -29,15 +28,6 @@ public class User implements UserDetails {
         this.forename = forename;
         this.surname = surname;
         this.password = password;
-        authRole = AuthRole.USER;
-    }
-
-    public User(String email, String forename, String surname, String password, List<DogEntity> dogs) {
-        this.email = email;
-        this.forename = forename;
-        this.surname = surname;
-        this.password = password;
-        this.dogs = dogs;
         authRole = AuthRole.USER;
     }
 
@@ -69,20 +59,12 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<DogEntity> getDogs() {
-        return dogs;
-    }
-
-    public void setDogs(List<DogEntity> dogs) {
-        this.dogs = dogs;
-    }
-
     public UserEntity transformToUserEntity() {
         return new UserEntity(email, forename, surname, password);
+    }
+
+    public UserEntity transformToUserEntity(List<DogEntity> dogs) {
+        return new UserEntity(email, forename, surname, password, dogs);
     }
 
     @Override

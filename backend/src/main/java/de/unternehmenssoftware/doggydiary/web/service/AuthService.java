@@ -6,6 +6,8 @@ import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,27 +23,30 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public String register(AuthRequest authRequest) {
+    public ResponseEntity<String> register(AuthRequest authRequest) {
+        //Email already exists
+        if(userRepository.findByEmail(authRequest.email()) != null) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
         String encodedPassword = applicationConfig.passwordEncoder().encode(authRequest.password());
         UserEntity encodedPasswordUserEntity = new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword);
 
         try {
             userRepository.save(encodedPasswordUserEntity);
-            return jwtService.generateToken(encodedPasswordUserEntity);
+            return ResponseEntity.status(HttpStatus.CREATED).body(jwtService.generateToken(encodedPasswordUserEntity));
         }catch (Exception e) {
-            return null;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    public String authenticate(AuthRequest authRequest) {
+    public ResponseEntity<String> authenticate(AuthRequest authRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
         UserEntity userEntity = userRepository.findByEmail(authRequest.email());
 
         if(userEntity == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found or wrong credentials");
         }
 
-        return jwtService.generateToken(userEntity);
+        return ResponseEntity.status(HttpStatus.OK).body(jwtService.generateToken(userEntity));
     }
 
     public User getAuthenticatedUser() {

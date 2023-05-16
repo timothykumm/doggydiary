@@ -15,22 +15,12 @@ public class AuthController {
 
     @PostMapping(path = "/register")
     public ResponseEntity<String> register(@RequestBody AuthRequest authRequest) {
-        String webToken = authService.register(authRequest);
-
-        if(webToken == null || !webToken.startsWith("ey")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(webToken);
+        return authService.register(authRequest);
     }
 
     @PostMapping(path = "/authenticate")
     public ResponseEntity<String> authenticate(@RequestBody AuthRequest authRequest) {
-        String webToken = authService.authenticate(authRequest);
-
-        if(webToken == null || !webToken.startsWith("ey")) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found or wrong credentials");
-        }
-        return ResponseEntity.ok(webToken);
+        return authService.authenticate(authRequest);
     }
 
 }

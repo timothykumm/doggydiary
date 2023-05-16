@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,21 +20,20 @@ public class DogService {
 
     public List<Dog> getAllDogsByUser() {
         UserEntity userEntity = authService.getAuthenticatedUserEntity();
-            return dogRepository.getAllByUser(userEntity).stream().map(dogEntity ->
-                new Dog(dogEntity.getName(), dogEntity.getBreed(), dogEntity.getAge(), userEntity))
+            return dogRepository.getAllByUser(userEntity).stream().map(DogEntity::transformToDog)
                 .collect(Collectors.toList());
     }
 
-    public Dog createDog(Dog dog) {
+    public Optional<Dog> createDog(Dog dog) {
         UserEntity userEntity = authService.getAuthenticatedUserEntity();
-        DogEntity dogEntity = new DogEntity(dog.getName(), dog.getBreed(), dog.getAge(), userEntity);
+        DogEntity dogEntity = dog.transformToDogEntity(userEntity);
 
         try {
             dogRepository.save(dogEntity);
         }catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
-        return dog;
+        return Optional.of(dog);
     }
 
 }

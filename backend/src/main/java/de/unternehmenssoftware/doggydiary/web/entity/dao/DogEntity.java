@@ -1,5 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
+import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +35,10 @@ public class DogEntity {
         this.user = user;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -64,6 +69,10 @@ public class DogEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public Dog transformToDog() {
+        return new Dog(id, name, breed, age);
     }
 }
 

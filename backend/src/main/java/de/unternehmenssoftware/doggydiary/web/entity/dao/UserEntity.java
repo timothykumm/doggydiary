@@ -91,8 +91,13 @@ public class UserEntity implements UserDetails {
         this.dogs = dogs;
     }
 
+    /*public User transformToUser() {
+        return new User(email, forename, surname, password,
+                dogs.stream().map(DogEntity::transformToDog).collect(Collectors.toList()));
+    }*/
+
     public User transformToUser() {
-        return new User(email, forename, surname, password, dogs);
+        return new User(email, forename, surname, password);
     }
 
     @Override

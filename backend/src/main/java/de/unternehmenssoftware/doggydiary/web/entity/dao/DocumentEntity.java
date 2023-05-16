@@ -1,5 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
+import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
+import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -50,5 +52,9 @@ public class DocumentEntity {
 
     public void setDog(DogEntity dog) {
         this.dog = dog;
+    }
+
+    public Document transformToDocument() {
+        return new Document(title, content);
     }
 }

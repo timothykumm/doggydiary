@@ -25,7 +25,7 @@ public class AuthService {
 
     public ResponseEntity<String> register(AuthRequest authRequest) {
         //Email already exists
-        if(userRepository.findByEmail(authRequest.email()) != null) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        if(userRepository.existsUserEntityByEmail(authRequest.email())) return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
         String encodedPassword = applicationConfig.passwordEncoder().encode(authRequest.password());
         UserEntity encodedPasswordUserEntity = new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword);

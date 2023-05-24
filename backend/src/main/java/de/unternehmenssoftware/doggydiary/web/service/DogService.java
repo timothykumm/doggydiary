@@ -32,7 +32,7 @@ public class DogService {
 
         try {
             dogRepository.save(dogEntity);
-        }catch (Exception e) {
+        }catch (IllegalArgumentException e) {
             return Optional.empty();
         }
         return Optional.of(dogEntity.transformToDog());

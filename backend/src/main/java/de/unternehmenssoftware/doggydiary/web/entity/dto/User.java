@@ -1,19 +1,18 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.AuthRole;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class User {
 
     private String email;
@@ -21,6 +20,7 @@ public class User {
     private String surname;
 
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private AuthRole authRole;
 
     public User(String email, String forename, String surname) {

@@ -1,16 +1,13 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
-import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity(name = "documents")
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class DocumentEntity {
 
     @Id

@@ -2,22 +2,19 @@ package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity(name = "users")
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class UserEntity implements UserDetails {
 
     @Id
@@ -60,12 +57,6 @@ public class UserEntity implements UserDetails {
         return new User(email, forename, surname, password,
                 dogs.stream().map(DogEntity::transformToDog).collect(Collectors.toList()));
     }*/
-
-    public boolean equals(UserEntity user) {
-        return (Objects.equals(email, user.getEmail())) &&
-                (Objects.equals(forename, user.getForename())) &&
-                (Objects.equals(surname, user.getSurname()));
-    }
 
     public User transformToUser() {
         return new User(email, forename, surname);

@@ -2,13 +2,11 @@ package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dao.DocumentEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Document {
 
     private String title;

@@ -21,7 +21,8 @@ public class DogService {
 
     public List<Dog> getAllDogsByUser() {
         UserEntity userEntity = authService.getAuthenticatedUserEntity();
-            return dogRepository.getAllByUser(userEntity).stream().map(DogEntity::transformToDog)
+        List<DogEntity> dogEntities = dogRepository.getAllByUser(userEntity);
+            return dogEntities.stream().map(DogEntity::transformToDog)
                 .collect(Collectors.toList());
     }
 

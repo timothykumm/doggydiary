@@ -13,41 +13,35 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    String savedUserMail = "saveduser@gmail.com", unsavedUserMail = "unsaveduser@gmail.com";
+    UserEntity expected = new UserEntity(savedUserMail, "Reiner", "Wahnsinn", "geheim");
+
     @Test
     void findByEmail() {
-        //arrange
-        String mail = "dasistder@gmail.com";
-        UserEntity expected = new UserEntity(mail, "Reiner", "Wahnsinn", "geheim");
         userRepository.save(expected);
 
         //act
-        UserEntity actual = userRepository.findByEmail(mail);
+        UserEntity actual = userRepository.findByEmail(savedUserMail);
 
         //assert
-        assertTrue(expected.equals(actual));
+        assertEquals(expected.transformToUser(), actual.transformToUser());
     }
 
     @Test
-    void existsUserEntityByEmail() {
-        //arrange
-        String mail = "dasistder@gmail.com";
-        UserEntity expected = new UserEntity(mail, "Reiner", "Wahnsinn", "geheim");
+    void userEntityDoesExist() {
         userRepository.save(expected);
 
         //act
-        boolean actual = userRepository.existsUserEntityByEmail(mail);
+        boolean actual = userRepository.existsUserEntityByEmail(savedUserMail);
 
         //assert
         assertTrue(actual);
     }
 
     @Test
-    void existsUserEntityByFakeEmail() {
-        //arrange
-        String mail = "dasgibtesgarnicht@gmail.com";
-
+    void userEntityDoesNotExist() {
         //act
-        boolean actual = userRepository.existsUserEntityByEmail(mail);
+        boolean actual = userRepository.existsUserEntityByEmail(unsavedUserMail);
 
         //assert
         assertFalse(actual);

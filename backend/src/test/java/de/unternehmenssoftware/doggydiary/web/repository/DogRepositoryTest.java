@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -32,6 +33,6 @@ class DogRepositoryTest {
 
         //assert
         DogEntity actual = dogEntities.get(0);
-        assertTrue(expected.equals(actual));
+        assertEquals(expected.transformToDog(), actual.transformToDog());
     }
 }

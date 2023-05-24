@@ -2,17 +2,14 @@ package de.unternehmenssoftware.doggydiary.web.entity.dao;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "dogs")
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class DogEntity {
 
     @Id
@@ -38,13 +35,6 @@ public class DogEntity {
         this.breed = breed;
         this.age = age;
         this.user = user;
-    }
-
-    public boolean equals(DogEntity dog) {
-        return (Objects.equals(id, dog.getId())) &&
-                (Objects.equals(name, dog.getName())) &&
-                (Objects.equals(breed, dog.getBreed())) &&
-                (age == dog.getAge());
     }
 
     public Dog transformToDog() {

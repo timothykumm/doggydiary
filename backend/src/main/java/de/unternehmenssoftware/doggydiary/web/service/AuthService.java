@@ -2,7 +2,7 @@ package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.config.ApplicationConfig;
 import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service

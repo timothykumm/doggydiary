@@ -1,9 +1,9 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.AuthRole;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.AuthRole;
+import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;

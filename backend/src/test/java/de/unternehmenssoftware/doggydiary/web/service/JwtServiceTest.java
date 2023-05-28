@@ -1,6 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import io.jsonwebtoken.JwtException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package de.unternehmenssoftware.doggydiary.web.entity.dao;
+package de.unternehmenssoftware.doggydiary.web.entity;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import jakarta.persistence.*;

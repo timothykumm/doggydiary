@@ -1,6 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.repository;
 
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +13,8 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    String savedUserMail = "saveduser@gmail.com", unsavedUserMail = "unsaveduser@gmail.com";
-    UserEntity expected = new UserEntity(savedUserMail, "Reiner", "Wahnsinn", "geheim");
+    final String savedUserMail = "saveduser@gmail.com", unsavedUserMail = "unsaveduser@gmail.com";
+    final UserEntity expected = new UserEntity(savedUserMail, "Reiner", "Wahnsinn", "geheim");
 
     @Test
     void findByEmail() {

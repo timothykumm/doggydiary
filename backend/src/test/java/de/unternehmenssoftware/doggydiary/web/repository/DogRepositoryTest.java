@@ -1,7 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.repository;
 
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class DogRepositoryTest {
@@ -23,8 +22,8 @@ class DogRepositoryTest {
     @Test
     void getAllByUser() {
         //arrange
-        UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
-        DogEntity expected = new DogEntity("Mopsi", "Schäferhund", 3, userEntity);
+        final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
+        final DogEntity expected = new DogEntity("Mopsi", "Schäferhund", 3, userEntity);
         userRepository.save(userEntity);
         dogRepository.save(expected);
 

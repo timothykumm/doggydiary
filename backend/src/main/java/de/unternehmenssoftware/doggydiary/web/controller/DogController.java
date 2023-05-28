@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController()
+@RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/dogs")
 public class DogController {
     private final DogService dogService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<Dog>> getDogs() {
         return ResponseEntity.ok(dogService.getAllDogsByUser());
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Void> createDog(@RequestBody DogRequest dogRequest) {
         Optional<Dog> dog = dogService.createDog(dogRequest);
 

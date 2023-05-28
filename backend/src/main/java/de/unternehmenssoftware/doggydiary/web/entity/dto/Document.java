@@ -1,7 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.entity.dto;
 
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DocumentEntity;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.DocumentEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

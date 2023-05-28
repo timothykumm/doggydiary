@@ -1,8 +1,8 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,17 +31,17 @@ class DogServiceTest {
     @InjectMocks
     private DogService dogService;
 
+    final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
+    final List<DogEntity> dogEntities = List.of(
+            new DogEntity("Sabine", "Mops", 4, null),
+            new DogEntity("Tomas", "Schaeferhund", 7, null)
+    );
+
     @BeforeEach
     public void setup() {
         dogService = new DogService(authService, dogRepository);
         when(authService.getAuthenticatedUserEntity()).thenReturn(userEntity);
     }
-
-    UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
-    List<DogEntity> dogEntities = List.of(
-            new DogEntity("Sabine", "Mops", 4, null),
-            new DogEntity("Tomas", "Schaeferhund", 7, null)
-    );
 
     @Test
     public void testGetAllDogsByUser() {

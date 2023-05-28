@@ -6,14 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController()
+@RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/users")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<User> userDetails() {
         User user = userService.getUserDetails();
         return ResponseEntity.ok(user);

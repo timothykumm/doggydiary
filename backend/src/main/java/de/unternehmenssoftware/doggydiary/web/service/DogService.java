@@ -1,8 +1,8 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.DogEntity;
-import de.unternehmenssoftware.doggydiary.web.entity.dao.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import lombok.RequiredArgsConstructor;

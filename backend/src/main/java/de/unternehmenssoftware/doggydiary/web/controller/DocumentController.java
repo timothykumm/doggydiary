@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,21 +19,12 @@ public class DocumentController {
 
     @GetMapping
     ResponseEntity<List<Document>> getDocuments(@RequestParam("id") String dogId) {
-        Optional<List<Document>> documents = documentService.getAllDocumentsByDog(dogId);
-
-        if(documents.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(documents.get());
+        return ResponseEntity.ok(documentService.getAllDocumentsByDog(dogId));
     }
 
     @PostMapping
     ResponseEntity<Void> postDocument(@RequestBody DocumentRequest documentRequest) {
-        Optional<Document> document = documentService.createDocument(documentRequest);
-
-        if(document.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        Document document = documentService.createDocument(documentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

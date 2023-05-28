@@ -6,10 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DogRepository extends CrudRepository<DogEntity, Long> {
     List<DogEntity> getAllByUser(UserEntity user);
-    DogEntity getDogEntityById(Long dogId);
+    Optional<DogEntity> getDogEntityById(Long dogId);
 
 }

@@ -6,6 +6,7 @@ import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
+import de.unternehmenssoftware.doggydiary.web.exception.DocumentException;
 import de.unternehmenssoftware.doggydiary.web.repository.DocumentRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,9 +55,9 @@ class DocumentServiceTest {
         when(authService.getAuthenticatedUser()).thenReturn(user);
         when(documentRepository.getDocumentsByUserAndDogId(Mockito.anyString(), Mockito.anyString())).thenReturn(documentEntities);
 
-        Optional<List<Document>> documents = documentService.getAllDocumentsByDog("12345");
+        List<Document> documents = documentService.getAllDocumentsByDog("12345");
 
-        assertEquals(documents.get(), documentEntities.stream().map(DocumentEntity::transformToDocument).toList());
+        assertEquals(documents, documentEntities.stream().map(DocumentEntity::transformToDocument).toList());
     }
 
     @Test
@@ -65,22 +66,21 @@ class DocumentServiceTest {
         DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , Mockito.mock(UserEntity.class));
         DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
 
-        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(dogEntity);
+        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenReturn(documentEntity);
 
-        Optional<Document> actual = documentService.createDocument(documentRequest);
-        assertEquals(actual.get(), documentEntity.transformToDocument());
+        Document actual = documentService.createDocument(documentRequest);
+        assertEquals(actual, documentEntity.transformToDocument());
     }
 
     @Test
-    void createDocumentTFails() {
+    void createDocumentThrowsException() {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
         DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , Mockito.mock(UserEntity.class));
 
-        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(dogEntity);
+        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenThrow(IllegalArgumentException.class);
 
-        Optional<Document> actual = documentService.createDocument(documentRequest);
-        assertEquals(actual, Optional.empty());
+        assertThrows(DocumentException.class, () -> documentService.createDocument(documentRequest));
     }
 }

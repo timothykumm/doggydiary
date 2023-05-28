@@ -4,6 +4,7 @@ import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
+import de.unternehmenssoftware.doggydiary.web.exception.DogCreateException;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,7 @@ class DogServiceTest {
     }
 
     @Test
-    void createDogFails() {
+    void createDogThrowsException() {
 
         //arrange
         DogRequest dogRequest = new DogRequest(
@@ -90,10 +91,9 @@ class DogServiceTest {
                 0);
 
         //act
-        when(dogRepository.save(Mockito.any(DogEntity.class))).thenThrow(IllegalArgumentException.class);
-        Optional<Dog> actual = dogService.createDog(dogRequest);
+        when(dogRepository.save(Mockito.any(DogEntity.class))).thenThrow(DogCreateException.class);
 
         //assert
-        assertTrue(actual.isEmpty());
+        assertThrows(DogCreateException.class, () -> dogService.createDog(dogRequest));
     }
 }

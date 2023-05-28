@@ -4,8 +4,8 @@ import de.unternehmenssoftware.doggydiary.web.controller.request.DocumentRequest
 import de.unternehmenssoftware.doggydiary.web.entity.DocumentEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
-import de.unternehmenssoftware.doggydiary.web.exception.DocumentException;
-import de.unternehmenssoftware.doggydiary.web.exception.DogException;
+import de.unternehmenssoftware.doggydiary.web.exception.DocumentCreateException;
+import de.unternehmenssoftware.doggydiary.web.exception.DogNotFoundException;
 import de.unternehmenssoftware.doggydiary.web.repository.DocumentRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +28,14 @@ public class DocumentService {
     }
 
     public Document createDocument(DocumentRequest documentRequest) {
-        DogEntity dogEntity = dogRepository.getDogEntityById(documentRequest.dogId()).orElseThrow(() -> new DogException("No dog found"));
+        DogEntity dogEntity = dogRepository.getDogEntityById(documentRequest.dogId()).orElseThrow(DogNotFoundException::new);
 
         DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
 
         try {
             documentRepository.save(documentEntity);
         }catch (IllegalArgumentException e) {
-            throw new DocumentException("Couldnt create document " + e);
+            throw new DocumentCreateException();
         }
         return documentEntity.transformToDocument();
     }

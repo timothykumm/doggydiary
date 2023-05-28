@@ -4,6 +4,7 @@ import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
+import de.unternehmenssoftware.doggydiary.web.exception.DogCreateException;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class DogService {
         try {
             dogRepository.save(dogEntity);
         }catch (IllegalArgumentException e) {
-            return Optional.empty();
+            throw new DogCreateException();
         }
         return Optional.of(dogEntity.transformToDog());
     }

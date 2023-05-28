@@ -6,7 +6,7 @@ import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
-import de.unternehmenssoftware.doggydiary.web.exception.DocumentException;
+import de.unternehmenssoftware.doggydiary.web.exception.DocumentCreateException;
 import de.unternehmenssoftware.doggydiary.web.repository.DocumentRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,6 +81,6 @@ class DocumentServiceTest {
         when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenThrow(IllegalArgumentException.class);
 
-        assertThrows(DocumentException.class, () -> documentService.createDocument(documentRequest));
+        assertThrows(DocumentCreateException.class, () -> documentService.createDocument(documentRequest));
     }
 }

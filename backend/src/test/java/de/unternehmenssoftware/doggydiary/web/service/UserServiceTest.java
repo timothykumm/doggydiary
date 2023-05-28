@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
-
     @Mock
     static AuthService authService = Mockito.mock(AuthService.class);
 

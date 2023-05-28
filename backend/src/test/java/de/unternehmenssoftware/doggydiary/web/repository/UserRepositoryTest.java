@@ -1,6 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.repository;
 
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
+import de.unternehmenssoftware.doggydiary.web.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,7 @@ class UserRepositoryTest {
         userRepository.save(expected);
 
         //act
-        UserEntity actual = userRepository.findByEmail(savedUserMail);
+        UserEntity actual = userRepository.findByEmail(savedUserMail).orElseThrow(UserNotFoundException::new);
 
         //assert
         assertEquals(expected.transformToUser(), actual.transformToUser());

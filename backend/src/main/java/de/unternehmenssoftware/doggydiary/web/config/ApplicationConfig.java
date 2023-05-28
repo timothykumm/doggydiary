@@ -1,5 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.config;
 
+import de.unternehmenssoftware.doggydiary.web.entity.CustomUserCredentials;
+import de.unternehmenssoftware.doggydiary.web.exception.UserNotFoundException;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +27,8 @@ public class ApplicationConfig {
     }
     @Bean
     public UserDetailsService userDetailsService() throws UsernameNotFoundException {
-        return userRepository::findByEmail;
+        return email -> userRepository.findByEmail(email).map(CustomUserCredentials::new)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Bean

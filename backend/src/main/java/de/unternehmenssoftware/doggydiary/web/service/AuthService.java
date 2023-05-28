@@ -2,8 +2,11 @@ package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.config.ApplicationConfig;
 import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
+import de.unternehmenssoftware.doggydiary.web.entity.CustomUserCredentials;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
+import de.unternehmenssoftware.doggydiary.web.exception.UserCredentialsException;
+import de.unternehmenssoftware.doggydiary.web.exception.UserMailAlreadyExistsException;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,11 +26,13 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<String> register(AuthRequest authRequest) {
-        //Email already exists
-        if(userRepository.existsUserEntityByEmail(authRequest.email())) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+
+        if(userRepository.existsUserEntityByEmail(authRequest.email())) throw new UserMailAlreadyExistsException();
 
         String encodedPassword = applicationConfig.passwordEncoder().encode(authRequest.password());
-        UserEntity encodedPasswordUserEntity = new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword);
+        CustomUserCredentials encodedPasswordUserEntity = new CustomUserCredentials(
+                new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword)
+        );
 
         try {
             userRepository.save(encodedPasswordUserEntity);
@@ -39,13 +44,10 @@ public class AuthService {
 
     public ResponseEntity<String> authenticate(AuthRequest authRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
-        UserEntity userEntity = userRepository.findByEmail(authRequest.email());
+        CustomUserCredentials userCredential = userRepository.findByEmail(authRequest.email())
+                .map(CustomUserCredentials::new).orElseThrow(UserCredentialsException::new);
 
-        if(userEntity == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found or wrong credentials");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(jwtService.generateToken(userEntity));
+        return ResponseEntity.status(HttpStatus.OK).body(jwtService.generateToken(userCredential));
     }
 
     public User getAuthenticatedUser() {

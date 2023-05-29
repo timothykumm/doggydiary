@@ -3,6 +3,7 @@ package de.unternehmenssoftware.doggydiary.web.service;
 import de.unternehmenssoftware.doggydiary.web.controller.request.DocumentRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.DocumentEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
+import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import de.unternehmenssoftware.doggydiary.web.exception.DocumentCreateException;
 import de.unternehmenssoftware.doggydiary.web.exception.DogNotFoundException;
@@ -28,8 +29,8 @@ public class DocumentService {
     }
 
     public Document createDocument(DocumentRequest documentRequest) {
-        DogEntity dogEntity = dogRepository.getDogEntityById(documentRequest.dogId()).orElseThrow(DogNotFoundException::new);
-
+        UserEntity authenticatedUser = authService.getAuthenticatedUserEntity();
+        DogEntity dogEntity = dogRepository.getDogEntityByIdAndUser(documentRequest.dogId(), authenticatedUser).orElseThrow(DogNotFoundException::new);
         DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
 
         try {

@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface DogRepository extends CrudRepository<DogEntity, Long> {
     List<DogEntity> getAllByUser(UserEntity user);
-    Optional<DogEntity> getDogEntityById(Long dogId);
+    Optional<DogEntity> getDogEntityByIdAndUser(Long dogId, UserEntity user);
 
 }

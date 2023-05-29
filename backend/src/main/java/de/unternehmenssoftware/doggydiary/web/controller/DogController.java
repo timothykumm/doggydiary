@@ -3,6 +3,7 @@ package de.unternehmenssoftware.doggydiary.web.controller;
 import de.unternehmenssoftware.doggydiary.web.controller.request.DogRequest;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Dog;
 import de.unternehmenssoftware.doggydiary.web.service.DogService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class DogController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createDog(@RequestBody DogRequest dogRequest) {
+    public ResponseEntity<Void> createDog(@Valid @RequestBody DogRequest dogRequest) {
         Optional<Dog> dog = dogService.createDog(dogRequest);
 
         if(dog.isEmpty()) {

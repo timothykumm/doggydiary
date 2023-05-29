@@ -47,7 +47,7 @@ class DocumentServiceTest {
 
     @Test
     void getAllDocumentsByDog() {
-        User user = new User("dasistder@gmail.com", "Reiner", "Wahnsinn");
+        final User user = new User("dasistder@gmail.com", "Reiner", "Wahnsinn");
         List<DocumentEntity> documentEntities = List.of(
                 new DocumentEntity("Titel1", "Content1", Mockito.mock(DogEntity.class)),
                 new DocumentEntity("Titel2", "Content2", Mockito.mock(DogEntity.class)));
@@ -66,7 +66,8 @@ class DocumentServiceTest {
         DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , Mockito.mock(UserEntity.class));
         DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
 
-        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(Optional.of(dogEntity));
+        when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
+        when(dogRepository.getDogEntityByIdAndUser(Mockito.anyLong(), Mockito.any(UserEntity.class))).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenReturn(documentEntity);
 
         Document actual = documentService.createDocument(documentRequest);
@@ -78,7 +79,8 @@ class DocumentServiceTest {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
         DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , Mockito.mock(UserEntity.class));
 
-        when(dogRepository.getDogEntityById(Mockito.anyLong())).thenReturn(Optional.of(dogEntity));
+        when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
+        when(dogRepository.getDogEntityByIdAndUser(Mockito.anyLong(), Mockito.any(UserEntity.class))).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenThrow(IllegalArgumentException.class);
 
         assertThrows(DocumentCreateException.class, () -> documentService.createDocument(documentRequest));

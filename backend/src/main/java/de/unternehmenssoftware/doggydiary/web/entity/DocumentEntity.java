@@ -32,6 +32,6 @@ public class DocumentEntity {
     }
 
     public Document transformToDocument() {
-        return new Document(title, content);
+        return new Document(id, title, content);
     }
 }

@@ -30,13 +30,12 @@ public class AuthService {
         if(userRepository.existsUserEntityByEmail(authRequest.email())) throw new UserMailAlreadyExistsException();
 
         String encodedPassword = applicationConfig.passwordEncoder().encode(authRequest.password());
-        CustomUserCredentials encodedPasswordUserEntity = new CustomUserCredentials(
-                new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword)
-        );
+        UserEntity encodedPasswordUserEntity = new UserEntity(authRequest.email(), authRequest.forename(), authRequest.surname(), encodedPassword);
+        CustomUserCredentials userCredentials = new CustomUserCredentials(encodedPasswordUserEntity);
 
         try {
             userRepository.save(encodedPasswordUserEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(jwtService.generateToken(encodedPasswordUserEntity));
+            return ResponseEntity.status(HttpStatus.CREATED).body(jwtService.generateToken(userCredentials));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

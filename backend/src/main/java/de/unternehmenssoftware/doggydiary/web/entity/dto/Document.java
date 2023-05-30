@@ -9,8 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class Document {
 
+    private Long id;
     private String title;
     private String content;
+
+    public Document(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
 
     public Document(String title, String content) {
         this.title = title;

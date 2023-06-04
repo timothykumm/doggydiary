@@ -5,16 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { TestbuttonComponent } from './components/testbutton/testbutton.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    TestbuttonComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,10 @@
+  .input-container input,
+  .input-container button {
+    flex: 1;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .input-button {
+    margin-top: 5%;
+  }

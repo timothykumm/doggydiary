@@ -13,6 +13,10 @@ export class JwtService {
     const expirationDate = new Date();
     this.cookieService.set('jwt', bearerToken, new Date(this.#deocdeToken(bearerToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours()+24))
    }
+
+   removeTokenInCookies() {
+    this.cookieService.delete('jwt');
+   }
   
   getTokenFromCookies() : string {
     return this.cookieService.get('jwt');

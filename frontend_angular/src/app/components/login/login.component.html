@@ -1,0 +1,31 @@
+<a *ngIf="!loggedIn" class="nav-link active" aria-current="page" href="#" (click)="toggleModal()"> Login </a>
+<a *ngIf="loggedIn" class="nav-link active" aria-current="page" href="#" (click)="logout()"> Logout </a>
+
+<!-- Modal -->
+<div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="close" aria-label="Close" (click)="toggleModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-container">
+                    <div class="row">
+                        <div class=".col-sm-9">
+                                <li>Email:</li>
+                                <input type="text" [(ngModel)]="credentials.email" />
+                                <li>Password:</li>
+                                <input type="password" [(ngModel)]="credentials.password" />
+                                <button type="button" class="input-button" data-dismiss="modal"
+                                    (click)="login()">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

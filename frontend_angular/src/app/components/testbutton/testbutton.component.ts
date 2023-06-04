@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/api/auth/auth.service';
-import { TokenService } from 'src/app/services/api/auth/token/token.service';
 import { AuthenticationRequest } from '../../models/auth/AuthenticationRequest';
+import { JwtService } from '../../services/utils/jwt/jwt.service'
 
 @Component({
   selector: 'ddr-testbutton',
@@ -16,11 +16,11 @@ export class TestbuttonComponent {
     password: ''
   }
 
-  constructor(private authService: AuthService, private tokenService: TokenService) {}
+  constructor(private authService: AuthService, private jwtService: JwtService) {}
 
   authenticate() : void {
     this.authService.authenticate(this.credentials).subscribe({
-      next: (r) => { this.tokenService.setToken(r) },
+      next: (r) => { this.jwtService.saveTokenInCookies(r) },
       error: (e) => { console.log(e) }
     })
   }

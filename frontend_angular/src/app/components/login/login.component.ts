@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthenticationRequest } from 'src/app/models/auth/AuthenticationRequest';
+import { AuthenticationPostRequest } from 'src/app/models/api/request/authentication/AuthenticationPostRequest';
+import { AuthenticationPostResponse } from 'src/app/models/api/response/authentication/AuthenticationPostResponse';
 import { AuthService } from 'src/app/services/api/auth/auth.service';
 import { JwtService } from 'src/app/services/utils/jwt/jwt.service';
 
@@ -12,9 +13,13 @@ export class LoginComponent {
 
   loggedIn = false;
 
-  credentials: AuthenticationRequest = {
+  credentials: AuthenticationPostRequest = {
     email: '',
     password: ''
+  }
+
+  authenticationPostResponse: AuthenticationPostResponse = {
+    token: ''
   }
 
   constructor(private authService: AuthService, private jwtService: JwtService) {}
@@ -27,13 +32,12 @@ export class LoginComponent {
   }
 
   async login() : Promise<void> {
-    let authenticationResponse: string = '';
-    try { authenticationResponse = await this.authenticate(); }
+    try { this.authenticationPostResponse.token = await this.authenticate(); }
     catch { }
 
 
-    if(authenticationResponse.startsWith('ey')) {
-      this.jwtService.saveTokenInCookies(authenticationResponse);
+    if(this.authenticationPostResponse.token.startsWith('ey')) {
+      this.jwtService.saveTokenInCookies(this.authenticationPostResponse.token);
       this.loggedIn = true;
       this.toggleModal();
       return;

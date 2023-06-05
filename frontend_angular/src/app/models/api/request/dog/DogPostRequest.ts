@@ -1,4 +1,4 @@
-export interface DogRequest {
+export interface DogPostRequest {
     name: string;
     breed: string;
     age: number;

@@ -1,0 +1,9 @@
+<div *ngFor="let dog of dogs">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src={{dog.img}} alt="placeholder">
+        <div class="card-body">
+            <p class="card-text"> Name: {{ dog.name }} </p>
+            <p class="card-text"> Alter: {{ dog.age }} </p>
+        </div>
+    </div>
+</div>

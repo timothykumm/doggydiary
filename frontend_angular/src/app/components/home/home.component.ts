@@ -8,6 +8,7 @@ import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';
 })
 export class HomeComponent {
 
+  //test data
   dogs: DogGetResponse[] = [
     {
       id: 1,
@@ -53,6 +54,10 @@ export class HomeComponent {
     }
     ]
 
-
+    selectDog(dog: DogGetResponse): void {
+      console.log('Name ' + dog.name);
+      console.log('Alter ' + dog.age);
+      console.log('Rasse ' + dog.breed);
+    }
 
 }

@@ -1,5 +1,4 @@
-import { Component, NgModule } from '@angular/core';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'ddr-navbar',
@@ -8,11 +7,11 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NavbarComponent {
 
-navbarTitle = "DoggyDiary";
-isCollapsed = true;
+  navbarTitle = "DoggyDiary";
+  isCollapsed = true;
 
-toggleCollapse(): void {
-  this.isCollapsed = !this.isCollapsed;
-}
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
 }

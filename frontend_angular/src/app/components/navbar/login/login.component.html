@@ -1,4 +1,4 @@
-<a *ngIf="!loggedIn" class="nav-link active" aria-current="page" href="#" (click)="toggleModal()"> Login </a>
+<a *ngIf="!loggedIn" class="nav-link active" aria-current="page" href="#" (click)="toggleLoginModal()"> Login </a>
 <a *ngIf="loggedIn" class="nav-link active" aria-current="page" href="#" (click)="logout()"> Logout </a>
 
 <!-- Modal -->
@@ -8,7 +8,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Login</h5>
-                <button type="button" class="close" aria-label="Close" (click)="toggleModal()">
+                <button type="button" class="close" aria-label="Close" (click)="toggleLoginModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

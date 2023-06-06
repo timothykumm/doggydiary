@@ -23,7 +23,7 @@ class DogRepositoryTest {
     void getAllByUser() {
         //arrange
         final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
-        final DogEntity expected = new DogEntity("Mopsi", "Schäferhund", 3, userEntity);
+        final DogEntity expected = new DogEntity("Mopsi", "Schäferhund", 3, "", userEntity);
         userRepository.save(userEntity);
         dogRepository.save(expected);
 

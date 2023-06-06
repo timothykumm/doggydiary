@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationPostRequest } from '../../../models/api/request/authentication/AuthenticationPostRequest'
-import { RegistraionPostRequest } from '../../../models/api/request/authentication/RegistrationPostRequest'
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  register(registraionRequest: RegistraionPostRequest): Observable<any> {
+  register(authenticationRequest: AuthenticationPostRequest): Observable<any> {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -21,10 +20,10 @@ export class AuthService {
       })
     };
 
-    return this.http.post(this.url + "/register", registraionRequest, {...httpOptions, responseType: 'text' })
+    return this.http.post(this.url + "/register", authenticationRequest, {...httpOptions, responseType: 'text' })
   }
 
-  authenticate(authenticationRequest: AuthenticationPostRequest): Observable<any> {
+  login(authenticationRequest: AuthenticationPostRequest): Observable<any> {
 
     const httpOptions = {
       headers: new HttpHeaders({

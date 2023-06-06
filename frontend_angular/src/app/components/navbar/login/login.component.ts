@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthenticationPostRequest } from 'src/app/models/api/request/authentication/AuthenticationPostRequest';
-import { AuthService } from 'src/app/services/api/auth/auth.service';
-import { JwtService } from 'src/app/services/utils/jwt/jwt.service';
 import { LoginService } from 'src/app/services/utils/login/login.service';
+import { Mode } from '../../../models/api/request/authentication/MODE';
 
 @Component({
   selector: 'ddr-login',
@@ -12,9 +11,12 @@ import { LoginService } from 'src/app/services/utils/login/login.service';
 export class LoginComponent implements OnInit{
 
   loggedIn = false;
+  userAlreadyHasAccount: boolean = true; 
 
   credentials: AuthenticationPostRequest = {
     email: '',
+    forename: '',
+    surname: '',
     password: ''
   }
 
@@ -31,12 +33,13 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  async login() : Promise<void> {
-    if(await this.loginService.login(this.credentials)) {
+  async loginOrRegister(mode: Mode) : Promise<void> {
+    if(await this.loginService.loginOrRegisterAndFetchJwt(this.credentials, mode)) {
       this.toggleLoginModal();
       this.setLoginStatus(true);
       return;
     } 
+    console.log("Could not authenticate")
   }
 
    logout() : void {
@@ -46,6 +49,7 @@ export class LoginComponent implements OnInit{
 
   setLoginStatus(status: boolean) {
     this.loggedIn = status;
+    this.loginService.setLoginStatus(status);
   }
 
 }

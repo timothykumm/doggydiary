@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/v1/dogs")
 public class DogController {
     private final DogService dogService;

@@ -13,22 +13,25 @@ public class Dog {
     private String name;
     private String breed;
     private int age;
+    private String img;
 
-    public Dog(String name, String breed, int age) {
+    public Dog(String name, String breed, int age, String img) {
         this.name = name;
         this.breed = breed;
         this.age = age;
+        this.img = img;
     }
 
-    public Dog(Long id, String name, String breed, int age) {
+    public Dog(Long id, String name, String breed, int age, String img) {
         this.id = id;
         this.name = name;
         this.breed = breed;
         this.age = age;
+        this.img = img;
     }
 
     public DogEntity transformToDogEntity(UserEntity userEntity) {
-        return new DogEntity(name, breed, age, userEntity);
+        return new DogEntity(name, breed, age, img, userEntity);
     }
 
 }

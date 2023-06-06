@@ -27,6 +27,9 @@ class DogServiceTest {
     private AuthService authService;
 
     @Mock
+    private ProfilePictureService profilePictureService;
+
+    @Mock
     private DogRepository dogRepository;
 
     @InjectMocks
@@ -34,13 +37,13 @@ class DogServiceTest {
 
     final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
     final List<DogEntity> dogEntities = List.of(
-            new DogEntity("Sabine", "Mops", 4, null),
-            new DogEntity("Tomas", "Schaeferhund", 7, null)
+            new DogEntity("Sabine", "Mops", 4, "", null),
+            new DogEntity("Tomas", "Schaeferhund", 7, "", null)
     );
 
     @BeforeEach
     public void setup() {
-        dogService = new DogService(authService, dogRepository);
+        dogService = new DogService(authService,  profilePictureService, dogRepository);
         when(authService.getAuthenticatedUserEntity()).thenReturn(userEntity);
     }
 

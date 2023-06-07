@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Date;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class DogControllerTest {
@@ -35,7 +37,7 @@ class DogControllerTest {
 
     @Test
     void createDog() throws Exception {
-        DogRequest dogRequest = new DogRequest("Bello", "Yorkier Terrier", 8);
+        DogRequest dogRequest = new DogRequest("Bello", "Yorkier Terrier", new Date());
         String request = objectMapper.writeValueAsString(dogRequest);
 
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_BATH)

@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +39,8 @@ class DogServiceTest {
 
     final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
     final List<DogEntity> dogEntities = List.of(
-            new DogEntity("Sabine", "Mops", 4, "", null),
-            new DogEntity("Tomas", "Schaeferhund", 7, "", null)
+            new DogEntity("Sabine", "Mops", new Date(), "", null),
+            new DogEntity("Tomas", "Schaeferhund", new Date(), "", null)
     );
 
     @BeforeEach
@@ -74,7 +76,7 @@ class DogServiceTest {
         DogRequest dogRequest = new DogRequest(
                 expected.getName(),
                 expected.getBreed(),
-                expected.getAge());
+                expected.getBirthdate());
 
         //act
         when(dogRepository.save(Mockito.any(DogEntity.class))).thenReturn(expected);
@@ -91,7 +93,7 @@ class DogServiceTest {
         DogRequest dogRequest = new DogRequest(
                 null,
                 null,
-                0);
+                new Date());
 
         //act
         when(dogRepository.save(Mockito.any(DogEntity.class))).thenThrow(DogCreateException.class);

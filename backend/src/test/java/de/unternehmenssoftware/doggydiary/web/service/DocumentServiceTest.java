@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ class DocumentServiceTest {
     @Test
     void createDocumentSucceeds() {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
-        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , "", Mockito.mock(UserEntity.class));
+        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", new Date() , "", Mockito.mock(UserEntity.class));
         DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
 
         when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
@@ -77,7 +78,7 @@ class DocumentServiceTest {
     @Test
     void createDocumentThrowsException() {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
-        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", 8 , "", Mockito.mock(UserEntity.class));
+        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", new Date() , "", Mockito.mock(UserEntity.class));
 
         when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
         when(dogRepository.getDogEntityByIdAndUser(Mockito.anyLong(), Mockito.any(UserEntity.class))).thenReturn(Optional.of(dogEntity));

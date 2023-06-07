@@ -2,6 +2,6 @@ export interface DogGetResponse {
     id: number;
     name: string;
     breed: string;
-    age: number;
+    birthdate: Date;
     img: string;
 }

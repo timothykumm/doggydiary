@@ -26,23 +26,23 @@ public class DogController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createDog(@Valid @RequestBody DogRequest dogRequest) {
+    public ResponseEntity<String> createDog(@Valid @RequestBody DogRequest dogRequest) {
         Optional<Dog> dog = dogService.createDog(dogRequest);
 
         if(dog.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(dog.get().getId().toString());
     }
 
     @PostMapping(path = "/{dogId}/profile")
-    public ResponseEntity<Void> createDogProfilePicture(@PathVariable(value = "dogId") Long dogId, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> createDogProfilePicture(@PathVariable(value = "dogId") Long dogId, @RequestPart(name = "file") MultipartFile file) {
         Optional<Dog> dog = dogService.createDogProfilePicture(dogId, file);
 
         if(dog.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(dog.get().getImg());
     }
 
 }

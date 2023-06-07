@@ -4,8 +4,10 @@
             <img class="card-img-top" src={{dog.img}} alt="placeholder" data-id={{dog.id}} (click)="selectDog(dog)">
             <div class="card-body">
                 <p class="card-text"> Name: {{ dog.name }} </p>
-                <p class="card-text"> Alter: {{ dog.age }} </p>
+                <p class="card-text"> Geburtsdatum: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </p>
             </div>
         </div>
     </div>
 </div>
+
+<ddr-adddogdialog (createdDog)="addDogFromChildComponent($event)"></ddr-adddogdialog>

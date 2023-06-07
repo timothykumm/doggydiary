@@ -34,7 +34,7 @@ public class DogService {
 
     public Optional<Dog> createDog(DogRequest dogRequest) {
         UserEntity userEntity = authService.getAuthenticatedUserEntity();
-        DogEntity dogEntity = new DogEntity(dogRequest.name(), dogRequest.breed(), dogRequest.age(), "", userEntity);
+        DogEntity dogEntity = new DogEntity(dogRequest.name(), dogRequest.breed(), dogRequest.birthdate(), "", userEntity);
 
         try {
             dogRepository.save(dogEntity);

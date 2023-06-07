@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "dogs")
@@ -21,8 +22,8 @@ public class DogEntity {
     private String name;
     @Column(name = "breed")
     private String breed;
-    @Column(name = "age")
-    private int age;
+    @Column(name = "birthdate")
+    private Date birthdate;
     @Column(name = "img")
     @Nullable
     private String img;
@@ -34,16 +35,16 @@ public class DogEntity {
     @JoinColumn(name = "fk_email")
     private UserEntity user;
 
-    public DogEntity(String name, String breed, int age, String img, UserEntity user) {
+    public DogEntity(String name, String breed, Date birthdate, String img, UserEntity user) {
         this.name = name;
         this.breed = breed;
-        this.age = age;
+        this.birthdate = birthdate;
         this.img = img;
         this.user = user;
     }
 
     public Dog transformToDog() {
-        return new Dog(id, name, breed, age, img);
+        return new Dog(id, name, breed, birthdate, img);
     }
 }
 

@@ -12,6 +12,8 @@ import { HomeComponent } from './components/home/home.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieExpirationInterceptor } from './services/utils/interceptor/cookie-expiration.interceptor';
+import { AddDogDialogComponent } from './components/home/adddogdialog/adddogdialog.component';
+import { HomeModule } from './components/home/home.module';
 
 
 
@@ -19,14 +21,14 @@ import { CookieExpirationInterceptor } from './services/utils/interceptor/cookie
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent,
-    HomeComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    HomeModule
   ],
   providers: [
     {

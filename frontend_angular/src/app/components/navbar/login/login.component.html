@@ -1,9 +1,9 @@
-<a *ngIf="!loggedIn" class="nav-link active" aria-current="page" href="#" (click)="toggleLoginModal()"> Login </a>
-<a *ngIf="loggedIn" class="nav-link active" aria-current="page" href="#" (click)="logout()"> Logout </a>
+<div [ngSwitch]="loggedIn">
+<a *ngSwitchCase="false" class="nav-link active" aria-current="page" href="#" (click)="toggleLoginModal()"> Login </a>
+<a *ngSwitchCase="true" class="nav-link active" aria-current="page" href="#" (click)="logout()"> Logout </a>
+</div>
 
-<!-- Modal -->
-<div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+<div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">

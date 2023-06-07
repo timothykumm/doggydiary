@@ -1,0 +1,49 @@
+<button type="button" class="add-dog-button" autocomplete="off" (click)="toggleAddDogModal()"></button>
+
+<div class="modal fade show" id="addDogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Dog</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="toggleAddDogModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div>
+            <input class="dog-image-input" type="file" name="file" (change)="fileChangeEvent($event)" />
+            <image-cropper
+                name="file"
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 3"
+                format="jpeg"
+                (imageCropped)="imageCropped($event)"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+          </div>
+          <div class="mb-2">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="recipient-name" name="dog.name" [(ngModel)]="dog.name" />
+          </div>
+          <div class="mb-2">
+            <label for="recipient-breed" class="col-form-label">Breed:</label>
+            <input type="text" class="form-control" id="recipient-breed" name="dog.breed" [(ngModel)]="dog.breed">
+          </div>
+          <div class="mb-2">
+            <label for="recipient-birthdate" class="col-form-label">Birth Date: </label>
+          </div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" name="dog.birthdate" [(ngModel)]="dog.birthdate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createDogAndUploadPic()">Add Dog</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.add-dog-button {
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #BDDBE5;
+    cursor: pointer;
+    border: none;
+    font-family: 'Helvetica Neue', sans-serif;
+    width: 60px;
+    height: 60px;
+    background-image: url('../../../../assets/adddog.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-indent: -9999px;
+  }
+
+  .mat-fix {
+    position: relative;
+    z-index: 9999;
+  }
+
+  #addDogModal {
+    z-index: 0;
+  }
+  

@@ -14,3 +14,16 @@
     background-size: contain;
     text-indent: -9999px;
   }
+
+  .progress-spinner::ng-deep circle{
+    stroke: #BDDBE5 !important;
+  }
+
+
+  
+  .progress-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

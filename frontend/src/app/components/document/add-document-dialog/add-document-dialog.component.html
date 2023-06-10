@@ -1,1 +1,12 @@
-<button type="button" class="add-document-button" autocomplete="off"></button>
+<input class="add-document-button" type="file" name="file" (change)="fileChangeEvent($event)" />
+
+<div class="spinner-container" *ngIf="progressInPercent > 0" >
+    <mat-progress-spinner 
+        class="progress-spinner" 
+        [color]="'#BDDBE5'" 
+        [mode]="'determinate'"
+        [value]="progressInPercent">
+    </mat-progress-spinner>
+</div>
+
+<pre name="summary-output"> {{ extractedText }} </pre>

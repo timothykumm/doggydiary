@@ -12,7 +12,7 @@ import { LoginComponent } from './components/navbar/login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieExpirationInterceptor } from './services/utils/interceptor/cookie-expiration.interceptor';
 import { HomeModule } from './components/home/home.module';
-import { DogInnerviewModule } from './components/dog-innerview/dog-innerview.module';
+import { DocumentModule } from './components/document/document.module';
 
 
 
@@ -28,7 +28,7 @@ import { DogInnerviewModule } from './components/dog-innerview/dog-innerview.mod
     HttpClientModule,
     FormsModule,
     HomeModule,
-    DogInnerviewModule
+    DocumentModule
   ],
   providers: [
     {

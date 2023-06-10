@@ -5,11 +5,11 @@ import { DocumentService } from 'src/app/services/api/document/document.service'
 import { LoginService } from 'src/app/services/utils/login/login.service';
 
 @Component({
-  selector: 'ddr-dog-innerview',
-  templateUrl: './dog-innerview.component.html',
-  styleUrls: ['./dog-innerview.component.css']
+  selector: 'ddr-document',
+  templateUrl: './document.component.html',
+  styleUrls: ['./document.component.css']
 })
-export class DogInnerviewComponent implements OnInit {
+export class DocumentComponent implements OnInit {
 
 documents: DocumentGetResponse[] = [];
 

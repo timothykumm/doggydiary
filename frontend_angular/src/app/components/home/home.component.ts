@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';
 import { DogService } from 'src/app/services/api/dog/dog.service';
 import { LoginService } from 'src/app/services/utils/login/login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ddr-home',
@@ -12,13 +13,15 @@ export class HomeComponent implements OnInit {
 
   dogs: DogGetResponse[] = [];
 
-  constructor(private loginService: LoginService, private dogService: DogService) { }
+  constructor(private loginService: LoginService, private dogService: DogService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+
     this.loginService.onLoginStatusChange().subscribe((loggedIn: boolean) => {
           this.refreshDogList(loggedIn);
-    }
-    )
+    })
+
+    this.refreshDogList(this.loginService.isLoggedIn());
   }
 
   async refreshDogList(loggedIn: boolean) {
@@ -39,13 +42,11 @@ export class HomeComponent implements OnInit {
   }
 
   addDogFromChildComponent(dog: DogGetResponse) {
-    this.dogs.push(dog);
+    this.dogs = [...this.dogs, dog];
   }
 
-  selectDog(dog: DogGetResponse): void {
-    console.log('Name ' + dog.name);
-    console.log('Geburtsdatum ' + dog.birthdate);
-    console.log('Rasse ' + dog.breed);
+  navigateToDog(dog: DogGetResponse) {
+    this.router.navigate(['dog'], { queryParams: { id: dog.id } })
   }
 
 }

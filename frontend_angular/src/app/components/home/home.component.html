@@ -1,7 +1,7 @@
 <div class="card-row">
     <div *ngFor="let dog of dogs">
         <div class="card sm-4" style="width: 18rem;">
-            <img class="card-img-top" src={{dog.img}} alt="placeholder" data-id={{dog.id}} (click)="selectDog(dog)">
+            <img class="card-img-top" src={{dog.img}} alt="placeholder" data-id={{dog.id}} (click)="navigateToDog(dog)">
             <div class="card-body">
                 <p class="card-text"> Name: {{ dog.name }} </p>
                 <p class="card-text"> Geburtsdatum: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </p>
@@ -10,4 +10,4 @@
     </div>
 </div>
 
-<ddr-adddogdialog (createdDog)="addDogFromChildComponent($event)"></ddr-adddogdialog>
+<ddr-add-dog-dialog (createdDog)="addDogFromChildComponent($event)"></ddr-add-dog-dialog>

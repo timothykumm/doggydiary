@@ -1,6 +1,6 @@
 <div [ngSwitch]="loggedIn">
-<a *ngSwitchCase="false" class="nav-link active" aria-current="page" href="#" (click)="toggleLoginModal()"> Login </a>
-<a *ngSwitchCase="true" class="nav-link active" aria-current="page" href="#" (click)="logout()"> Logout </a>
+<a *ngSwitchCase="false" class="nav-link active" aria-current="page" (click)="toggleLoginModal()"> Login </a>
+<a *ngSwitchCase="true" class="nav-link active" aria-current="page" (click)="logout()"> Logout </a>
 </div>
 
 <div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">

@@ -8,12 +8,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/navbar/login/login.component';
-import { HomeComponent } from './components/home/home.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieExpirationInterceptor } from './services/utils/interceptor/cookie-expiration.interceptor';
-import { AddDogDialogComponent } from './components/home/adddogdialog/adddogdialog.component';
 import { HomeModule } from './components/home/home.module';
+import { DogInnerviewModule } from './components/dog-innerview/dog-innerview.module';
 
 
 
@@ -28,7 +27,8 @@ import { HomeModule } from './components/home/home.module';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    HomeModule
+    HomeModule,
+    DogInnerviewModule
   ],
   providers: [
     {

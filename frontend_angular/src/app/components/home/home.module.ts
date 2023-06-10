@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
-import { AddDogDialogComponent } from './adddogdialog/adddogdialog.component';
+import { AddDogDialogComponent } from './add-dog-dialog/add-dog-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';

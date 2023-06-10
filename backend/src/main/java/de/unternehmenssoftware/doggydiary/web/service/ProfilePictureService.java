@@ -1,49 +1,74 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
-import de.unternehmenssoftware.doggydiary.web.config.FileStorageConfig;
+import de.unternehmenssoftware.doggydiary.web.config.MinioServerConfig;
 import de.unternehmenssoftware.doggydiary.web.exception.DogProfilePicCreateException;
-import de.unternehmenssoftware.doggydiary.web.exception.DogProfilePicUploadException;
+import io.minio.*;
+import io.minio.errors.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ProfilePictureService {
 
-    private final FileStorageConfig fileStorageConfig;
+    private final MinioServerConfig fileStorageConfig;
 
-    public String uploadPictureToServer(MultipartFile file) throws IOException {
-        String randomNumber = UUID.randomUUID().toString();
-        String endpoint = fileStorageConfig.getDogImagesUrl() + "/" + randomNumber + "." + getFileExtension(file.getOriginalFilename());
-        String fileExtension = getFileExtension(file.getOriginalFilename());
-        if(file.isEmpty()) throw new DogProfilePicCreateException("File is empty");
-        if(!fileExtension.endsWith("jpg") && !fileExtension.endsWith("png")) throw new DogProfilePicCreateException("File is not an image");
+    public String uploadPictureToMinio(MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        final String endpoint = fileStorageConfig.getBucketUrl();
+        final String bucketName = fileStorageConfig.getBucketName();
+
+        final String randomNumber = UUID.randomUUID().toString();
+        final String fileExtension = getFileExtension(file.getOriginalFilename());
+        final String fileName = randomNumber + "." + fileExtension;
+        final String destinationUrl = endpoint + "/" + bucketName + "/" + fileName;
+
+        if (file.isEmpty()) throw new DogProfilePicCreateException("File is empty");
+        if (!fileExtension.endsWith("jpg") && !fileExtension.endsWith("png"))
+            throw new DogProfilePicCreateException("File is not an image");
 
 
-        RestTemplate restTemplate = new RestTemplate();
+        MinioClient minioClient = MinioClient.builder()
+                .endpoint(endpoint)
+                .build();
 
-        // Request-Header konfigurieren
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        //create bucket
+        createBucketIfNotExist(minioClient, bucketName);
 
-        // HTTP-Entity mit Daten und Header erstellen
-        HttpEntity<byte[]> requestEntity = new HttpEntity<>(file.getBytes(), headers);
+        //upload image
+        createImage(minioClient, bucketName, fileName, file);
 
-        // PUT-Anfrage senden
-        ResponseEntity<String> responseEntity = restTemplate.exchange(endpoint, HttpMethod.PUT, requestEntity, String.class);
+        return destinationUrl;
+    }
 
-        // Antwort auswerten
-        if (!responseEntity.getStatusCode().is2xxSuccessful()) throw new DogProfilePicUploadException();
+    private void createBucketIfNotExist(MinioClient minioClient, String bucketName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+        if (!found) {
+            // Make a new bucket
+            minioClient.makeBucket(MakeBucketArgs.builder()
+                    .bucket(bucketName)
+                    .build());
+        } else {
+            System.out.println("Bucket " + bucketName + " already exists.");
+        }
+    }
 
-        return endpoint;
+    private void createImage(MinioClient minioClient, String bucketName, String fileName, MultipartFile file) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        final InputStream fileInputStream = file.getInputStream();
+
+        minioClient.putObject(PutObjectArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .stream(fileInputStream, file.getSize(), -1)
+                .contentType("image/jpeg")
+                .build());
     }
 
     private static String getFileExtension(String filename) {

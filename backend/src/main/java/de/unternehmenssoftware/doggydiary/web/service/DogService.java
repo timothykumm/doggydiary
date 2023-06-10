@@ -50,9 +50,9 @@ public class DogService {
         String destinationFile;
 
         try {
-            destinationFile = profilePictureService.uploadPictureToServer(file);
-        }catch (IOException e) {
-            throw new DogProfilePicUploadException();
+            destinationFile = profilePictureService.uploadPictureToMinio(file);
+        }catch (Exception e) {
+            throw new DogProfilePicUploadException(e);
         }
 
         try {

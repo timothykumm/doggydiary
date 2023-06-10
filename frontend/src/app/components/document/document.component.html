@@ -1,7 +1,7 @@
 <div class="card-row">
     <div *ngFor="let document of documents">
         <div class="card sm-4" style="width: 18rem;">
-            <img class="card-img-top" alt="placeholder">
+            <img class="card-img-top" alt="placeholder" src="https://th.bing.com/th/id/OIP.fp_l68B10zn31U5SLS72SAAAAA?pid=ImgDet&rs=1">
             <div class="card-body">
                 <p class="card-text"> Titel: {{ document.title }} </p>
                 <p class="card-text"> Erstellt: {{ document.date | date : 'dd.MM.YYYY' }} </p>
@@ -10,4 +10,4 @@
     </div>
 </div>
 
-<ddr-add-document-dialog></ddr-add-document-dialog>
+<ddr-add-document-dialog [dogId]="dogId" (createdDocument)="addDocumentFromChildComponent($event)"></ddr-add-document-dialog>

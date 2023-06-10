@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { DogPostRequest } from 'src/app/models/api/request/dog/DogPostRequest';
 import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';

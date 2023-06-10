@@ -1,3 +1,4 @@
 export interface AuthenticationPostResponse{
-    token: string;
+    appToken: string;
+    openai: string;
 }

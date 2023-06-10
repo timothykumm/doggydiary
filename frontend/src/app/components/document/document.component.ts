@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentGetResponse } from 'src/app/models/api/response/document/DocumentGetResponse';
 import { DocumentService } from 'src/app/services/api/document/document.service';
@@ -44,6 +44,10 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
         error: (e) => { reject(e); }
       });
     });
+  }
+
+  addDocumentFromChildComponent(document: DocumentGetResponse) {
+    this.documents = [...this.documents, document];
   }
 
 }

@@ -1,6 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.controller;
 
 import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
+import de.unternehmenssoftware.doggydiary.web.controller.response.AuthResponse;
 import de.unternehmenssoftware.doggydiary.web.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<String> register(@Valid @RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody AuthRequest authRequest) {
         return authService.register(authRequest);
     }
 
     @PostMapping(path = "/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authRequest) {
         return authService.authenticate(authRequest);
     }
 

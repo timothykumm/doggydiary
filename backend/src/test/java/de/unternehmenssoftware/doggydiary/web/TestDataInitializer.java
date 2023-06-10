@@ -56,7 +56,7 @@ public class TestDataInitializer {
         //initializes global accessible entities
         user = new UserEntity("repo@testing.com", "Repos", "testen", encodedPassword);
         dog = new DogEntity("Wiener", "Wuerstchen", new Date(), "", user);
-        document = new DocumentEntity("Repotest", "Dies existiert um die Post und get Requests zu testen", dog);
+        document = new DocumentEntity(new Date(), "Repotest", "Dies existiert um die Post und get Requests zu testen", dog);
 
         //generates global accessible jwtToken
         authToken = jwtService.generateToken(new CustomUserCredentials(user));

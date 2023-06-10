@@ -50,8 +50,8 @@ class DocumentServiceTest {
     void getAllDocumentsByDog() {
         final User user = new User("dasistder@gmail.com", "Reiner", "Wahnsinn");
         List<DocumentEntity> documentEntities = List.of(
-                new DocumentEntity("Titel1", "Content1", Mockito.mock(DogEntity.class)),
-                new DocumentEntity("Titel2", "Content2", Mockito.mock(DogEntity.class)));
+                new DocumentEntity(Mockito.mock(Date.class), "Titel1", "Content1", Mockito.mock(DogEntity.class)),
+                new DocumentEntity(Mockito.mock(Date.class), "Titel2", "Content2", Mockito.mock(DogEntity.class)));
 
         when(authService.getAuthenticatedUser()).thenReturn(user);
         when(documentRepository.getDocumentsByUserAndDogId(Mockito.anyString(), Mockito.anyString())).thenReturn(documentEntities);
@@ -64,21 +64,23 @@ class DocumentServiceTest {
     @Test
     void createDocumentSucceeds() {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
-        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", new Date() , "", Mockito.mock(UserEntity.class));
-        DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
+        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", Mockito.mock(Date.class) , "", Mockito.mock(UserEntity.class));
+        DocumentEntity documentEntity = new DocumentEntity(Mockito.mock(Date.class), documentRequest.title(), documentRequest.content(), dogEntity);
 
         when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
         when(dogRepository.getDogEntityByIdAndUser(Mockito.anyLong(), Mockito.any(UserEntity.class))).thenReturn(Optional.of(dogEntity));
         when(documentRepository.save(Mockito.any(DocumentEntity.class))).thenReturn(documentEntity);
 
         Document actual = documentService.createDocument(documentRequest);
-        assertEquals(actual, documentEntity.transformToDocument());
+        assertEquals(actual.getId(), documentEntity.transformToDocument().getId());
+        assertEquals(actual.getTitle(), documentEntity.transformToDocument().getTitle());
+        assertEquals(actual.getContent(), documentEntity.transformToDocument().getContent());
     }
 
     @Test
     void createDocumentThrowsException() {
         DocumentRequest documentRequest = new DocumentRequest("Title1", "Content1", 12345L);
-        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", new Date() , "", Mockito.mock(UserEntity.class));
+        DogEntity dogEntity = new DogEntity("Fiffi", "Mops", Mockito.mock(Date.class) , "", Mockito.mock(UserEntity.class));
 
         when(authService.getAuthenticatedUserEntity()).thenReturn(Mockito.mock(UserEntity.class));
         when(dogRepository.getDogEntityByIdAndUser(Mockito.anyLong(), Mockito.any(UserEntity.class))).thenReturn(Optional.of(dogEntity));

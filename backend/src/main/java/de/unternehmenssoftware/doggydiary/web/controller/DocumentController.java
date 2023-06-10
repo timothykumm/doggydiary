@@ -25,9 +25,9 @@ public class DocumentController {
     }
 
     @PostMapping
-    ResponseEntity<Void> postDocument(@Valid @RequestBody DocumentRequest documentRequest) {
+    ResponseEntity<String> postDocument(@Valid @RequestBody DocumentRequest documentRequest) {
         Document document = documentService.createDocument(documentRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(document.getId().toString());
     }
 
 }

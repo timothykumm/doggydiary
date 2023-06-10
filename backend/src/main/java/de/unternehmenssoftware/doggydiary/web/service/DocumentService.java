@@ -12,6 +12,7 @@ import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class DocumentService {
     public Document createDocument(DocumentRequest documentRequest) {
         UserEntity authenticatedUser = authService.getAuthenticatedUserEntity();
         DogEntity dogEntity = dogRepository.getDogEntityByIdAndUser(documentRequest.dogId(), authenticatedUser).orElseThrow(DogNotFoundException::new);
-        DocumentEntity documentEntity = new DocumentEntity(documentRequest.title(), documentRequest.content(), dogEntity);
+        DocumentEntity documentEntity = new DocumentEntity(new Date(), documentRequest.title(), documentRequest.content(), dogEntity);
 
         try {
             documentRepository.save(documentEntity);

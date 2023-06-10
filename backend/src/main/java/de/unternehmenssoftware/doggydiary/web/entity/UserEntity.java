@@ -24,25 +24,30 @@ public class UserEntity {
     @Column(name = "password", length = 100)
     private String password;
 
+    @Column(name = "openai", length = 51)
+    private String openai;
+
     @OneToMany(mappedBy = "user")
     private List<DogEntity> dogs;
 
     @Enumerated(EnumType.STRING)
     private AuthRole authRole;
 
-    public UserEntity(String email, String forename, String surname, String password) {
+    public UserEntity(String email, String forename, String surname, String password, String openai) {
         this.email = email;
         this.forename = forename;
         this.surname = surname;
         this.password = password;
+        this.openai = openai;
         this.authRole = AuthRole.USER;
     }
 
-    public UserEntity(String email, String forename, String surname, String password, List<DogEntity> dogs) {
+    public UserEntity(String email, String forename, String surname, String password, String openai, List<DogEntity> dogs) {
         this.email = email;
         this.forename = forename;
         this.surname = surname;
         this.password = password;
+        this.openai = openai;
         this.dogs = dogs;
         this.authRole = AuthRole.USER;
     }
@@ -53,7 +58,7 @@ public class UserEntity {
     }*/
 
     public User transformToUser() {
-        return new User(email, forename, surname);
+        return new User(email, forename, surname, openai);
     }
 
 }

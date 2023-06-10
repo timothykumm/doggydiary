@@ -51,10 +51,10 @@ public class TestDataInitializer {
         String encodedPassword = applicationConfig.passwordEncoder().encode("geheim");
 
         //generates global accessible authRequest
-        authRequest = new AuthRequest("repo@testing.com", "Repos", "testen", "geheim");
+        authRequest = new AuthRequest("repo@testing.com", "Repos", "testen", "geheim", "sk...");
 
         //initializes global accessible entities
-        user = new UserEntity("repo@testing.com", "Repos", "testen", encodedPassword);
+        user = new UserEntity("repo@testing.com", "Repos", "testen", encodedPassword, "sk...");
         dog = new DogEntity("Wiener", "Wuerstchen", new Date(), "", user);
         document = new DocumentEntity(new Date(), "Repotest", "Dies existiert um die Post und get Requests zu testen", dog);
 

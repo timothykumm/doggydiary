@@ -25,7 +25,7 @@ class UserServiceTest {
 
     @Test
     void getUserDetails() {
-        User user = new User("gertet@gmai.com", "Hans", "Heinrich");
+        User user = new User("gertet@gmai.com", "Hans", "Heinrich", "");
         when(authService.getAuthenticatedUser()).thenReturn(user);
         assertEquals("gertet@gmai.com", userService.getUserDetails().getEmail());
     }

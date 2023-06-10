@@ -48,7 +48,7 @@ class DocumentServiceTest {
 
     @Test
     void getAllDocumentsByDog() {
-        final User user = new User("dasistder@gmail.com", "Reiner", "Wahnsinn");
+        final User user = new User("dasistder@gmail.com", "Reiner", "Wahnsinn", "");
         List<DocumentEntity> documentEntities = List.of(
                 new DocumentEntity(Mockito.mock(Date.class), "Titel1", "Content1", Mockito.mock(DogEntity.class)),
                 new DocumentEntity(Mockito.mock(Date.class), "Titel2", "Content2", Mockito.mock(DogEntity.class)));

@@ -15,7 +15,7 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     final String savedUserMail = "saveduser@gmail.com", unsavedUserMail = "unsaveduser@gmail.com";
-    final UserEntity expected = new UserEntity(savedUserMail, "Reiner", "Wahnsinn", "geheim");
+    final UserEntity expected = new UserEntity(savedUserMail, "Reiner", "Wahnsinn", "geheim", "");
 
     @Test
     void findByEmail() {

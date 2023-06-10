@@ -26,7 +26,7 @@ class DocumentRepositoryTest {
 
     @Test
     void getDocumentsByUserAndDogId() {
-        final UserEntity user = new UserEntity("saveduser@gmail.com", "Reiner", "Wahnsinn", "geheim");
+        final UserEntity user = new UserEntity("saveduser@gmail.com", "Reiner", "Wahnsinn", "geheim", "");
         final DogEntity dog = new DogEntity("Mopsi", "Schäferhund", new Date(), "", user);
         final DocumentEntity document = new DocumentEntity(new Date(), "Arztbesuch", "Dem Hund geht es gut", dog);
 

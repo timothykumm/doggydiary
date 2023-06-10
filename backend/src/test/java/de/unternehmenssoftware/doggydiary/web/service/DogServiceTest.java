@@ -37,7 +37,7 @@ class DogServiceTest {
     @InjectMocks
     private DogService dogService;
 
-    final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim");
+    final UserEntity userEntity = new UserEntity("dasistder@gmail.com", "Reiner", "Wahnsinn", "geheim", "");
     final List<DogEntity> dogEntities = List.of(
             new DogEntity("Sabine", "Mops", new Date(), "", null),
             new DogEntity("Tomas", "Schaeferhund", new Date(), "", null)

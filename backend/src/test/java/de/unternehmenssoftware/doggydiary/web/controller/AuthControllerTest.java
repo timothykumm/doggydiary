@@ -3,6 +3,7 @@ package de.unternehmenssoftware.doggydiary.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.unternehmenssoftware.doggydiary.web.TestDataInitializer;
 import de.unternehmenssoftware.doggydiary.web.controller.request.AuthRequest;
+import de.unternehmenssoftware.doggydiary.web.controller.response.AuthResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,31 +30,32 @@ class AuthControllerTest {
     @Test
     void registrationSucceeds() throws Exception {
 
-        AuthRequest authRequest = new AuthRequest("test@gmail.com", "Heinrich", "Müller", "geheim");
+        AuthRequest authRequest = new AuthRequest("test@gmail.com", "Heinrich", "Müller", "geheim", "sk...");
         String request = objectMapper.writeValueAsString(authRequest);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(BASE_BATH + "/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request)
-                        .accept(MediaType.TEXT_PLAIN))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()))
                 .andReturn();
 
-        String token = result.getResponse().getContentAsString();
+        AuthResponse authResponse = objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
 
-        assertTrue(token.startsWith("ey"));
+        assertTrue(authResponse.appToken().startsWith("ey"));
+        assertTrue(authResponse.openaiToken().startsWith("sk"));
     }
 
     @Test
     void registrationFailsBecauseEmailAlreadyExists() throws Exception {
 
-        AuthRequest authRequest = new AuthRequest("repo@testing.com", "Heinrich", "Müller", "geheim");
+        AuthRequest authRequest = new AuthRequest("repo@testing.com", "Heinrich", "Müller", "geheim", "sk...");
         String request = objectMapper.writeValueAsString(authRequest);
 
         mockMvc.perform(MockMvcRequestBuilders.post(BASE_BATH + "/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request)
-                        .accept(MediaType.TEXT_PLAIN))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CONFLICT.value()))
                 .andReturn();
     }
@@ -65,12 +67,13 @@ class AuthControllerTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(BASE_BATH + "/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request)
-                        .accept(MediaType.TEXT_PLAIN))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
                 .andReturn();
 
-        String token = result.getResponse().getContentAsString();
+        AuthResponse authResponse = objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
 
-        assertTrue(token.startsWith("ey"));
+        assertTrue(authResponse.appToken().startsWith("ey"));
+        assertTrue(authResponse.openaiToken().startsWith("sk"));
     }
 }

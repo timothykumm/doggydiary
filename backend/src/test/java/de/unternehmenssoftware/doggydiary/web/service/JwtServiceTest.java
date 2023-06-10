@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class JwtServiceTest {
 
     final CustomUserCredentials userDetails = new CustomUserCredentials(
-            new UserEntity("test@gmail.com", "Reiner", "Wahnsinn", "12345")
+            new UserEntity("test@gmail.com", "Reiner", "Wahnsinn", "12345", "")
     );
     final String validToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTY4NDQxODMwOTksImlhdCI6MTUxNjIzOTAyMn0.vYmEJqzcWpPQdsHQbq0qCPn30fZjg1W5qToXrBdcNfA";
     final String invalidToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0QGdtYWlsLmNvbSIsImV4cCI6MTY4NDQxODMwOTksImlhdCI6MTUxNjIzOTAyMn0.rdvNherDW9vEBsLjO-hCIfxFGUt0gNyX9zz6dTrwF8c";
@@ -45,7 +45,7 @@ class JwtServiceTest {
     @Test
     void tokenIsNotValid() {
         CustomUserCredentials differentUserDetails = new CustomUserCredentials(new UserEntity(
-                "different@gmail.com", "Reiner", "Wahnsinn", "12345")
+                "different@gmail.com", "Reiner", "Wahnsinn", "12345", "")
         );
 
         assertFalse(jwtService.isTokenValid(validToken, differentUserDetails));

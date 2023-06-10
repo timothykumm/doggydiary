@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class CustomUserCredentials extends UserEntity implements UserDetails {
 
     public CustomUserCredentials(UserEntity userEntity) {
-        super(userEntity.getEmail(), userEntity.getForename(), userEntity.getSurname(), userEntity.getPassword());
+        super(userEntity.getEmail(), userEntity.getForename(), userEntity.getSurname(), userEntity.getPassword(), userEntity.getOpenai());
     }
 
     @Override

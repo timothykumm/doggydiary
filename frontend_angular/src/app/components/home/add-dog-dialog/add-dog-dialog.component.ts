@@ -6,9 +6,9 @@ import { DogService } from 'src/app/services/api/dog/dog.service';
 import { ConvertImgService } from 'src/app/services/utils/img/convertimg.service';
 
 @Component({
-  selector: 'ddr-adddogdialog',
-  templateUrl: './adddogdialog.component.html',
-  styleUrls: ['./adddogdialog.component.css']
+  selector: 'ddr-add-dog-dialog',
+  templateUrl: './add-dog-dialog.component.html',
+  styleUrls: ['./add-dog-dialog.component.css']
 })
 
 export class AddDogDialogComponent {

@@ -36,6 +36,8 @@
                                 <input type="text" [(ngModel)]="credentials.email" />
                                 <li>Password:</li>
                                 <input type="password" [(ngModel)]="credentials.password" />
+                                <li>OpenAi Api Token:</li>
+                                <input type="text" [(ngModel)]="credentials.openai" />
                                 <button type="button" class="input-button" data-dismiss="modal"
                                     (click)="loginOrRegister(2)">Register</button>
                                 <p  class="already-registered-tag" (click)="userAlreadyHasAccount = !userAlreadyHasAccount">Already registered?</p>

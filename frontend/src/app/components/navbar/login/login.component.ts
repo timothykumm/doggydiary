@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit{
     email: '',
     forename: '',
     surname: '',
-    password: ''
+    password: '',
+    openai: ''
   }
 
   constructor(private loginService: LoginService) {}

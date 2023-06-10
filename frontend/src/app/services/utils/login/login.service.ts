@@ -14,17 +14,19 @@ export class LoginService {
   private loggedIn = new Subject<boolean>();
 
   authenticationPostResponse: AuthenticationPostResponse = {
-    token: ''
+    appToken: '',
+    openai: ''
   }
 
   constructor(private authService: AuthService, private jwtService: JwtService) { }
 
   async loginOrRegisterAndFetchJwt(credentials: AuthenticationPostRequest, mode: Mode): Promise<boolean> {
-    try { this.authenticationPostResponse.token = await this.authenticate(credentials, mode); }
+    try { this.authenticationPostResponse = await this.authenticate(credentials, mode); }
     catch { }
 
-    if (this.authenticationPostResponse.token.startsWith('ey')) {
-      this.jwtService.saveTokenInCookies(this.authenticationPostResponse.token);
+    if (this.authenticationPostResponse.appToken.startsWith('ey')) {
+      this.jwtService.saveAppTokenInCookies(this.authenticationPostResponse.appToken);
+      this.jwtService.saveOpenAiTokenInCookies(this.authenticationPostResponse.openai);
       return true;
     }
 
@@ -32,11 +34,12 @@ export class LoginService {
   }
 
   logout(): void {
-    this.jwtService.removeTokenInCookies();
+    this.jwtService.removeAppTokenInCookies();
+    this.jwtService.removeOpenAiTokenInCookies();
   }
 
-  async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
+  async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<AuthenticationPostResponse> {
+    return new Promise<AuthenticationPostResponse>((resolve, reject) => {
       switch(mode) {
         
         case Mode.LOGIN:
@@ -59,7 +62,7 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    return this.jwtService.getTokenFromCookies().startsWith('ey');
+    return this.jwtService.getAppTokenFromCookies().startsWith('ey');
   }
 
   setLoginStatus(status: boolean): void {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';
 import { DogService } from 'src/app/services/api/dog/dog.service';
 import { LoginService } from 'src/app/services/utils/login/login.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ddr-home',
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
   dogs: DogGetResponse[] = [];
 
-  constructor(private loginService: LoginService, private dogService: DogService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private loginService: LoginService, private dogService: DogService, private router: Router) { }
 
   ngOnInit(): void {
 

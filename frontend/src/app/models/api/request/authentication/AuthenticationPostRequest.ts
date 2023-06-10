@@ -3,4 +3,5 @@ export interface AuthenticationPostRequest{
     forename?: string;
     surname?: string;
     password: string;
+    openai: string;
 }

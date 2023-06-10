@@ -9,21 +9,35 @@ export class JwtService {
 
   constructor(private cookieService: CookieService) { }
 
-  saveTokenInCookies(bearerToken : string) {
+  saveAppTokenInCookies(authToken: string) {
     const expirationDate = new Date();
-    this.cookieService.set('jwt', bearerToken, new Date(this.#deocdeToken(bearerToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours()+24))
-   }
-
-   removeTokenInCookies() {
-    this.cookieService.delete('jwt');
-   }
-  
-  getTokenFromCookies() : string {
-    return this.cookieService.get('jwt');
+    this.cookieService.set('app-jwt', authToken, new Date(this.#deocdeToken(authToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours() + 24))
   }
 
-  #deocdeToken(token: string) : any {
-   return jwt_decode(token)
+
+  saveOpenAiTokenInCookies(authToken: string) {
+    const expirationDate = new Date();
+    this.cookieService.set('openai-jwt', authToken)
+  }
+
+  removeAppTokenInCookies() {
+    this.cookieService.delete('app-jwt');
+  }
+
+  removeOpenAiTokenInCookies() {
+    this.cookieService.delete('openai-jwt');
+  }
+
+  getAppTokenFromCookies(): string {
+    return this.cookieService.get('app-jwt');
+  }
+
+  getOpenAiTokenFromCookies(): string {
+    return this.cookieService.get('openai-jwt');
+  }
+
+  #deocdeToken(token: string): any {
+    return jwt_decode(token)
   }
 
 }

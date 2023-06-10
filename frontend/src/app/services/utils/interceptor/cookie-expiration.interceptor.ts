@@ -16,7 +16,7 @@ export class CookieExpirationInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    if(!this.jwtService.getTokenFromCookies().startsWith('ey') && !request.url.includes('authenticate') && !request.url.includes('register')) {
+    if(!this.jwtService.getAppTokenFromCookies().startsWith('ey') && !request.url.includes('authenticate') && !request.url.includes('register')) {
       //jwt missing - probably expired
       return new Observable<HttpEvent<5>>;
     } 

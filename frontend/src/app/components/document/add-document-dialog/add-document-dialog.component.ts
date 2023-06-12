@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DocumentPostRequest } from 'src/app/models/api/request/document/DocumentPostRequest';
+import { ChatgptPostResponse } from 'src/app/models/api/response/chatgpt/ChatgptPostResponse';
 import { DocumentGetResponse } from 'src/app/models/api/response/document/DocumentGetResponse';
+import { ChatgptService } from 'src/app/services/api/chatgpt/chatgpt.service';
 import { DocumentService } from 'src/app/services/api/document/document.service';
+import { TensorflowService } from 'src/app/services/utils/tensorflow/tensorflow.service';
 import { createWorker, PSM, OEM } from 'tesseract.js';
 
 @Component({
@@ -15,7 +18,6 @@ export class AddDocumentDialogComponent {
   @Output() createdDocument = new EventEmitter<DocumentGetResponse>;
 
   progressInPercent = 0;
-  extractedText = '';
   file!: File;
 
   document: DocumentPostRequest = {
@@ -24,36 +26,41 @@ export class AddDocumentDialogComponent {
     dogId: 0
   }
 
-  constructor(private documentService: DocumentService) {}
+  constructor(private documentService: DocumentService, private tensorflowService: TensorflowService, private chatgptService: ChatgptService) {}
 
   fileChangeEvent(event: any) {
+    //read file
     this.file = event.target.files[0];
-    this.extractText();
-  }
+    if(!this.file) return
 
-  worker = createWorker({
-    logger: m => this.progressInPercent = (m.progress * 100)
-  })
-
-  extractText = async () => {
-
-    await this.worker.load()
-    await this.worker.loadLanguage('deu')
-    await this.worker.initialize('deu', OEM.LSTM_ONLY)
-
-    await this.worker.setParameters({
-      tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
+    //create worker
+    const worker = createWorker({
+      logger: m => this.progressInPercent = (m.progress * 100)
     })
 
-    const { data } = await this.worker.recognize(this.file)
+    //extract text and askgpt
+    this.tensorflowService.extractText(worker, this.file).then(async text => {
+      const chatgptResponse = await this.getChatgptResponse(text);
 
-    this.extractedText = data.text
-    this.progressInPercent = 0;
-  
-    //to-do
-    this.document.title = "test"
-    this.document.dogId = this.dogId;
-    this.createDocument();
+      this.document.title = "In Arbeit";
+      this.document.content = chatgptResponse.choices[0].message.content;
+      this.document.dogId = this.dogId;
+
+      console.log(this.document)
+      console.log(chatgptResponse);
+
+      this.createDocument();
+      this.progressInPercent = 0;
+    });
+  }
+
+  async getChatgptResponse(input: string): Promise<ChatgptPostResponse> {
+    return new Promise<ChatgptPostResponse>((resolve, reject) => {
+      this.chatgptService.getResponseToQuestion(input).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
   }
 
   async createDocument() {

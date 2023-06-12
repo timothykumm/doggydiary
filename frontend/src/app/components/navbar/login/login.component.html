@@ -8,9 +8,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Login</h5>
-                <button type="button" class="close" aria-label="Close" (click)="toggleLoginModal()">
+                <p type="button" class="close" aria-label="Close" (click)="toggleLoginModal()">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </p>
             </div>
             <div class="modal-body">
                 <div class="input-container">
@@ -18,26 +18,21 @@
                         <div class=".col-sm-9" >
 
                             <div *ngSwitchCase="true">
-                                <li>Email:</li>
-                                <input type="text" [(ngModel)]="credentials.email" />
-                                <li>Password:</li>
-                                <input type="password" [(ngModel)]="credentials.password" />
+                                <input class="email-input" type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" />
+                                <input class="password-input" type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" />
                                 <button type="button" class="input-button" data-dismiss="modal"
                                     (click)="loginOrRegister(1)">Login</button>
                                 <p  class="already-registered-tag" (click)="userAlreadyHasAccount = !userAlreadyHasAccount">Not registered yet?</p>
                             </div>
 
                             <div *ngSwitchCase="false">
-                                <li>Forename:</li>
-                                <input type="text" [(ngModel)]="credentials.forename" />
-                                <li>Surename:</li>
-                                <input type="text" [(ngModel)]="credentials.surname" />
-                                <li>Email:</li>
-                                <input type="text" [(ngModel)]="credentials.email" />
-                                <li>Password:</li>
-                                <input type="password" [(ngModel)]="credentials.password" />
-                                <li>OpenAi Api Token:</li>
-                                <input type="text" [(ngModel)]="credentials.openai" />
+                                <div id="input-register">
+                                <input type="text" [placeholder]="'Forename'" [(ngModel)]="credentials.forename" />
+                                <input type="text" [placeholder]="'Surename'" [(ngModel)]="credentials.surname" />
+                                <input type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" />
+                                <input type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" />
+                                <input type="text" [placeholder]="'OpenAI Api-Key'" [(ngModel)]="credentials.openai" />
+                            </div>
                                 <button type="button" class="input-button" data-dismiss="modal"
                                     (click)="loginOrRegister(2)">Register</button>
                                 <p  class="already-registered-tag" (click)="userAlreadyHasAccount = !userAlreadyHasAccount">Already registered?</p>

@@ -1,4 +1,17 @@
 .card-row {
-  display: flex;
   flex-wrap: wrap;
+}
+
+.card-name {
+  color: black;
+  font-size: 400%;
+  font-family: fantasy;
+  padding-left: 10%;
+  padding-top: 20%;
+}
+
+.card-birthday {
+  color: black;
+  font-size: 150%;
+  font-family: fantasy;
 }

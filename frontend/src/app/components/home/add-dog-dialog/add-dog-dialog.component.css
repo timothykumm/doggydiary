@@ -23,4 +23,48 @@
   #addDogModal {
     z-index: 0;
   }
+
+  .modal-body {
+    background-color: #212529;
+    color: white;
+    border-radius: 10px;
+  }
+
+  .modal-content {
+    padding-bottom: 0px;
+    background-color: #212529;
+    color: white;
+  }
+
+  .close {
+    background: none;
+    font-size: xx-large;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    margin-bottom: 5%;
+    background-color: #212529;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid white;
+  }
+
+  .center-button {
+    background-color: #475d64;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding: 3%;
+    margin: auto;
+    width: 130%;
+  }
   
+  .image-input {
+    visibility: hidden;
+  }
+
+  #mat-input-0 {
+    color: white;
+    background-color: #475d64;
+}
+

@@ -8,12 +8,45 @@
   .input-button {
     margin-top: 5%;
     margin-bottom: 5%;
+    background-color: #475d64;
+    color: whitesmoke;
+    border-radius: 5px;
+    padding: 3%;
   }
 
   .already-registered-tag {
-    color: steelblue;
+    color: #BDDBE5;
   }
 
   .modal-body {
-    padding-bottom: 0px;
+    background-color: #212529;
+    color: white;
+    border-radius: 10px;
   }
+
+  .modal-content {
+    padding-bottom: 0px;
+    background-color: #212529;
+    color: white;
+  }
+
+  .close {
+    background: none;
+    font-size: xx-large;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    margin-bottom: 5%;
+    background-color: #212529;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid white;
+    padding: 5%;
+  }
+
+  .nav-link {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+

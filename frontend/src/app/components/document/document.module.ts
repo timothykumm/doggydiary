@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AddDocumentDialogComponent } from './add-document-dialog/add-document-dialog.component';
 import { DocumentComponent } from './document.component';
 import { FormsModule } from '@angular/forms';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     FormsModule,
     MatProgressSpinnerModule,
+    MatTableModule,
     BrowserAnimationsModule
   ]
 })

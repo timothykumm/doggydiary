@@ -13,10 +13,11 @@
           <div>
             <input class="dog-image-input" type="file" name="file" (change)="fileChangeEvent($event)" />
             <image-cropper
+                class="image-input"
                 name="file"
                 [imageChangedEvent]="imageChangedEvent"
                 [maintainAspectRatio]="true"
-                [aspectRatio]="4 / 3"
+                [aspectRatio]="16 / 9"
                 format="jpeg"
                 (imageCropped)="imageCropped($event)"
                 (cropperReady)="cropperReady()"
@@ -34,15 +35,15 @@
           <div class="mb-2">
             <label for="recipient-birthdate" class="col-form-label">Birth Date: </label>
           </div>
-          <mat-form-field>
+          <mat-form-field color="accent">
             <input matInput [matDatepicker]="picker" placeholder="Choose a date" name="dog.birthdate" [(ngModel)]="dog.birthdate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker class="mat-datepicker-field" #picker></mat-datepicker>
           </mat-form-field>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="createDogAndUploadPic()">Add Dog</button>
+        <button type="button" class="center-button" (click)="createDogAndUploadPic()">Add Dog</button>
       </div>
     </div>
   </div>

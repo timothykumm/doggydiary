@@ -1,12 +1,12 @@
 <div class="card-row">
     <div *ngFor="let dog of dogs">
-        <div class="card sm-4" style="width: 18rem;">
-            <img class="card-img-top" src={{dog.img}} alt="placeholder" data-id={{dog.id}} (click)="navigateToDog(dog)">
-            <div class="card-body">
-                <p class="card-text"> Name: {{ dog.name }} </p>
-                <p class="card-text"> Geburtsdatum: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </p>
-            </div>
+    <div class="card bg-dark text-white" (click)="navigateToDog(dog)">
+        <img src={{dog.img}} class="card-img" data-id={{dog.id}}>
+        <div class="card-img-overlay">
+          <h6 class="card-name"> {{ dog.name }}</h6>
+          <h6 class="card-birthday"> Geburtsdatum: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </h6>
         </div>
+      </div>
     </div>
 </div>
 

@@ -30,8 +30,11 @@
           </div>
           <div class="mb-2">
             <label for="recipient-breed" class="col-form-label">Breed:</label>
+            <div class="search-form">
+            <button name="submit" type="submit" (click)="detectDogBreed()">Detect</button>
             <input type="text" class="form-control" id="recipient-breed" name="dog.breed" [(ngModel)]="dog.breed">
           </div>
+        </div>
           <div class="mb-2">
             <label for="recipient-birthdate" class="col-form-label">Birth Date: </label>
           </div>

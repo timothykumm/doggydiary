@@ -68,3 +68,15 @@
     background-color: #475d64;
 }
 
+.search-form {
+  position: relative;
+}
+
+button[name="submit"] {
+  position: absolute;
+  right: 0;
+  background-color: #475d64;
+  color: whitesmoke;
+  width: 80px;
+  height: 40px;
+}

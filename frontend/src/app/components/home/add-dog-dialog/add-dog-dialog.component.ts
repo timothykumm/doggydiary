@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { DogPostRequest } from 'src/app/models/api/request/dog/DogPostRequest';
 import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';
+import { ClassifierService } from 'src/app/services/api/classifier/classifier.service';
 import { DogService } from 'src/app/services/api/dog/dog.service';
 import { ConvertImgService } from 'src/app/services/utils/img/convertimg.service';
 
@@ -24,7 +25,7 @@ export class AddDogDialogComponent {
     birthdate: new Date()
   }
 
-constructor(private dogService: DogService, private convertImgService: ConvertImgService) {}
+constructor(private dogService: DogService, private classifierService: ClassifierService, private convertImgService: ConvertImgService) {}
 
   toggleAddDogModal(): void {
     const addDogModal = document.getElementById("addDogModal");
@@ -52,13 +53,22 @@ constructor(private dogService: DogService, private convertImgService: ConvertIm
   async createDogAndUploadPic() {
     const dogId = await this.createDog();
 
-    if(dogId !== undefined && this.croppedImage !== undefined) {
+    if(dogId !== undefined && this.croppedImage !== '') {
     const file: File = this.convertImgService.convertBase64ToMultipartFile(this.croppedImage);
     const img = await this.uploadProfilePic(dogId, file);
     this.passDogToParentComponent(Number(dogId), this.dog.name, this.dog.breed, this.dog.birthdate, img);
     console.log(img)
   }
     this.toggleAddDogModal();
+  }
+
+  async detectDogBreed() {
+    if(this.croppedImage !== '') {
+      const file: File = this.convertImgService.convertBase64ToMultipartFile(this.croppedImage);
+      const classifiedDog = await this.classifyDog(file);
+      console.log('Classified Dog: ' + classifiedDog)
+      this.dog.breed = classifiedDog;
+    }
   }
 
   async createDog(): Promise<string> {
@@ -86,6 +96,15 @@ constructor(private dogService: DogService, private convertImgService: ConvertIm
   async uploadProfilePic(dogId: string, file: File): Promise<any> {
     return new Promise<string>((resolve, reject) => {
       this.dogService.postDogProfilePic(dogId, file).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
+  async classifyDog(file: File): Promise<any> {
+    return new Promise<string>((resolve, reject) => {
+      this.classifierService.getDogClassification(file).subscribe({
         next: (r) => { resolve(r); },
         error: (e) => { reject(e); }
       });

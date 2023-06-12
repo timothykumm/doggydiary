@@ -42,8 +42,7 @@ class AuthControllerTest {
 
         AuthResponse authResponse = objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
 
-        assertTrue(authResponse.appToken().startsWith("ey"));
-        assertTrue(authResponse.openaiToken().startsWith("sk"));
+        assertTrue(authResponse.jwt().startsWith("ey"));
     }
 
     @Test
@@ -73,7 +72,6 @@ class AuthControllerTest {
 
         AuthResponse authResponse = objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
 
-        assertTrue(authResponse.appToken().startsWith("ey"));
-        assertTrue(authResponse.openaiToken().startsWith("sk"));
+        assertTrue(authResponse.jwt().startsWith("ey"));
     }
 }

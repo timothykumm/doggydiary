@@ -37,7 +37,7 @@ public class AuthService {
         try {
             userRepository.save(encodedPasswordUserEntity);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(new AuthResponse(jwtService.generateToken(userCredential), encodedPasswordUserEntity.getOpenai()));
+                    .body(new AuthResponse(jwtService.generateToken(userCredential)));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -48,7 +48,7 @@ public class AuthService {
         CustomUserCredentials userCredential = userRepository.findByEmail(authRequest.email())
                 .map(CustomUserCredentials::new).orElseThrow(UserCredentialsException::new);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse(jwtService.generateToken(userCredential), userCredential.getOpenai()));
+        return ResponseEntity.status(HttpStatus.OK).body(new AuthResponse(jwtService.generateToken(userCredential)));
     }
 
     public User getAuthenticatedUser() {

@@ -9,21 +9,21 @@ export class JwtService {
 
   constructor(private cookieService: CookieService) { }
 
-  saveAppTokenInCookies(authToken: string) {
+  saveJwtInCookies(authToken: string) {
     const expirationDate = new Date();
     this.cookieService.set('app-jwt', authToken, new Date(this.#deocdeToken(authToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours() + 24))
   }
 
-  removeAppTokenInCookies() {
+  removJwtInCookies() {
     this.cookieService.delete('app-jwt');
   }
 
-  getAppTokenFromCookies(): string {
+  getJwtFromCookies(): string {
     return this.cookieService.get('app-jwt');
   }
 
   extractClaim(claim: string) {
-    return this.#deocdeToken(this.getAppTokenFromCookies())[claim] ?? undefined;
+    return this.#deocdeToken(this.getJwtFromCookies())[claim] ?? undefined;
   }
 
   #deocdeToken(token: string): any {

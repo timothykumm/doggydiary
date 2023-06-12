@@ -14,8 +14,7 @@ export class LoginService {
   private loggedIn = new Subject<boolean>();
 
   authenticationPostResponse: AuthenticationPostResponse = {
-    appToken: '',
-    openai: ''
+    jwt: ''
   }
 
   constructor(private authService: AuthService, private jwtService: JwtService) { }
@@ -24,8 +23,8 @@ export class LoginService {
     try { this.authenticationPostResponse = await this.authenticate(credentials, mode); }
     catch { }
 
-    if (this.authenticationPostResponse.appToken.startsWith('ey')) {
-      this.jwtService.saveAppTokenInCookies(this.authenticationPostResponse.appToken);
+    if (this.authenticationPostResponse.jwt.startsWith('ey')) {
+      this.jwtService.saveJwtInCookies(this.authenticationPostResponse.jwt);
       return true;
     }
 
@@ -33,7 +32,7 @@ export class LoginService {
   }
 
   logout(): void {
-    this.jwtService.removeAppTokenInCookies();
+    this.jwtService.removJwtInCookies();
   }
 
   async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<AuthenticationPostResponse> {
@@ -60,7 +59,7 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    return this.jwtService.getAppTokenFromCookies().startsWith('ey');
+    return this.jwtService.getJwtFromCookies().startsWith('ey');
   }
 
   setLoginStatus(status: boolean): void {

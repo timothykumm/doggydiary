@@ -18,7 +18,7 @@ export class DogService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwtService.getAppTokenFromCookies()
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies()
       })
     };
 
@@ -29,7 +29,7 @@ export class DogService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwtService.getAppTokenFromCookies(),
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies(),
         'Content-Type': 'application/json'
       })
     };
@@ -44,7 +44,7 @@ export class DogService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwtService.getAppTokenFromCookies()
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies()
       })
     };
 

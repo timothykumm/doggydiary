@@ -1,5 +1,6 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
+import de.unternehmenssoftware.doggydiary.web.entity.CustomUserCredentials;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -20,11 +22,12 @@ public class JwtService {
     private final int expirationDateAddition = 24 * (60  * 60 * 1000); //24hS
 
     //Extra Claims removed
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(CustomUserCredentials userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationDateAddition))
+                .claim("openai", userDetails.getOpenAiToken())
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

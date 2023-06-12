@@ -14,26 +14,16 @@ export class JwtService {
     this.cookieService.set('app-jwt', authToken, new Date(this.#deocdeToken(authToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours() + 24))
   }
 
-
-  saveOpenAiTokenInCookies(authToken: string) {
-    const expirationDate = new Date();
-    this.cookieService.set('openai-jwt', authToken)
-  }
-
   removeAppTokenInCookies() {
     this.cookieService.delete('app-jwt');
-  }
-
-  removeOpenAiTokenInCookies() {
-    this.cookieService.delete('openai-jwt');
   }
 
   getAppTokenFromCookies(): string {
     return this.cookieService.get('app-jwt');
   }
 
-  getOpenAiTokenFromCookies(): string {
-    return this.cookieService.get('openai-jwt');
+  extractClaim(claim: string) {
+    return this.#deocdeToken(this.getAppTokenFromCookies())[claim] ?? undefined;
   }
 
   #deocdeToken(token: string): any {

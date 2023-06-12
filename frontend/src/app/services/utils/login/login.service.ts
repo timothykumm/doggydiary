@@ -26,7 +26,6 @@ export class LoginService {
 
     if (this.authenticationPostResponse.appToken.startsWith('ey')) {
       this.jwtService.saveAppTokenInCookies(this.authenticationPostResponse.appToken);
-      this.jwtService.saveOpenAiTokenInCookies(this.authenticationPostResponse.openai);
       return true;
     }
 
@@ -35,7 +34,6 @@ export class LoginService {
 
   logout(): void {
     this.jwtService.removeAppTokenInCookies();
-    this.jwtService.removeOpenAiTokenInCookies();
   }
 
   async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<AuthenticationPostResponse> {

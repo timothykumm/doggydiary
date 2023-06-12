@@ -26,6 +26,10 @@ public class CustomUserCredentials extends UserEntity implements UserDetails {
         return super.getEmail();
     }
 
+    public String getOpenAiToken() {
+        return super.getOpenai();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

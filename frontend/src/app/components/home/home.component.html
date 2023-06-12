@@ -1,6 +1,7 @@
 <div class="card-row">
-    <div *ngFor="let dog of dogs">
-    <div class="card bg-dark text-white" (click)="navigateToDog(dog)">
+  <div *ngFor="let dog of dogs">
+    <div class="card-container">
+      <div class="card bg-dark text-white card-max-size" (click)="navigateToDog(dog)">
         <img src={{dog.img}} class="card-img" data-id={{dog.id}}>
         <div class="card-img-overlay">
           <h6 class="card-name"> {{ dog.name }}</h6>
@@ -8,6 +9,7 @@
         </div>
       </div>
     </div>
+  </div>
 </div>
 
 <ddr-add-dog-dialog (createdDog)="addDogFromChildComponent($event)"></ddr-add-dog-dialog>

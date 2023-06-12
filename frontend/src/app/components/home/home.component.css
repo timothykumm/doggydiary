@@ -1,5 +1,29 @@
-.card-row {
-  flex-wrap: wrap;
+.card-max-size {
+  max-width: 800px; 
+  margin: 20px;
+}
+
+@media (min-width: 800px) and (max-width: 1200px) {
+  .card-container {
+    display: flex;
+    justify-content: center; 
+    justify-self: center;
+  }
+
+  .card-max-size {
+    min-width: 800px; 
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .card-max-size {
+    min-width: 600px; 
+  }
 }
 
 .card-name {

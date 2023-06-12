@@ -1,13 +1,17 @@
-<div class="card-row">
-    <div *ngFor="let document of documents">
-        <div class="card sm-4" style="width: 18rem;">
-            <img class="card-img-top" alt="placeholder" src="https://th.bing.com/th/id/OIP.fp_l68B10zn31U5SLS72SAAAAA?pid=ImgDet&rs=1" (click)="selectDocument(document)">
-            <div class="card-body">
-                <p class="card-text"> Titel: {{ document.title }} </p>
-                <p class="card-text"> Erstellt: {{ document.date | date : 'dd.MM.YYYY' }} </p>
-            </div>
+<main role="main" class="container" *ngFor="let document of documents">
+
+    <div class="my-3 p-3 bg-white rounded box-shadow" (click)="toggleDocument(document)">
+      <h6 class="border-gray pb-2 mb-0" [id]="'border-bottom-' + document.id"> {{  document.title  }} - {{ document.date | date : 'dd.MM.YYYY' }}</h6>
+      <div class="media text-muted pt-3" [id]="'media-text-' + document.id">
+        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" [id]="'media-body-' + document.id">
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <strong class="text-gray-dark">Zusammenfassung</strong>
+            <a href="#">Edit</a>
+          </div>
+          <span class="d-block">{{ document.content }}</span>
         </div>
+      </div>
     </div>
-</div>
+  </main>
 
 <ddr-add-document-dialog [dogId]="dogId" (createdDocument)="addDocumentFromChildComponent($event)"></ddr-add-document-dialog>

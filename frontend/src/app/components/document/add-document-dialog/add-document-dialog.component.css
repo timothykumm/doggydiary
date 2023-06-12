@@ -1,6 +1,6 @@
 .add-document-button {
     border-radius: 50%;
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 20px;
     background-color: #BDDBE5;

@@ -1,4 +1,17 @@
-.card-row {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray,
+.d-block.text-right.mt-3,
+.my-3.p-3.bg-white.rounded.box-shadow {
+  background-color: #f3eeee;
+}
+
+.my-3.p-3.bg-white.rounded.box-shadow {
+  background-color: #f3eeee;
+  outline: auto;
+}
+
+.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray,
+.media.text-muted.pt-3 {
+  display: none;
+}
+
+

@@ -16,5 +16,9 @@ services:
       - '9000:9000'
       - '9001:9001'
     volumes:
-      - /docker/minio:/data
+      - C:/docker/minio:/data
     restart: unless-stopped
+  dog-classifier:
+    image: dog-classifier
+    ports:
+      - "5000:5000"

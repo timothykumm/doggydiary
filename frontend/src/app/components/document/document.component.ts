@@ -50,4 +50,8 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
     this.documents = [...this.documents, document];
   }
 
+  selectDocument(document: DocumentGetResponse) {
+    console.log(document.content)
+  }
+
 }

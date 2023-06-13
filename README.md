@@ -2,6 +2,12 @@
 
 A comprehensive web application that provides features for dog owners to track and manage their pet's life. Powered by a self-trained image recognition model, the app can accurately detect the breed of a dog. In addition to breed detection, the app integrates image text-extraction that allows users to scan, digitize and store documents such as veterinary records, vaccination certificates, and medical reports. The document scanning feature leverages Chat GPT to efficiently process the document.
 
+![1](https://github.com/timothykumm/doggydiary/assets/27158937/e86ca515-d064-4a88-9fb7-b92e31b191bf)
+![2](https://github.com/timothykumm/doggydiary/assets/27158937/250c676c-90f7-485c-a7a5-8fd7f7af8ea1)
+![3](https://github.com/timothykumm/doggydiary/assets/27158937/4d245eec-785c-44d0-8286-941395df5df1)
+![4](https://github.com/timothykumm/doggydiary/assets/27158937/f36dc92e-e88b-4c68-92f9-4b94bea8cad8)
+
+
 ---
 ## __How to setup__
 1. Pull the [mysql](https://hub.docker.com/_/mysql/), [minio](https://hub.docker.com/r/minio/minio) and the [dog-classification](https://hub.docker.com/r/timmycode/dog-breed-classification/tags) docker image

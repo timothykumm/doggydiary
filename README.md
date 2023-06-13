@@ -1,5 +1,15 @@
-## DoggyDiary
+# DoggyDiary
 
-A comprehensive web application that allows dog owners to track their pet's life. This app can detect the dog's breed using image recognition technology and allows users to store and scan important documents related to their pet's health and wellbeing.
+A comprehensive web application that provides features for dog owners to track and manage their pet's life. Powered by a self-trained image recognition model, the app can accurately detect the breed of a dog. In addition to breed detection, the app integrates image text-extraction that allows users to scan, digitize and store documents such as veterinary records, vaccination certificates, and medical reports. The document scanning feature leverages Chat GPT to efficiently process the document.
 
-![DALL·E 2023-04-29 23 44 53 - A dog in style of cartoon](https://user-images.githubusercontent.com/27158937/236577323-8672e7f6-a3d4-4ee1-8450-c9d59c69101b.png)
+---
+## __How to setup__
+1. Pull the [mysql](https://hub.docker.com/_/mysql/), [minio](https://hub.docker.com/r/minio/minio) and the [dog-classification](https://hub.docker.com/r/timmycode/dog-breed-classification/tags) docker image
+2. Open docker-compose.yml and modify the minio volume path from `C:/docker/minio:/data` to `<custom_path>:/data` so that images can be stored. Replace `<custom_path>` with a path on your local system.
+3. Start all container with `docker-compose up`
+4. Open the minioclient panel (standard is [http://localhost:9001](http://localhost:9001)), login with (__User__: minioadmin, __PW__: minioadmin), open the bucket browser, create a bucket named "dogimages" and set its accesibility to public.
+5. Start the frontend with `ng serve` and the backend with `gradle bootrun`
+6. You should now be able to use the web-application via [http://localhost:4200](http://localhost:4200)
+
+    <sub> If you have erros regarding cors policy, you should use this [chrome plugin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=de) </sub>
+

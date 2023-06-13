@@ -1,6 +1,7 @@
 <input class="add-document-button" type="file" name="file" (change)="fileChangeEvent($event)" />
 
 <div class="spinner-container" *ngIf="progressInPercent > 0" >
+    <span id="progress-text"> {{ progressText }} </span>
     <mat-progress-spinner 
         class="progress-spinner" 
         [color]="'#BDDBE5'" 

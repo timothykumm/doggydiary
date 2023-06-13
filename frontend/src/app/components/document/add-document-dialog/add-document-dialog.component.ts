@@ -18,6 +18,7 @@ export class AddDocumentDialogComponent {
   @Output() createdDocument = new EventEmitter<DocumentGetResponse>;
 
   progressInPercent = 0;
+  progressText = ''
   file!: File;
 
   document: DocumentPostRequest = {
@@ -31,26 +32,28 @@ export class AddDocumentDialogComponent {
   fileChangeEvent(event: any) {
     //read file
     this.file = event.target.files[0];
-    if(!this.file) return
+    if(!this.file || !this.file.type.startsWith('image/')) return
 
     //create worker
     const worker = createWorker({
       logger: m => this.progressInPercent = (m.progress * 100)
     })
 
-    //extract text and askgpt
+    this.progressText = 'Extracting Text from Image'
+
+    //extract text and ask chatgpt
     this.tensorflowService.extractText(worker, this.file).then(async text => {
       const chatgptResponse = await this.getChatgptResponse(text);
 
-      this.document.title = "In Arbeit";
-      this.document.content = chatgptResponse.choices[0].message.content;
-      this.document.dogId = this.dogId;
-
-      console.log(this.document)
-      console.log(chatgptResponse);
-
+      this.progressText = 'Asking ChatGPT'
+      this.filterDocument(chatgptResponse.choices[0].message.content);
       this.createDocument();
+
+      //reset
       this.progressInPercent = 0;
+      this.progressText = 'Extracting Text from Image'
+    }).catch(e => {
+      this.progressText = 'File format not supported'
     });
   }
 
@@ -69,8 +72,6 @@ export class AddDocumentDialogComponent {
     if(documentId !== undefined) {
     this.passDocumentToParentComponent(Number(documentId), new Date(), this.document.title, this.document.content);
   }
-
-    //this.toggleAddDogModal();
   }
 
   async createDocumentAndNothing(): Promise<string> {
@@ -80,6 +81,25 @@ export class AddDocumentDialogComponent {
         error: (e) => { reject(e); }
       });
     });
+  }
+
+  filterDocument(chatgptResponse: string) {
+    const splittedResponse = chatgptResponse.split('\n')
+
+    if(splittedResponse.length >= 2) {
+    this.document.title = splittedResponse[0].replace('Title:', '');
+
+    for(let i = 1; i < splittedResponse.length; i++) {
+      if(splittedResponse[i].startsWith('Disclaimer:') || splittedResponse[i].startsWith('Note:')) return;
+    this.document.content += '\n' + splittedResponse[i].replace('Summary:', '')
+    }
+
+    }else{
+      this.document.title = "Error in generating Headline";
+      this.document.content = chatgptResponse;
+    }
+
+    this.document.dogId = this.dogId;
   }
 
   passDocumentToParentComponent(documentId: number, date: Date, title: string, content: string) {

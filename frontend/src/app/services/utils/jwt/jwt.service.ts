@@ -11,15 +11,15 @@ export class JwtService {
 
   saveJwtInCookies(authToken: string) {
     const expirationDate = new Date();
-    this.cookieService.set('app-jwt', authToken, new Date(this.#deocdeToken(authToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours() + 24))
+    this.cookieService.set('jwt', authToken, new Date(this.#deocdeToken(authToken)['exp'] * 1000) ?? expirationDate.setHours(expirationDate.getHours() + 24))
   }
 
   removJwtInCookies() {
-    this.cookieService.delete('app-jwt');
+    this.cookieService.delete('jwt');
   }
 
   getJwtFromCookies(): string {
-    return this.cookieService.get('app-jwt');
+    return this.cookieService.get('jwt');
   }
 
   extractClaim(claim: string) {

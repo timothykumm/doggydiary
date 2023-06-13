@@ -80,3 +80,7 @@ button[name="submit"] {
   width: 80px;
   height: 40px;
 }
+
+.dog-image-input {
+  background-color: #212529;
+}

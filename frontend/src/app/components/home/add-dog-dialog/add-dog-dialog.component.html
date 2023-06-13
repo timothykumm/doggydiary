@@ -38,7 +38,7 @@
           <div class="mb-2">
             <label for="recipient-birthdate" class="col-form-label">Birth Date: </label>
           </div>
-          <mat-form-field color="accent">
+          <mat-form-field>
             <input matInput [matDatepicker]="picker" placeholder="Choose a date" name="dog.birthdate" [(ngModel)]="dog.birthdate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker class="mat-datepicker-field" #picker></mat-datepicker>

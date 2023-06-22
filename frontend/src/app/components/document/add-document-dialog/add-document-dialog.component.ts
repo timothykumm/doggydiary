@@ -17,7 +17,7 @@ export class AddDocumentDialogComponent {
   @Input() dogId!: number;
   @Output() createdDocument = new EventEmitter<DocumentGetResponse>;
 
-  progressInPercent = 0;
+  progressInPercent = -1;
   progressText = ''
   file!: File;
 
@@ -27,12 +27,17 @@ export class AddDocumentDialogComponent {
     dogId: 0
   }
 
-  constructor(private documentService: DocumentService, private tensorflowService: TensorflowService, private chatgptService: ChatgptService) {}
+  constructor(private documentService: DocumentService, private tensorflowService: TensorflowService, private chatgptService: ChatgptService) { }
 
   fileChangeEvent(event: any) {
     //read file
     this.file = event.target.files[0];
-    if(!this.file || !this.file.type.startsWith('image/')) return
+    this.progressInPercent = 0; //so that errors can be displayed to user
+
+    if (!this.file || !(this.file.type.startsWith('image/jpeg') || this.file.type.startsWith('image/png'))) {
+      this.progressText = 'File format not supported'
+      return;
+    }
 
     //create worker
     const worker = createWorker({
@@ -43,18 +48,22 @@ export class AddDocumentDialogComponent {
 
     //extract text and ask chatgpt
     this.tensorflowService.extractText(worker, this.file).then(async text => {
-      const chatgptResponse = await this.getChatgptResponse(text);
 
-      this.progressText = 'Asking ChatGPT'
-      this.filterDocument(chatgptResponse.choices[0].message.content);
-      this.createDocument();
+      if (text.length < 10) {
+        this.#setProgressText('Extracted text length is too short')
+        return;
+      }
 
-      //reset
-      this.progressInPercent = 0;
-      this.progressText = 'Extracting Text from Image'
-    }).catch(e => {
-      this.progressText = 'File format not supported'
-    });
+      await this.getChatgptResponse(text).then(chatgptResponse => {
+        this.#setProgressText('Asking ChatGPT')
+        this.filterDocument(chatgptResponse.choices[0].message.content);
+        this.createDocument();
+
+        //reset progress display loading symbol and text
+        this.progressInPercent = -1
+      }).catch(() => this.#setProgressText('Api key is probably invalid.'))
+
+    }).catch(() => this.#setProgressText('Could not extract text from image'))
   }
 
   async getChatgptResponse(input: string): Promise<ChatgptPostResponse> {
@@ -69,9 +78,9 @@ export class AddDocumentDialogComponent {
   async createDocument() {
     const documentId = await this.createDocumentAndNothing();
 
-    if(documentId !== undefined) {
-    this.passDocumentToParentComponent(Number(documentId), new Date(), this.document.title, this.document.content);
-  }
+    if (documentId !== undefined) {
+      this.passDocumentToParentComponent(Number(documentId), new Date(), this.document.title, this.document.content);
+    }
   }
 
   async createDocumentAndNothing(): Promise<string> {
@@ -83,18 +92,22 @@ export class AddDocumentDialogComponent {
     });
   }
 
+  #setProgressText(text: string) {
+    this.progressText = text;
+  }
+
   filterDocument(chatgptResponse: string) {
     const splittedResponse = chatgptResponse.split('\n')
 
-    if(splittedResponse.length >= 2) {
-    this.document.title = splittedResponse[0].replace('Title:', '');
+    if (splittedResponse.length >= 2) {
+      this.document.title = splittedResponse[0].replace('Title:', '');
 
-    for(let i = 1; i < splittedResponse.length; i++) {
-      if(splittedResponse[i].startsWith('Disclaimer:') || splittedResponse[i].startsWith('Note:')) return;
-    this.document.content += '\n' + splittedResponse[i].replace('Summary:', '')
-    }
+      for (let i = 1; i < splittedResponse.length; i++) {
+        if (splittedResponse[i].startsWith('Disclaimer:') || splittedResponse[i].startsWith('Note:')) return;
+        this.document.content += '\n' + splittedResponse[i].replace('Summary:', '')
+      }
 
-    }else{
+    } else {
       this.document.title = "Error in generating Headline";
       this.document.content = chatgptResponse;
     }
@@ -109,7 +122,7 @@ export class AddDocumentDialogComponent {
       date: date,
       title: title,
       content: content
-      
+
     }
 
     this.createdDocument.emit(document);

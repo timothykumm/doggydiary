@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieExpirationInterceptor } from './services/utils/interceptor/cookie-expiration.interceptor';
 import { HomeModule } from './components/home/home.module';
 import { DocumentModule } from './components/document/document.module';
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 
@@ -20,7 +21,8 @@ import { DocumentModule } from './components/document/document.module';
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

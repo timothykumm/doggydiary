@@ -1,4 +1,13 @@
 <div [ngSwitch]="loggedIn">
+    <img class="modal-profile" src="../assets/profile.png" width="50" height="50" (click)="toggleDropdown()"/> 
+
+    <ul [ngClass]="droptownToggled ? 'dropdown-menu show' : 'dropdown-menu'">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+
 <a *ngSwitchCase="false" class="nav-link active" aria-current="page" (click)="toggleLoginModal()"> Login </a>
 <a *ngSwitchCase="true" class="nav-link active" aria-current="page" (click)="logout()"> Logout </a>
 </div>
@@ -15,26 +24,56 @@
             <div class="modal-body">
                 <div class="input-container">
                     <div class="row" [ngSwitch]="userAlreadyHasAccount">
-                        <div class=".col-sm-9" >
 
+                        <div class=".col-sm-9" >
                             <div *ngSwitchCase="true">
-                                <input class="email-input" type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" />
-                                <input class="password-input" type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" />
+
+                                <div class="input">
+                                    <input class="email-input" type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b" />
+                                    <img *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                                </div>
+
+                                <div class="input">
+                                    <input class="password-input" type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" #password="ngModel" required="true" />
+                                    <img *ngIf="password.invalid && (password.dirty || password.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                                </div>
+
                                 <button type="button" class="input-button" data-dismiss="modal"
-                                    (click)="loginOrRegister(1)">Login</button>
+                                    (click)="(email.invalid || password.invalid) ? null : loginOrRegister(1)">Login</button>
                                 <p  class="already-registered-tag" (click)="userAlreadyHasAccount = !userAlreadyHasAccount">Not registered yet?</p>
                             </div>
 
                             <div *ngSwitchCase="false">
                                 <div id="input-register">
-                                <input type="text" [placeholder]="'Forename'" [(ngModel)]="credentials.forename" />
-                                <input type="text" [placeholder]="'Surename'" [(ngModel)]="credentials.surname" />
-                                <input type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" />
-                                <input type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" />
-                                <input type="text" [placeholder]="'OpenAI Api-Key'" [(ngModel)]="credentials.openai" />
+
+                            <div class="input">
+                                <input type="text" [placeholder]="'Forename'" [(ngModel)]="credentials.forename" #forename="ngModel" required="true" />
+                                <img *ngIf="forename.invalid && (forename.dirty || forename.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                            </div>
+
+                            <div class="input">
+                                <input type="text" [placeholder]="'Surename'" [(ngModel)]="credentials.surname" #surename="ngModel" required="true" />
+                                <img *ngIf="surename.invalid && (surename.dirty || surename.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                            </div>
+
+                            <div class="input">
+                                <input type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b"/>
+                                <img *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                            </div>
+
+                            <div class="input">
+                                <input type="password" [placeholder]="'Password'" [(ngModel)]="credentials.password" #password="ngModel" required="true" minlength="1"/>
+                                <img *ngIf="password.invalid && (password.dirty || password.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                            </div>
+
+                            <div class="input">
+                                <input type="text" [placeholder]="'OpenAI Api-Key'" [(ngModel)]="credentials.openai" #apikey="ngModel" pattern="^sk-[A-Za-z0-9]+$" />
+                                <img *ngIf="apikey.invalid && (apikey.dirty || apikey.touched)" class="alert" src="../../assets/input-warning.png" /> 
+                            </div>
+                        
                             </div>
                                 <button type="button" class="input-button" data-dismiss="modal"
-                                    (click)="loginOrRegister(2)">Register</button>
+                                    (click)="(forename.invalid || surename.invalid || email.invalid || password.invalid || apikey.invalid) ? null : loginOrRegister(2)">Register</button>
                                 <p  class="already-registered-tag" (click)="userAlreadyHasAccount = !userAlreadyHasAccount">Already registered?</p>
                             </div>
 

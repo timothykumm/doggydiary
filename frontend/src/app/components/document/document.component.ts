@@ -13,13 +13,13 @@ import { LoginService } from 'src/app/services/utils/login/login.service';
 })
 export class DocumentComponent implements OnInit {
 
-dogId!: number;
-//id of the document that is being edited (only one at a time)
-documentBeingEdited = 0
+  dogId!: number;
+  //id of the document that is being edited (only one at a time)
+  documentBeingEdited = 0
 
-documents: DocumentGetResponse[] = [];
+  documents: DocumentGetResponse[] = [];
 
-constructor(private route: ActivatedRoute, private documentService: DocumentService, private loginService: LoginService) {}
+  constructor(private route: ActivatedRoute, private documentService: DocumentService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -27,16 +27,16 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
     })
 
     this.loginService.onLoginStatusChange().subscribe((loggedIn: boolean) => {
-      this.getAllDocuments(loggedIn) 
+      this.getAllDocuments(loggedIn)
     })
 
     this.getAllDocuments(this.loginService.isLoggedIn());
   }
 
   async getAllDocuments(loggedIn: boolean) {
-    if(loggedIn && this.dogId) {
+    if (loggedIn && this.dogId) {
       this.documents = await this.getAllDocumentsApi(this.dogId);
-    }else{
+    } else {
       this.documents = [];
     }
   }
@@ -47,25 +47,25 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
 
   editDocument(documentId: number, editableSpanTitle: string | null, editableSpanContent: string | null) {
 
-    if(editableSpanTitle && editableSpanContent) {
-          const documentRequest: DocumentPostRequest = {
-            title: editableSpanTitle,
-            content: editableSpanContent,
-            dogId: this.dogId
-          }
-    
-          this.editDocumentApi(documentId, documentRequest);
-        }
+    if (editableSpanTitle && editableSpanContent) {
+      const documentRequest: DocumentPostRequest = {
+        title: editableSpanTitle,
+        content: editableSpanContent,
+        dogId: this.dogId
+      }
+
+      this.editDocumentApi(documentId, documentRequest);
+    }
   }
 
   deleteDocument(documentId: number, dogId: number) {
-          this.documents = this.documents.filter((doc) => doc.id !== documentId);
-          this.deleteDocumentApi(documentId, dogId);
+    this.documents = this.documents.filter((doc) => doc.id !== documentId);
+    this.deleteDocumentApi(documentId, dogId);
   }
 
   async toggleEdit(document: DocumentGetResponse, editableSpanTitle: string | null, editableSpanContent: string | null) {
-    
-    if(document.id === this.documentBeingEdited) {
+
+    if (document.id === this.documentBeingEdited) {
       this.editDocument(document.id, editableSpanTitle, editableSpanContent);
       this.documentBeingEdited = 0;
       return;

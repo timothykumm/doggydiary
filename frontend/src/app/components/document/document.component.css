@@ -18,7 +18,12 @@
   font-size: medium;
 }
 
-.combine {
+.combine-row {
   display: flex;
   flex-direction: row;
+}
+
+.trash-icon {
+  width: 20px;
+  height: 20px; 
 }

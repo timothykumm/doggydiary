@@ -1,21 +1,32 @@
 <main role="main" class="container" *ngFor="let document of documents">
 
-    <div class="my-3 p-3 bg-white rounded box-shadow" (click)="isDocumentBeingEdited(document) ? null : toggleDocument(document)">
-      <div class="combine">
-      <h6 class="border-gray pb-2 mb-0" [id]="'border-bottom-' + document.id" [contentEditable]="isDocumentBeingEdited(document)" #editableSpanTitle> {{  document.title  }} </h6>
+  <div class="my-3 p-3 bg-white rounded box-shadow"
+    (click)="isDocumentBeingEdited(document) ? null : toggleDocument(document)">
+    <div class="combine-row">
+      <h6 class="border-gray pb-2 mb-0" [id]="'border-bottom-' + document.id"
+        [contentEditable]="isDocumentBeingEdited(document)" #editableSpanTitle> {{ document.title }} </h6>
       <h6 class="border-gray pb-2 mb-0"> &nbsp;- {{ document.date | date : 'dd.MM.YYYY' }} </h6>
     </div>
-      <div class="media text-muted pt-3" [id]="'media-text-' + document.id">
-        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" [id]="'media-body-' + document.id">
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <strong class="text-gray-dark">Summary</strong>
-            <a (click)="toggleEdit(document, editableSpanTitle.textContent, editableSpanContent.textContent)" [text]="isDocumentBeingEdited(document) ? 'Save' : 'Edit'"></a>
-            <a (click)="deleteDocument(document.id, dogId)" [text]="'Del'"></a>
+    <div class="media text-muted pt-3" [id]="'media-text-' + document.id">
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray" [id]="'media-body-' + document.id">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <strong class="text-gray-dark">Summary</strong>
+          <div class="combine-row">
+            <a (click)="toggleEdit(document, editableSpanTitle.textContent, editableSpanContent.textContent)"
+              [text]="isDocumentBeingEdited(document) ? 'Save' : 'Edit'"></a>
+
+              <svg class="trash-icon" xmlns="http://www.w3.org/2000/svg" (click)="deleteDocument(document.id, dogId)" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 7h-4V6a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v1H3v2h18V7zm-4 0H7M8 12v7a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-7M4 7h16" />
+              </svg>
+              
           </div>
-          <span [contentEditable]="isDocumentBeingEdited(document)"  #editableSpanContent class="d-block">{{ document.content }}</span>
         </div>
+        <span [contentEditable]="isDocumentBeingEdited(document)" #editableSpanContent class="d-block">{{
+          document.content }}</span>
       </div>
     </div>
-  </main>
+  </div>
+</main>
 
-<ddr-add-document-dialog [dogId]="dogId" (createdDocument)="addDocumentFromChildComponent($event)"></ddr-add-document-dialog>
+<ddr-add-document-dialog [dogId]="dogId"
+  (createdDocument)="addDocumentFromChildComponent($event)"></ddr-add-document-dialog>

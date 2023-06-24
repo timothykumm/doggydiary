@@ -36,4 +36,10 @@ public class DocumentController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @DeleteMapping
+    ResponseEntity<Void> deleteDocument(@RequestParam(name = "documentId") Long documentId, @RequestParam(name = "dogId") Long dogId) {
+        documentService.deleteDocument(documentId, dogId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

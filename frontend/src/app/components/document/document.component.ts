@@ -27,54 +27,46 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
     })
 
     this.loginService.onLoginStatusChange().subscribe((loggedIn: boolean) => {
-      this.refreshDocumentList(loggedIn) 
+      this.getAllDocuments(loggedIn) 
     })
 
-    this.refreshDocumentList(this.loginService.isLoggedIn());
+    this.getAllDocuments(this.loginService.isLoggedIn());
   }
 
-  async refreshDocumentList(loggedIn: boolean) {
+  async getAllDocuments(loggedIn: boolean) {
     if(loggedIn && this.dogId) {
-      this.documents = await this.getAllDocuments(this.dogId);
+      this.documents = await this.getAllDocumentsApi(this.dogId);
     }else{
       this.documents = [];
     }
-  }
-
-  async getAllDocuments(dogid: number): Promise<DocumentGetResponse[]> {
-    return new Promise<DocumentGetResponse[]>((resolve, reject) => {
-      this.documentService.getAllDocuments(dogid).subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
-  }
-
-  async editDocument(documentId: number, document: DocumentPostRequest): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.documentService.editDocument(documentId, document).subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
   }
 
   addDocumentFromChildComponent(document: DocumentGetResponse) {
     this.documents = [...this.documents, document];
   }
 
+  editDocument(documentId: number, editableSpanTitle: string | null, editableSpanContent: string | null) {
+
+    if(editableSpanTitle && editableSpanContent) {
+          const documentRequest: DocumentPostRequest = {
+            title: editableSpanTitle,
+            content: editableSpanContent,
+            dogId: this.dogId
+          }
+    
+          this.editDocumentApi(documentId, documentRequest);
+        }
+  }
+
+  deleteDocument(documentId: number, dogId: number) {
+          this.documents = this.documents.filter((doc) => doc.id !== documentId);
+          this.deleteDocumentApi(documentId, dogId);
+  }
+
   async toggleEdit(document: DocumentGetResponse, editableSpanTitle: string | null, editableSpanContent: string | null) {
     
-    if(document.id === this.documentBeingEdited && editableSpanTitle && editableSpanContent) {
-      //send put request to server
-      const documentRequest: DocumentPostRequest = {
-        title: editableSpanTitle,
-        content: editableSpanContent,
-        dogId: this.dogId
-      }
-
-      this.editDocument(document.id, documentRequest);
-      
+    if(document.id === this.documentBeingEdited) {
+      this.editDocument(document.id, editableSpanTitle, editableSpanContent);
       this.documentBeingEdited = 0;
       return;
     }
@@ -96,6 +88,33 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
 
   isDocumentBeingEdited(document: DocumentGetResponse) {
     return document.id === this.documentBeingEdited;
+  }
+
+  async getAllDocumentsApi(dogid: number): Promise<DocumentGetResponse[]> {
+    return new Promise<DocumentGetResponse[]>((resolve, reject) => {
+      this.documentService.getAllDocuments(dogid).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
+  async editDocumentApi(documentId: number, document: DocumentPostRequest): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.documentService.editDocument(documentId, document).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
+  async deleteDocumentApi(documentId: number, dogId: number): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.documentService.deleteDocument(documentId, dogId).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
   }
 
 }

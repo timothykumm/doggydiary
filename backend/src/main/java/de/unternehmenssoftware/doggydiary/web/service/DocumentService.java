@@ -50,10 +50,23 @@ public class DocumentService {
                 .orElseThrow(DocumentNotFoundException::new);
 
         documentEntity.setTitle(documentRequest.title());
+        System.out.println(documentRequest.title());
         documentEntity.setContent(documentRequest.content());
 
         try {
             documentRepository.save(documentEntity);
+        }catch (IllegalArgumentException e) {
+            throw new DocumentEditException();
+        }
+    }
+
+    public void deleteDocument(Long documentId, Long dogId) {
+        UserEntity authenticatedUser = authService.getAuthenticatedUserEntity();
+        DocumentEntity documentEntity = documentRepository.getDocumentByUserAndDogId(authenticatedUser.getEmail(), documentId, dogId)
+                .orElseThrow(DocumentNotFoundException::new);
+
+        try {
+            documentRepository.delete(documentEntity);
         }catch (IllegalArgumentException e) {
             throw new DocumentEditException();
         }

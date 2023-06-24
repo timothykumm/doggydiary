@@ -18,3 +18,7 @@
   font-size: medium;
 }
 
+.combine {
+  display: flex;
+  flex-direction: row;
+}

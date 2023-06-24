@@ -49,4 +49,15 @@ export class DocumentService {
   return this.http.put(this.url + "?documentId=" + documentId, documentPostRequest, httpOptions)
   }
 
+  deleteDocument(documentId: number, dogId: number): Observable<any> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies()
+      })
+    };
+
+  return this.http.delete(this.url + "?documentId=" + documentId + "&dogId=" + dogId, httpOptions)
+  }
+
 }

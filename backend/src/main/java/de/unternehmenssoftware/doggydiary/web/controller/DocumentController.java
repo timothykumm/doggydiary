@@ -20,7 +20,7 @@ public class DocumentController {
     private final DocumentService documentService;
 
     @GetMapping
-    ResponseEntity<List<Document>> getDocuments(@RequestParam("dogId") String dogId) {
+    ResponseEntity<List<Document>> getDocuments(@RequestParam("dogId") Long dogId) {
         return ResponseEntity.ok(documentService.getAllDocumentsByDog(dogId));
     }
 
@@ -28,6 +28,12 @@ public class DocumentController {
     ResponseEntity<String> postDocument(@Valid @RequestBody DocumentRequest documentRequest) {
         Document document = documentService.createDocument(documentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(document.getId().toString());
+    }
+
+    @PutMapping
+    ResponseEntity<Void> putDocument(@RequestParam(name = "documentId") Long documentId, @Valid @RequestBody DocumentRequest documentRequest) {
+        documentService.putDocument(documentId, documentRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

@@ -6,6 +6,8 @@ import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
 import de.unternehmenssoftware.doggydiary.web.exception.DocumentCreateException;
+import de.unternehmenssoftware.doggydiary.web.exception.DocumentEditException;
+import de.unternehmenssoftware.doggydiary.web.exception.DocumentNotFoundException;
 import de.unternehmenssoftware.doggydiary.web.exception.DogNotFoundException;
 import de.unternehmenssoftware.doggydiary.web.repository.DocumentRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
@@ -23,7 +25,7 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final DogRepository dogRepository;
 
-    public List<Document> getAllDocumentsByDog(String dogId) {
+    public List<Document> getAllDocumentsByDog(Long dogId) {
         String email = authService.getAuthenticatedUser().getEmail();
 
         return documentRepository.getDocumentsByUserAndDogId(email, dogId).stream().map(DocumentEntity::transformToDocument).toList();
@@ -40,6 +42,21 @@ public class DocumentService {
             throw new DocumentCreateException();
         }
         return documentEntity.transformToDocument();
+    }
+
+    public void putDocument(Long documentId, DocumentRequest documentRequest) {
+        UserEntity authenticatedUser = authService.getAuthenticatedUserEntity();
+        DocumentEntity documentEntity = documentRepository.getDocumentByUserAndDogId(authenticatedUser.getEmail(), documentId, documentRequest.dogId())
+                .orElseThrow(DocumentNotFoundException::new);
+
+        documentEntity.setTitle(documentRequest.title());
+        documentEntity.setContent(documentRequest.content());
+
+        try {
+            documentRepository.save(documentEntity);
+        }catch (IllegalArgumentException e) {
+            throw new DocumentEditException();
+        }
     }
 
 }

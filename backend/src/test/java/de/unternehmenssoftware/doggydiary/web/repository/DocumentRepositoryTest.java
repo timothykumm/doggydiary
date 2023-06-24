@@ -34,7 +34,7 @@ class DocumentRepositoryTest {
         DogEntity savedDog = dogRepository.save(dog);
         documentRepository.save(document);
 
-        List<DocumentEntity> documents = documentRepository.getDocumentsByUserAndDogId(user.getEmail(), savedDog.getId().toString());
+        List<DocumentEntity> documents = documentRepository.getDocumentsByUserAndDogId(user.getEmail(), savedDog.getId());
 
         assertEquals(documents.size(), 1);
     }

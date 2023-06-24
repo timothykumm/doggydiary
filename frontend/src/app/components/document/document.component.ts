@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy } from '@angular/compiler';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DocumentPostRequest } from 'src/app/models/api/request/document/DocumentPostRequest';
 import { DocumentGetResponse } from 'src/app/models/api/response/document/DocumentGetResponse';
 import { DocumentService } from 'src/app/services/api/document/document.service';
 import { LoginService } from 'src/app/services/utils/login/login.service';
@@ -12,9 +13,11 @@ import { LoginService } from 'src/app/services/utils/login/login.service';
 })
 export class DocumentComponent implements OnInit {
 
-documents: DocumentGetResponse[] = [];
-
 dogId!: number;
+//id of the document that is being edited (only one at a time)
+documentBeingEdited = 0
+
+documents: DocumentGetResponse[] = [];
 
 constructor(private route: ActivatedRoute, private documentService: DocumentService, private loginService: LoginService) {}
 
@@ -47,8 +50,36 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
     });
   }
 
+  async editDocument(documentId: number, document: DocumentPostRequest): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.documentService.editDocument(documentId, document).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
   addDocumentFromChildComponent(document: DocumentGetResponse) {
     this.documents = [...this.documents, document];
+  }
+
+  async toggleEdit(document: DocumentGetResponse, editableSpanTitle: string | null, editableSpanContent: string | null) {
+    
+    if(document.id === this.documentBeingEdited && editableSpanTitle && editableSpanContent) {
+      //send put request to server
+      const documentRequest: DocumentPostRequest = {
+        title: editableSpanTitle,
+        content: editableSpanContent,
+        dogId: this.dogId
+      }
+
+      this.editDocument(document.id, documentRequest);
+      
+      this.documentBeingEdited = 0;
+      return;
+    }
+
+    this.documentBeingEdited = document.id;
   }
 
   toggleDocument(document: DocumentGetResponse) {
@@ -61,7 +92,10 @@ constructor(private route: ActivatedRoute, private documentService: DocumentServ
       mediaBody.style.display === '' ? mediaBody.style.display = 'block' : mediaBody.style.display = '';
       !borderButtom.classList.contains('border-bottom') ? borderButtom.classList.add('border-bottom') : borderButtom.classList.remove('border-bottom');
     }
+  }
 
+  isDocumentBeingEdited(document: DocumentGetResponse) {
+    return document.id === this.documentBeingEdited;
   }
 
 }

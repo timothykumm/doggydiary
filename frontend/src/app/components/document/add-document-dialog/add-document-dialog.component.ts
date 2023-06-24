@@ -113,6 +113,7 @@ export class AddDocumentDialogComponent {
     }
 
     this.document.dogId = this.dogId;
+    console.log(chatgptResponse)
   }
 
   passDocumentToParentComponent(documentId: number, date: Date, title: string, content: string) {

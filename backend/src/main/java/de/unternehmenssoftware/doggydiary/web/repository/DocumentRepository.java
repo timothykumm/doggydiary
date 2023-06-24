@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends CrudRepository<DocumentEntity, Long> {
@@ -19,6 +20,11 @@ public interface DocumentRepository extends CrudRepository<DocumentEntity, Long>
                     "join dogs as dog on dog.id = doc.dog.id " +
                     "join users as us on dog.user.email = us.email " +
                     "where us.email = :email AND dog.id = :dogId")
-    List<DocumentEntity> getDocumentsByUserAndDogId(@Param("email") String email, @Param("dogId") String dogId);
+    List<DocumentEntity> getDocumentsByUserAndDogId(@Param("email") String email, @Param("dogId") Long dogId);
 
+    @Query(value = "SELECT doc from documents as doc " +
+            "join dogs as dog on dog.id = doc.dog.id " +
+            "join users as us on dog.user.email = us.email " +
+            "where us.email = :email AND doc.id = :documentId AND dog.id = :dogId")
+    Optional<DocumentEntity> getDocumentByUserAndDogId(@Param("email") String email, @Param("documentId") Long documentId, @Param("dogId") Long dogId);
 }

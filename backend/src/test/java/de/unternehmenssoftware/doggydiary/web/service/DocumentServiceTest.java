@@ -54,9 +54,9 @@ class DocumentServiceTest {
                 new DocumentEntity(Mockito.mock(Date.class), "Titel2", "Content2", Mockito.mock(DogEntity.class)));
 
         when(authService.getAuthenticatedUser()).thenReturn(user);
-        when(documentRepository.getDocumentsByUserAndDogId(Mockito.anyString(), Mockito.anyString())).thenReturn(documentEntities);
+        when(documentRepository.getDocumentsByUserAndDogId(Mockito.anyString(), Mockito.anyLong())).thenReturn(documentEntities);
 
-        List<Document> documents = documentService.getAllDocumentsByDog("12345");
+        List<Document> documents = documentService.getAllDocumentsByDog(12345L);
 
         assertEquals(documents, documentEntities.stream().map(DocumentEntity::transformToDocument).toList());
     }

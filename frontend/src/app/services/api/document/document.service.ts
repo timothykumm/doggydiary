@@ -37,4 +37,16 @@ export class DocumentService {
     return this.http.post(this.url, documentPostRequest, {...httpOptions, responseType: "text"})
   }
 
+  editDocument(documentId: number, documentPostRequest: DocumentPostRequest): Observable<any> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies(),
+        'Content-Type': 'application/json'
+      })
+    };
+
+  return this.http.put(this.url + "?documentId=" + documentId, documentPostRequest, httpOptions)
+  }
+
 }

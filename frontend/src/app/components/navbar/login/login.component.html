@@ -5,8 +5,8 @@
     <div class="big-device" *ngSwitchCase="true">
         <img class="modal-profile" src="../assets/profile.png" width="50" height="50" (click)="toggleDropdown()" />
         <ul [ngClass]="droptownToggled ? 'dropdown-menu show left' : 'dropdown-menu left'">
-            <li><a class="dropdown-item" aria-current="page" [routerLink]="['/settings']"> Settings </a></li>
-            <li><a class="dropdown-item" aria-current="page" (click)="logout()"> Logout </a></li>
+            <li><a class="dropdown-item" aria-current="page" (click)="toggleDropdown()" [routerLink]="['/settings']"> Settings </a></li>
+            <li><a class="dropdown-item" aria-current="page" (click)="logout()" (click)="toggleDropdown()"> Logout </a></li>
         </ul>
     </div>
 
@@ -33,7 +33,7 @@
                             <div *ngSwitchCase="true">
 
                                 <div class="input">
-                                    <input class="email-input" type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b" />
+                                    <input class="email-input" type="email" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b" />
                                     <img *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" src="../../assets/input-warning.png" /> 
                                 </div>
 
@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="input">
-                                <input type="text" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b"/>
+                                <input type="email" [placeholder]="'Email'" [(ngModel)]="credentials.email" #email="ngModel" required="true" pattern="\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b"/>
                                 <img *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" src="../../assets/input-warning.png" /> 
                             </div>
 

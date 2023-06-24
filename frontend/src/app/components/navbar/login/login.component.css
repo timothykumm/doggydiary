@@ -36,7 +36,8 @@
   }
 
   input[type="text"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="email"] {
     margin-bottom: 5%;
     background-color: #212529;
     color: white;

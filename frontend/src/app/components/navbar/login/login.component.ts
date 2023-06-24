@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit{
   loggedIn = false;
   droptownToggled = false;
   userAlreadyHasAccount: boolean = true; 
+  @Output() toggleNavbar = new EventEmitter<void>;
 
   credentials: AuthenticationPostRequest = {
     email: '',
@@ -43,20 +44,27 @@ export class LoginComponent implements OnInit{
     if(await this.loginService.loginOrRegisterAndFetchJwt(this.credentials, mode)) {
       this.toggleLoginModal();
       this.setLoginStatus(true);
+      this.toggleNavbarFromParentComponent();
       return;
     } 
+
     console.log("Could not authenticate")
   }
 
    logout() : void {
       this.loginService.logout();
       this.setLoginStatus(false);
+      this.toggleNavbarFromParentComponent();
       this.toggleDropdown();
   }
 
   setLoginStatus(status: boolean) {
     this.loggedIn = status;
     this.loginService.setLoginStatus(status);
+  }
+
+  toggleNavbarFromParentComponent() {
+    this.toggleNavbar.emit();
   }
 
 }

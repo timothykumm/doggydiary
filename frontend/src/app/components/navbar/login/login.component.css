@@ -51,15 +51,45 @@
   }
 
 
-.alert {
-  position: absolute;
-  right: -10px;
-  top: -9px;
-  width: 70px;
-  height: 70px;
-}
+  .alert {
+    position: absolute;
+    right: -10px;
+    top: -9px;
+    width: 70px;
+    height: 70px;
+  }
 
-.input {
-  position: relative;
-}
+  .input {
+    position: relative;
+  }
 
+  .dropdown-menu.left {
+    right: 0;
+    background-color: #212529;
+    border-color: #5b9aad;
+  }
+
+  .dropdown-item {
+    color: white;
+    background-color: #212529;
+  }
+
+  @media (max-width: 992px) {
+    .small-device {
+      display: block;
+    }
+
+    .big-device {
+      display: none;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .small-device {
+      display: none;
+    }
+
+    .big-device {
+      display: block;
+    }
+  }

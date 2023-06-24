@@ -1,15 +1,19 @@
 <div [ngSwitch]="loggedIn">
-    <img class="modal-profile" src="../assets/profile.png" width="50" height="50" (click)="toggleDropdown()"/> 
 
-    <ul [ngClass]="droptownToggled ? 'dropdown-menu show' : 'dropdown-menu'">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
+    <a *ngSwitchCase="false" class="nav-link active" aria-current="page" (click)="toggleLoginModal()"> Login </a>
 
-<a *ngSwitchCase="false" class="nav-link active" aria-current="page" (click)="toggleLoginModal()"> Login </a>
-<a *ngSwitchCase="true" class="nav-link active" aria-current="page" (click)="logout()"> Logout </a>
+    <div class="big-device" *ngSwitchCase="true">
+        <img class="modal-profile" src="../assets/profile.png" width="50" height="50" (click)="toggleDropdown()" />
+        <ul [ngClass]="droptownToggled ? 'dropdown-menu show left' : 'dropdown-menu left'">
+            <li><a class="dropdown-item" aria-current="page" [routerLink]="['/settings']"> Settings </a></li>
+            <li><a class="dropdown-item" aria-current="page" (click)="logout()"> Logout </a></li>
+        </ul>
+    </div>
+
+    <div class="small-device" *ngSwitchCase="true">
+        <a class="nav-link active" aria-current="page" [routerLink]="['/settings']"> Settings </a>
+        <a class="nav-link" aria-current="page" (click)="logout()"> Logout </a>
+    </div>
 </div>
 
 <div class="modal fade show" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">

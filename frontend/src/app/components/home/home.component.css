@@ -27,16 +27,26 @@
   }
 }
 
-.card-name {
-  color: black;
-  font-size: 400%;
-  font-family: fantasy;
+.card-img-overlay {
   padding-left: 10%;
   padding-top: 20%;
+}
+
+.card-name {
+  color: rgb(0, 0, 0);
+  font-size: 400%;
+  font-family: fantasy;
+  background: linear-gradient(to right, #8bc27da9, #ffffff00);
+  display: inline-flex;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .card-birthday {
   color: black;
   font-size: 150%;
   font-family: fantasy;
+  background: linear-gradient(to right, #40aaf183, #ffffff00);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }

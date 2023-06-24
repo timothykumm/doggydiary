@@ -4,8 +4,8 @@
       <div class="card bg-dark text-white card-max-size" (click)="navigateToDog(dog)">
         <img src={{dog.img}} class="card-img" data-id={{dog.id}}>
         <div class="card-img-overlay">
-          <h6 class="card-name"> {{ dog.name }}</h6>
-          <h6 class="card-birthday"> Birthdate: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </h6>
+          <h1 class="card-name"> {{ dog.name }}</h1>
+          <h1 class="card-birthday"> Birthdate: {{ dog.birthdate | date : 'dd.MM.YYYY' }} </h1>
         </div>
       </div>
     </div>

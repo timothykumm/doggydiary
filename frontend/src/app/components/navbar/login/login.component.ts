@@ -11,6 +11,7 @@ import { Mode } from '../../../models/api/request/authentication/MODE';
 export class LoginComponent implements OnInit{
 
   loggedIn = false;
+  droptownToggled = false;
   userAlreadyHasAccount: boolean = true; 
 
   credentials: AuthenticationPostRequest = {
@@ -34,6 +35,10 @@ export class LoginComponent implements OnInit{
     }
   }
 
+  toggleDropdown(): void {
+    this.droptownToggled = !this.droptownToggled;
+  }
+
   async loginOrRegister(mode: Mode) : Promise<void> {
     if(await this.loginService.loginOrRegisterAndFetchJwt(this.credentials, mode)) {
       this.toggleLoginModal();
@@ -46,6 +51,7 @@ export class LoginComponent implements OnInit{
    logout() : void {
       this.loginService.logout();
       this.setLoginStatus(false);
+      this.toggleDropdown();
   }
 
   setLoginStatus(status: boolean) {

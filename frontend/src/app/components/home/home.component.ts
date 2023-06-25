@@ -18,27 +18,18 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.loginService.onLoginStatusChange().subscribe((loggedIn: boolean) => {
-          this.refreshDogList(loggedIn);
+          this.getAllDogs(loggedIn);
     })
 
-    this.refreshDogList(this.loginService.isLoggedIn());
+    this.getAllDogs(this.loginService.isLoggedIn());
   }
 
-  async refreshDogList(loggedIn: boolean) {
+  async getAllDogs(loggedIn: boolean) {
     if(loggedIn) {
-      this.dogs = await this.getAllDogs();
+      this.dogs = await this.getAllDogsApi();
     }else{
       this.dogs = [];
     }
-  }
-
-  async getAllDogs(): Promise<DogGetResponse[]> {
-    return new Promise<DogGetResponse[]>((resolve, reject) => {
-      this.dogService.getAllDogs().subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
   }
 
   addDogFromChildComponent(dog: DogGetResponse) {
@@ -47,6 +38,15 @@ export class HomeComponent implements OnInit {
 
   navigateToDog(dog: DogGetResponse) {
     this.router.navigate(['dog'], { queryParams: { id: dog.id } })
+  }
+
+  async getAllDogsApi(): Promise<DogGetResponse[]> {
+    return new Promise<DogGetResponse[]>((resolve, reject) => {
+      this.dogService.getAllDogs().subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
   }
 
 }

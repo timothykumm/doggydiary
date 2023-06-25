@@ -40,22 +40,13 @@ constructor(private dogService: DogService, private classifierService: Classifie
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
-  imageLoaded(image: LoadedImage) {
-    // show cropper
-  }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
 
   async createDogAndUploadPic() {
-    const dogId = await this.createDog();
+    const dogId = await this.createDogApi();
 
     if(dogId !== undefined && this.croppedImage !== '') {
     const file: File = this.convertImgService.convertBase64ToMultipartFile(this.croppedImage);
-    const img = await this.uploadProfilePic(dogId, file);
+    const img = await this.uploadProfilePicApi(dogId, file);
     this.passDogToParentComponent(Number(dogId), this.dog.name, this.dog.breed, this.dog.birthdate, img);
     console.log(img)
   }
@@ -65,19 +56,10 @@ constructor(private dogService: DogService, private classifierService: Classifie
   async detectDogBreed() {
     if(this.croppedImage !== '') {
       const file: File = this.convertImgService.convertBase64ToMultipartFile(this.croppedImage);
-      const classifiedDog = await this.classifyDog(file);
+      const classifiedDog = await this.classifyDogApi(file);
       console.log('Classified Dog: ' + classifiedDog)
       this.dog.breed = classifiedDog;
     }
-  }
-
-  async createDog(): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      this.dogService.createDog(this.dog).subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
   }
 
   passDogToParentComponent(dogId: number, name: string, breed: string, birthdate: Date, img: string) {
@@ -93,7 +75,7 @@ constructor(private dogService: DogService, private classifierService: Classifie
     this.createdDog.emit(dog);
   }
 
-  async uploadProfilePic(dogId: string, file: File): Promise<any> {
+  async uploadProfilePicApi(dogId: string, file: File): Promise<any> {
     return new Promise<string>((resolve, reject) => {
       this.dogService.postDogProfilePic(dogId, file).subscribe({
         next: (r) => { resolve(r); },
@@ -102,7 +84,16 @@ constructor(private dogService: DogService, private classifierService: Classifie
     });
   }
 
-  async classifyDog(file: File): Promise<any> {
+  async createDogApi(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.dogService.createDog(this.dog).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
+  async classifyDogApi(file: File): Promise<any> {
     return new Promise<string>((resolve, reject) => {
       this.classifierService.getDogClassification(file).subscribe({
         next: (r) => { resolve(r); },

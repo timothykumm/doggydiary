@@ -5,7 +5,7 @@ import { DocumentGetResponse } from 'src/app/models/api/response/document/Docume
 import { ChatgptService } from 'src/app/services/api/chatgpt/chatgpt.service';
 import { DocumentService } from 'src/app/services/api/document/document.service';
 import { TensorflowService } from 'src/app/services/utils/tensorflow/tensorflow.service';
-import { createWorker, PSM, OEM } from 'tesseract.js';
+import { createWorker } from 'tesseract.js';
 
 @Component({
   selector: 'ddr-add-document-dialog',
@@ -54,7 +54,7 @@ export class AddDocumentDialogComponent {
         return;
       }
 
-      await this.getChatgptResponse(text).then(chatgptResponse => {
+      await this.getChatgptResponseApi(text).then(chatgptResponse => {
         this.#setProgressText('Asking ChatGPT')
         this.filterDocument(chatgptResponse.choices[0].message.content);
         this.createDocument();
@@ -66,30 +66,13 @@ export class AddDocumentDialogComponent {
     }).catch(() => this.#setProgressText('Could not extract text from image'))
   }
 
-  async getChatgptResponse(input: string): Promise<ChatgptPostResponse> {
-    return new Promise<ChatgptPostResponse>((resolve, reject) => {
-      this.chatgptService.getResponseToQuestion(input).subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
-  }
-
   async createDocument() {
-    const documentId = await this.createDocumentAndNothing();
+    const documentId = await this.createDocumentApi();
 
     if (documentId !== undefined) {
       this.passDocumentToParentComponent(Number(documentId), new Date(), this.document.title, this.document.content);
+      this.resetDocument();
     }
-  }
-
-  async createDocumentAndNothing(): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      this.documentService.createDocument(this.document).subscribe({
-        next: (r) => { resolve(r); },
-        error: (e) => { reject(e); }
-      });
-    });
   }
 
   #setProgressText(text: string) {
@@ -113,7 +96,11 @@ export class AddDocumentDialogComponent {
     }
 
     this.document.dogId = this.dogId;
-    console.log(chatgptResponse)
+  }
+
+  resetDocument() {
+    this.document.title = '';
+    this.document.content = '';
   }
 
   passDocumentToParentComponent(documentId: number, date: Date, title: string, content: string) {
@@ -127,6 +114,24 @@ export class AddDocumentDialogComponent {
     }
 
     this.createdDocument.emit(document);
+  }
+
+  async getChatgptResponseApi(input: string): Promise<ChatgptPostResponse> {
+    return new Promise<ChatgptPostResponse>((resolve, reject) => {
+      this.chatgptService.getResponseToQuestion(input).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+
+  async createDocumentApi(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.documentService.createDocument(this.document).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
   }
 
 }

@@ -1,14 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DocumentComponent } from './document.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AddDocumentDialogComponent } from './add-document-dialog/add-document-dialog.component';
 
-describe('DoginnerviewComponent', () => {
+describe('DocumentComponent', () => {
   let component: DocumentComponent;
   let fixture: ComponentFixture<DocumentComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DocumentComponent]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule],
+      declarations: [
+        DocumentComponent,
+      AddDocumentDialogComponent]
     });
     fixture = TestBed.createComponent(DocumentComponent);
     component = fixture.componentInstance;

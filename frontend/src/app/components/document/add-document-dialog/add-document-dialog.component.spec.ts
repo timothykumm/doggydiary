@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddDocumentDialogComponent } from './add-document-dialog.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddDocumentDialogComponent', () => {
   let component: AddDocumentDialogComponent;
@@ -8,6 +9,7 @@ describe('AddDocumentDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [AddDocumentDialogComponent]
     });
     fixture = TestBed.createComponent(AddDocumentDialogComponent);

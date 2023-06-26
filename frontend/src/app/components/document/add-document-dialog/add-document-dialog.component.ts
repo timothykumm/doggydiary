@@ -54,8 +54,9 @@ export class AddDocumentDialogComponent {
         return;
       }
 
+      this.#setProgressText('Asking ChatGPT')
+      
       await this.getChatgptResponseApi(text).then(chatgptResponse => {
-        this.#setProgressText('Asking ChatGPT')
         this.filterDocument(chatgptResponse.choices[0].message.content);
         this.createDocument();
 
@@ -86,7 +87,6 @@ export class AddDocumentDialogComponent {
       this.document.title = splittedResponse[0].replace('Title:', '');
 
       for (let i = 1; i < splittedResponse.length; i++) {
-        if (splittedResponse[i].startsWith('Disclaimer:') || splittedResponse[i].startsWith('Note:')) return;
         this.document.content += '\n' + splittedResponse[i].replace('Summary:', '')
       }
 

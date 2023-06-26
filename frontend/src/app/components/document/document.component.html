@@ -1,8 +1,7 @@
 <main role="main" class="container" *ngFor="let document of documents">
 
-  <div class="my-3 p-3 bg-white rounded box-shadow"
-    (click)="isDocumentBeingEdited(document) ? null : toggleDocument(document)">
-    <div class="combine-row">
+  <div class="my-3 p-3 bg-white rounded box-shadow">
+    <div class="combine-row" (click)="isDocumentBeingEdited(document) ? null : toggleDocument(document)">
       <h6 class="border-gray pb-2 mb-0" [id]="'border-bottom-' + document.id"
         [contentEditable]="isDocumentBeingEdited(document)" #editableSpanTitle> {{ document.title }} </h6>
       <h6 class="border-gray pb-2 mb-0"> &nbsp;- {{ document.date | date : 'dd.MM.YYYY' }} </h6>
@@ -21,8 +20,8 @@
               
           </div>
         </div>
-        <span [contentEditable]="isDocumentBeingEdited(document)" #editableSpanContent class="d-block">{{
-          document.content }}</span>
+        <pre [contentEditable]="isDocumentBeingEdited(document)" #editableSpanContent class="d-block">{{
+          document.content }}</pre>
       </div>
     </div>
   </div>

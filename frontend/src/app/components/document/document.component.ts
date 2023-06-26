@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy } from '@angular/compiler';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentPostRequest } from 'src/app/models/api/request/document/DocumentPostRequest';
 import { DocumentGetResponse } from 'src/app/models/api/response/document/DocumentGetResponse';

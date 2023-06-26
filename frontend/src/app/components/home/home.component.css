@@ -27,14 +27,8 @@
   }
 }
 
-.card-img-overlay {
-  padding-left: 10%;
-  padding-top: 20%;
-}
-
 .card-name {
   color: rgb(0, 0, 0);
-  font-size: 400%;
   font-family: fantasy;
   background: linear-gradient(to right, #8bc27da9, #ffffff00);
   display: inline-flex;
@@ -44,9 +38,35 @@
 
 .card-birthday {
   color: black;
-  font-size: 150%;
   font-family: fantasy;
   background: linear-gradient(to right, #40aaf183, #ffffff00);
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+}
+
+.card-img-overlay {
+  padding-left: 10%;
+  padding-top: 20%;
+}
+
+@media (min-width: 400px) {
+
+  .card-name {
+    font-size: 400%;
+  }
+
+  .card-birthday {
+    font-size: 150%;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .card-name {
+    font-size: 200%;
+  }
+
+  .card-birthday {
+    font-size: 100%;
+  }
 }

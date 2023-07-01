@@ -87,7 +87,7 @@ export class AddDocumentDialogComponent {
       this.document.title = splittedResponse[0].replace('Title:', '');
 
       for (let i = 1; i < splittedResponse.length; i++) {
-        this.document.content += '\n' + splittedResponse[i].replace('Summary:', '')
+        this.document.content += splittedResponse[i].replace('Summary:', '').trimStart() + '\n'
       }
 
     } else {

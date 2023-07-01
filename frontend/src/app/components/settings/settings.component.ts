@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/api/auth/auth.service';
 import { UserService } from 'src/app/services/api/user/user.service';
-import { JwtService } from 'src/app/services/utils/jwt/jwt.service';
 import { LoginService } from 'src/app/services/utils/login/login.service';
+import { SettingsService } from 'src/app/services/utils/settings/settings.service';
 
 @Component({
   selector: 'ddr-settings',
@@ -13,21 +12,23 @@ export class SettingsComponent implements OnInit{
 
   activeTab = 'general';
   dropdownToggled = false;
-  languageModels = ['gpt-3.5-turbo-16k', 'gpt-3.5-turbo', 'bard', 'gpt-4'];
-  selectedLanguageModel = 0;
+  languageModels = [''];
+  selectedLanguageModelIndex = 0;
 
   settings = {
     openai: '',
     email: ''
   }
 
-
-  constructor(private userService: UserService, private jwtService: JwtService, private loginService: LoginService) { }
+  constructor(private userService: UserService, private loginService: LoginService, private settingsService: SettingsService) { }
 
   ngOnInit(): void {
     if(this.loginService.isLoggedIn()) {
-    this.settings.openai = this.jwtService.extractClaim('openai');
-    this.settings.email = this.jwtService.extractClaim('sub');
+    this.languageModels = this.settingsService.getLanguageModelList();
+
+    this.settings.openai = this.settingsService.getOpenai();
+    this.settings.email = this.settingsService.getEmail();
+    this.selectedLanguageModelIndex = this.languageModels.indexOf(this.settingsService.getLanguageModel());
     }
   }
 
@@ -48,24 +49,27 @@ export class SettingsComponent implements OnInit{
   }
 
   selectLanguageModel(index: number) {
-    this.selectedLanguageModel = index;
+    this.selectedLanguageModelIndex = index;
   }
 
   getSelectedLanguageModel() {
-    return this.languageModels[this.selectedLanguageModel]
+    return this.languageModels[this.selectedLanguageModelIndex]
   }
 
   isLanguageModelActive(index: number) {
-    return index === this.selectedLanguageModel;
+    return index === this.selectedLanguageModelIndex;
   }
 
   isLanguageModelDisabled(index: number) {
     return index === 2 || index === 3; //bard and chatgpt4
   }
 
-  editApikey() {
+  update() {
     this.editApikeyApi(this.settings.openai).then(async () => {
       console.log("Changed Api key")
+      this.settingsService.setOpenai(this.settings.openai);
+      this.settingsService.setLanguageModel(this.getSelectedLanguageModel());
+      console.log(this.getSelectedLanguageModel())
     }).catch((e) => console.log(e));
   }
 

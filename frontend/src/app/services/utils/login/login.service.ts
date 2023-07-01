@@ -5,6 +5,7 @@ import { AuthenticationPostRequest } from 'src/app/models/api/request/authentica
 import { AuthService } from '../../api/auth/auth.service';
 import { Observable, Subject } from 'rxjs';
 import { Mode } from 'src/app/models/api/request/authentication/MODE';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class LoginService {
     jwt: ''
   }
 
-  constructor(private authService: AuthService, private jwtService: JwtService) { }
+  constructor(private authService: AuthService, private jwtService: JwtService, private settingsService: SettingsService) { }
 
   async loginOrRegisterAndFetchJwt(credentials: AuthenticationPostRequest, mode: Mode): Promise<boolean> {
     try { this.authenticationPostResponse = await this.authenticate(credentials, mode); }
@@ -25,6 +26,8 @@ export class LoginService {
 
     if (this.authenticationPostResponse.jwt.startsWith('ey')) {
       this.jwtService.saveJwtInCookies(this.authenticationPostResponse.jwt);
+      this.settingsService.setEmail(this.jwtService.extractClaim('sub'))
+      this.settingsService.setOpenai(this.jwtService.extractClaim('openai'))
       return true;
     }
 
@@ -33,6 +36,8 @@ export class LoginService {
 
   logout(): void {
     this.jwtService.removJwtInCookies();
+    this.settingsService.setEmail('')
+    this.settingsService.setOpenai('')
   }
 
   async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<AuthenticationPostResponse> {

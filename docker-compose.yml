@@ -19,6 +19,6 @@ services:
       - C:/docker/minio:/data
     restart: unless-stopped
   dog-classifier:
-    image: dog-classifier
+    image: timmycode/dog-breed-classification:latest
     ports:
       - "5000:5000"

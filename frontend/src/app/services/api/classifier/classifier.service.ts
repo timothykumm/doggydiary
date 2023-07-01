@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ClassificationDogResponse } from 'src/app/models/api/response/classification/ClassificationPostResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ClassifierService {
 
   constructor(private http: HttpClient) { }
 
-  getDogClassification(file: File): Observable<string> {
+  getDogClassification(file: File): Observable<ClassificationDogResponse> {
 
     const formData = new FormData();
     formData.append('file', file);
@@ -22,7 +23,7 @@ export class ClassifierService {
       })
     };
 
-    return this.http.post(this.url, formData, {...httpOptions, responseType: "text"})
+    return this.http.post<ClassificationDogResponse>(this.url, formData, httpOptions)
   }
 
 }

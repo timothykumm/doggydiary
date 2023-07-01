@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { DogPostRequest } from 'src/app/models/api/request/dog/DogPostRequest';
+import { ClassificationDogResponse } from 'src/app/models/api/response/classification/ClassificationPostResponse';
 import { DogGetResponse } from 'src/app/models/api/response/dog/DogGetResponse';
 import { ClassifierService } from 'src/app/services/api/classifier/classifier.service';
 import { DogService } from 'src/app/services/api/dog/dog.service';
@@ -57,8 +58,14 @@ constructor(private dogService: DogService, private classifierService: Classifie
     if(this.croppedImage !== '') {
       const file: File = this.convertImgService.convertBase64ToMultipartFile(this.croppedImage);
       const classifiedDog = await this.classifyDogApi(file);
-      console.log('Classified Dog: ' + classifiedDog)
-      this.dog.breed = classifiedDog;
+
+      if(classifiedDog.probability < 0.40) {
+        this.dog.breed = 'Unknown';
+      } else {
+        this.dog.breed = classifiedDog.breed;
+      }
+
+      console.log('Probability ' + classifiedDog.probability)
     }
   }
 
@@ -93,8 +100,8 @@ constructor(private dogService: DogService, private classifierService: Classifie
     });
   }
 
-  async classifyDogApi(file: File): Promise<any> {
-    return new Promise<string>((resolve, reject) => {
+  async classifyDogApi(file: File): Promise<ClassificationDogResponse> {
+    return new Promise<ClassificationDogResponse>((resolve, reject) => {
       this.classifierService.getDogClassification(file).subscribe({
         next: (r) => { resolve(r); },
         error: (e) => { reject(e); }

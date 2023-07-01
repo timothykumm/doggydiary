@@ -1,1 +1,115 @@
-<p>settings works!</p>
+<div class="container">
+
+  <div class="row gutters-sm">
+    <div class="col-md-4 d-none d-md-block">
+      <div class="card">
+        <div class="card-body">
+          <nav class="nav flex-column nav-pills nav-gap-y-1">
+            <a (click)="switchTab('general')"
+              [ngClass]="{'nav-item nav-link has-icon nav-link-faded': true, 'active': isTabActive('general')}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-general mr-2">
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg> General Settings
+            </a>
+            <a (click)="switchTab('user')"
+              [ngClass]="{'nav-item nav-link has-icon nav-link-faded': true, 'active': isTabActive('user')}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-user mr-2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg> Account Settings
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header border-bottom mb-3 d-flex d-md-none">
+          <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+            <li class="nav-item">
+              <a (click)="switchTab('general')"
+                [ngClass]="{'nav-link has-icon': true, 'active': isTabActive('general')}"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-general">
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                  </path>
+                </svg></a>
+            </li>
+            <li class="nav-item">
+              <a (click)="switchTab('user')" [ngClass]="{'nav-link has-icon': true, 'active': isTabActive('user')}"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-user">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg></a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body tab-content">
+          <div [ngClass]="{'tab-pane' : true, 'active' : isTabActive('general')}" id="general">
+            <h6>GENERAL SETTINGS</h6>
+            <hr>
+            <form>
+              <div class="form-group">
+                <label for="languageModel">Language Model</label>
+                <div class="dropdown show">
+                  <button (click)="toggleDropdown()"
+                    [ngClass]="{'btn btn-secondary dropdown-toggle' : true, 'show' : isDropdownToggled()}" role="button"
+                    id="dropdownMenuLink" aria-haspopup="true" aria-expanded="true"
+                    [textContent]="getSelectedLanguageModel()"></button>
+                  <ul [ngClass]="{'dropdown-menu' : true, 'show' : isDropdownToggled()}">
+                    <div *ngFor="let languageModel of languageModels; index as i;">
+                      <li><button
+                          [ngClass]="{'dropdown-item' : true, 'actice': isLanguageModelActive(i), 'disabled': isLanguageModelDisabled(i)}"
+                          type="button" [id]="languageModel" [textContent]="languageModel"
+                          (click)="selectLanguageModel(i); toggleDropdown();"></button></li>
+                    </div>
+                  </ul>
+                </div>
+                <small id="modelSelectionHelp" class="form-text text-muted">Some language models are not avaible
+                  yet.</small>
+              </div>
+              <div class="form-group">
+                <label for="api-key">Api Key</label>
+                <div>
+                  <input type="text" id="apikey-input" name="apikeyInput" [(ngModel)]="settings.openai" #apikey="ngModel"
+                    pattern="^sk-[A-Za-z0-9]+$" />
+                </div>
+                <button class="btn btn-primary" id="update-button" type="button" (click)="editApikey()">Update</button>
+              </div>
+            </form>
+          </div>
+          <div [ngClass]="{'tab-pane' : true, 'active' : isTabActive('user')}" id="user">
+            <h6>ACCOUNT SETTINGS</h6>
+            <hr>
+            <form>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="emailInput" class="form-control" id="email" aria-describedby="emailHelp"
+                  [value]="settings.email" disabled>
+              </div>
+              <hr>
+              <div class="form-group">
+                <p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be
+                  certain.</p>
+              </div>
+              <button class="btn btn-danger" type="button">Delete Account</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

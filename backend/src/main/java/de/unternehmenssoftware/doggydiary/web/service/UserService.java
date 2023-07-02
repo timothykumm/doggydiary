@@ -3,6 +3,7 @@ package de.unternehmenssoftware.doggydiary.web.service;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
 import de.unternehmenssoftware.doggydiary.web.exception.ApikeyModifyException;
+import de.unternehmenssoftware.doggydiary.web.exception.UserDeleteException;
 import de.unternehmenssoftware.doggydiary.web.exception.UserNotFoundException;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +33,15 @@ public class UserService {
             throw new ApikeyModifyException();
         }
     }
+
+    public void deleteUser() {
+        UserEntity userEntity = authService.getAuthenticatedUserEntity();
+
+        try {
+            userRepository.deleteById(userEntity.getEmail());
+        } catch (RuntimeException e) {
+            throw new UserDeleteException();
+        }
+    }
+
 }

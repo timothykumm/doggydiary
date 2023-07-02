@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit{
     return index === 2 || index === 3; //bard and chatgpt4
   }
 
-  update() {
+  updateGeneralSettings() {
     this.editApikeyApi(this.settings.openai).then(async () => {
       console.log("Changed Api key")
       this.settingsService.setOpenai(this.settings.openai);
@@ -73,9 +73,25 @@ export class SettingsComponent implements OnInit{
     }).catch((e) => console.log(e));
   }
 
+  deleteAccount() {
+    this.deleteAccountApi().then(async () => {
+      this.loginService.logout();
+      window.location.href = "/home";
+    }).catch((e) => console.log(e));
+  }
+
   async editApikeyApi(apikey: string): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.userService.editApikey(apikey).subscribe({
+        next: (r) => { resolve(r); },
+        error: (e) => { reject(e); }
+      });
+    });
+  }
+  
+  async deleteAccountApi(): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.userService.deleteAccount().subscribe({
         next: (r) => { resolve(r); },
         error: (e) => { reject(e); }
       });

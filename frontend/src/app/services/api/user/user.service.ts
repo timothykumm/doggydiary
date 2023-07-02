@@ -24,4 +24,15 @@ export class UserService {
   return this.http.put(this.url + "?apikey=" + apikey, null, httpOptions)
   }
 
+  deleteAccount(): Observable<any> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.jwtService.getJwtFromCookies()
+      })
+    };
+
+  return this.http.delete(this.url, httpOptions)
+  }
+
 }

@@ -27,4 +27,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser() {
+        userService.deleteUser();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

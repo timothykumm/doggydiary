@@ -38,6 +38,7 @@ export class LoginService {
     this.jwtService.removJwtInCookies();
     this.settingsService.setEmail('')
     this.settingsService.setOpenai('')
+    this.setLoginStatus(false)
   }
 
   async authenticate(credentials: AuthenticationPostRequest, mode: Mode = Mode.LOGIN): Promise<AuthenticationPostResponse> {

@@ -5,10 +5,7 @@ import de.unternehmenssoftware.doggydiary.web.entity.DocumentEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.DogEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.UserEntity;
 import de.unternehmenssoftware.doggydiary.web.entity.dto.Document;
-import de.unternehmenssoftware.doggydiary.web.exception.DocumentCreateException;
-import de.unternehmenssoftware.doggydiary.web.exception.DocumentModifyException;
-import de.unternehmenssoftware.doggydiary.web.exception.DocumentNotFoundException;
-import de.unternehmenssoftware.doggydiary.web.exception.DogNotFoundException;
+import de.unternehmenssoftware.doggydiary.web.exception.*;
 import de.unternehmenssoftware.doggydiary.web.repository.DocumentRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +65,7 @@ public class DocumentService {
         try {
             documentRepository.delete(documentEntity);
         }catch (IllegalArgumentException e) {
-            throw new DocumentModifyException();
+            throw new DocumentDeleteException();
         }
     }
 

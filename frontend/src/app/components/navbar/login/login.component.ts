@@ -27,6 +27,13 @@ export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
     this.setLoginStatus(this.loginService.isLoggedIn());
+
+    this.loginService.onLoginStatusChange().subscribe((loggedIn: boolean) => {
+      //if user deletes account, this needs to be reached from settings menu
+      if(loggedIn == false) {
+        this.setLoginStatus(loggedIn);
+      }
+    })
   }
 
   toggleLoginModal(): void {
@@ -53,7 +60,6 @@ export class LoginComponent implements OnInit{
 
    logout() : void {
       this.loginService.logout();
-      this.setLoginStatus(false);
       this.toggleNavbarFromParentComponent();
       this.toggleDropdown();
   }

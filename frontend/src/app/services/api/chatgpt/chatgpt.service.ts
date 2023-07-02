@@ -35,7 +35,7 @@ export class ChatgptService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.jwtService.extractClaim('openai'),
+        'Authorization': 'Bearer ' + this.settingsService.getOpenai(),
         'Content-Type': 'application/json'
       })
     };

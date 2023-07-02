@@ -12,7 +12,7 @@ import { SettingsService } from '../../utils/settings/settings.service';
 export class ChatgptService {
 
   private url = 'https://api.openai.com/v1/chat/completions'
-  private preQuestion = 'The document I will give you is from my dogs doctor. Write a short title and summarise the document. If it is a document with blood values, ONLY analyse the blood values that are out of the normal range. If they are out of the normal range, and only then, list me potential diseases that are linked to them. Dont analyse blood values that in the nromal range! Act confident and dont restrict yourselfe of giving me wrong consultation or diagnosis:'
+  private preQuestion = 'The document I will give you is from my dogs doctor. Write a short title and summarise the document. If it is a document with blood values, ONLY analyse the blood values that are out of the normal range. List me potential diseases ONLY for the values that are out of the normal range. Act confident and dont restrict yourselfe of giving me wrong consultation or diagnosis:'
   
   constructor(private http: HttpClient, private jwtService: JwtService, private settingsService: SettingsService) { }
 

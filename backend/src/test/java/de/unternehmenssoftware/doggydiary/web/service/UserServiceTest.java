@@ -1,6 +1,7 @@
 package de.unternehmenssoftware.doggydiary.web.service;
 
 import de.unternehmenssoftware.doggydiary.web.entity.dto.User;
+import de.unternehmenssoftware.doggydiary.web.repository.DogRepository;
 import de.unternehmenssoftware.doggydiary.web.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +18,20 @@ class UserServiceTest {
     static AuthService authService = Mockito.mock(AuthService.class);
 
     @Mock
+    static ProfilePictureService profilePictureService = Mockito.mock(ProfilePictureService.class);
+
+    @Mock
     static UserRepository userRepository = Mockito.mock(UserRepository.class);
+
+    @Mock
+    static DogRepository dogRepository = Mockito.mock(DogRepository.class);
 
     @InjectMocks
     static UserService userService;
 
     @BeforeEach
     void setup() {
-        userService = new UserService(authService, userRepository);
+        userService = new UserService(authService, profilePictureService, userRepository, dogRepository);
     }
 
     @Test

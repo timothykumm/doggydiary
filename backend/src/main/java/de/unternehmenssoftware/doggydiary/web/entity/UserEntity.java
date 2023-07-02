@@ -27,7 +27,7 @@ public class UserEntity {
     @Column(name = "openai", length = 51)
     private String openai;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<DogEntity> dogs;
 
     @Enumerated(EnumType.STRING)

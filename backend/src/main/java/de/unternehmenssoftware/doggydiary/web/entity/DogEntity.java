@@ -28,7 +28,7 @@ public class DogEntity {
     @Nullable
     private String img;
 
-    @OneToMany(mappedBy = "dog")
+    @OneToMany(mappedBy = "dog", cascade = CascadeType.ALL)
     private List<DocumentEntity> documents;
 
     @ManyToOne()

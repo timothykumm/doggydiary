@@ -22,12 +22,13 @@ export class LoginService {
 
   async loginOrRegisterAndFetchJwt(credentials: AuthenticationPostRequest, mode: Mode): Promise<boolean> {
     try { this.authenticationPostResponse = await this.authenticate(credentials, mode); }
-    catch { }
+    catch {  }
 
     if (this.authenticationPostResponse.jwt.startsWith('ey')) {
       this.jwtService.saveJwtInCookies(this.authenticationPostResponse.jwt);
       this.settingsService.setEmail(this.jwtService.extractClaim('sub'))
       this.settingsService.setOpenai(this.jwtService.extractClaim('openai'))
+      this.authenticationPostResponse.jwt = '';
       return true;
     }
 

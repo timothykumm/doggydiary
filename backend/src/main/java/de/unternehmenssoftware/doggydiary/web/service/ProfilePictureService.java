@@ -8,6 +8,7 @@ import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +27,9 @@ public class ProfilePictureService {
     private final MinioServerConfig fileStorageConfig;
     private MinioClient minioClient;
     private String endpoint, bucketName;
+    private boolean executed = false;
 
-    @PostConstruct
-    public void onConstruct() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public void initialize()  {
         bucketName = fileStorageConfig.getBucketName();
         endpoint = fileStorageConfig.getBucketUrl();
 
@@ -37,10 +38,16 @@ public class ProfilePictureService {
                 .build();
 
         //create bucket if not exists
-        createBucketIfNotExist();
+        try {
+            createBucketIfNotExist();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String uploadPictureToMinio(MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        if(!executed) initialize();
 
         final String randomNumber = UUID.randomUUID().toString();
         final String fileExtension = getFileExtension(file.getOriginalFilename());

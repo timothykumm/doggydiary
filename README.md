@@ -20,3 +20,6 @@ A comprehensive web application that provides features for dog owners to track a
 
     <sub> If you have erros regarding cors policy, you should use this [chrome plugin](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=de) </sub>
 
+
+
+![architecture](https://github.com/timothykumm/doggydiary/assets/27158937/dae235d2-d65c-45a7-9542-ced1508feda8)
